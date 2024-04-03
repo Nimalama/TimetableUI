@@ -1,0 +1,405 @@
+.btn {
+  padding: 12px 16px;
+  border: 0;
+  border-radius: $border-radius;
+  color: $color-text;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: $font-weight-medium;
+  text-align: center;
+  @include transition;
+
+  &:hover {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  @include m(bg-transparent) {
+    background: transparent;
+  }
+
+  @include m(w-icon) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @include m(newsletter) {
+    height: 48px;
+    font-size: 16px;
+    font-weight: $font-weight-semi-bold;
+    line-height: 24px;
+    padding: 12px 16px;
+    width: 77px;
+  }
+
+  @include m(black) {
+    color: $woodsmoke;
+    background: transparent;
+    border: 1px solid $woodsmoke;
+  }
+
+  @include m(primary) {
+    background: $primary;
+    color: $white !important;
+
+    &:hover {
+      color: white;
+      background-color: darken($color: $primary, $amount: 10%);
+    }
+
+    &.outline {
+      border-color: $primary;
+      color: $primary;
+      background-color: transparent;
+
+      &:hover {
+        background-color: $primary;
+        color: $white;
+      }
+    }
+
+    &.btn--light {
+      background-color: $arc-light;
+      color: $primary;
+      border-color: $arc-light;
+    }
+
+    @include mqmax(sm) {
+      width: 100%;
+    }
+  }
+
+  @include m(sidebar) {
+    @include mqmax(sm) {
+      width: auto;
+      padding: getSpacing("2x") getSpacing("4x");
+    }
+  }
+
+  @include m(secondary) {
+    background: $secondary;
+    color: $white;
+
+    &:hover {
+      color: white;
+      background-color: darken($color: $secondary, $amount: 10%);
+    }
+  }
+
+  @include m(ghost) {
+    background-color: transparent;
+    color: $primary;
+    border: 1px solid transparent;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+
+  @include m(inline-width) {
+    width: auto !important;
+    font-size: 16px;
+    line-height: 24px;
+
+    &:hover {
+      color: $blue !important;
+    }
+  }
+
+  @include m(icon) {
+    height: 44px;
+    width: 44px;
+    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+
+    &:hover,
+    &.active {
+      background-color: getColor("grey.mainBg");
+    }
+  }
+
+  @include m(account) {
+    font-size: 16px;
+    line-height: 24px;
+    color: $blue;
+    background-color: transparent;
+    border: 1px solid $blue;
+    margin-bottom: 16px;
+    width: 100%;
+  }
+
+  @include m(yellow) {
+    background-color: getColor("warning.base");
+    color: $white;
+
+    &:hover {
+      background-color: darken($color: getColor("warning.base"), $amount: 10%);
+    }
+  }
+
+  @include m(danger) {
+    background-color: getColor("danger.base");
+    color: $white;
+
+    &:hover {
+      background-color: getColor("danger.dark");
+      color: $white;
+    }
+  }
+
+  @include m(white) {
+    background-color: $white;
+    color: $color-text;
+
+    &:hover {
+      background-color: darken($color: $white, $amount: 10%);
+      color: $color-text;
+    }
+  }
+
+  @include m(dark) {
+    background-color: $black;
+    color: white;
+
+    &:hover {
+      color: $white;
+      background-color: transparentize($black, 0.2);
+    }
+  }
+
+  @include m(link) {
+    color: $blue;
+    padding: 8px 15px;
+    font-size: 1rem;
+    min-width: unset;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  @include m(linkedin) {
+    background-color: $linkedIn;
+    color: $white;
+    font-weight: $font-weight-normal;
+    padding: 0;
+    font-size: getFontSize("body16");
+    justify-content: start;
+
+    span {
+      display: inline-block;
+      border-left: 1px solid $venice-blue;
+      padding: 12px 14px;
+    }
+
+    &:hover {
+      background-color: darken($color: $linkedIn, $amount: 5%);
+      color: $white;
+    }
+  }
+
+  @include m(run-code) {
+    position: relative;
+    background: rgba($color: $black, $alpha: 0.0001);
+    border: 1px solid rgba($color: $white, $alpha: 0.67);
+    box-sizing: border-box;
+    border-radius: 2px;
+    top: -8px;
+    left: 8px;
+    font-size: getFontSize("body14");
+    font-family: $font-primary;
+    font-weight: $font-weight-normal;
+    color: white;
+    padding: getSpacing("1x") getSpacing("4x");
+
+    &:hover {
+      color: white;
+      background: $hover-black;
+    }
+  }
+
+  @include m(run-challenge) {
+    background: $dark-grey;
+    color: $white !important;
+    border: 1px solid $white;
+
+    &:hover {
+      color: $darkIndigo !important;
+    }
+
+    @include mqmax(sm) {
+      border: none;
+    }
+  }
+
+  @include m(outline) {
+    border: 1px solid getColor("grey.borderGray");
+
+    &.dark {
+      color: getColor("darkmode.paragraph");
+
+      &:hover {
+        color: $color-text;
+      }
+    }
+
+    &:hover {
+      background-color: $light-grey;
+    }
+
+    @include e(btn-tab) {
+      @include mqmax(sm) {
+        border: none;
+        background-color: $primary;
+
+        &.dark {
+          color: $white;
+
+          &:hover {
+            color: $white;
+          }
+        }
+      }
+    }
+  }
+
+  @include m(sm) {
+    padding: 10px 16px;
+    font-size: getFontSize("body14");
+  }
+
+  @include m(md) {
+    padding: 12px 16px;
+    font-size: getFontSize("body16");
+  }
+
+  @include m(block) {
+    width: 100%;
+  }
+
+  &--disabled,
+  &[disabled] {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: initial;
+  }
+
+  &-group {
+    @include m(register) {
+      .btn {
+        justify-content: flex-start;
+        text-align: left;
+      }
+    }
+  }
+
+  &-back {
+    color: $color-text;
+  }
+
+  @include m(google) {
+    color: transparentize($color: $black, $amount: 0.46);
+    background-color: $white;
+    font-weight: $font-weight-normal;
+    &:hover {
+      color: transparentize($color: $black, $amount: 0.46);
+    }
+  }
+
+  @include e(outline-light) {
+    color: $white;
+    border: 1px solid rgba(255, 255, 255, 0.67);
+    border-radius: 2px;
+    background: transparent;
+    padding: 4px 16px;
+    font-weight: $font-weight-normal;
+    font-size: 0.875rem;
+
+    &:hover {
+      color: rgba(255, 255, 255, 0.87);
+    }
+  }
+
+  @include m(check-code) {
+    @include mq(md) {
+      width: 275px !important;
+    }
+  }
+  @include m(plain) {
+    background: none;
+    display: inline-block;
+    margin: 0 auto;
+  }
+
+  @include m(no-outline) {
+    background: none;
+  }
+
+  @include m(upgrade) {
+    justify-content: center;
+    padding: getSpacing("3x") getSpacing("4x");
+    font-weight: $font-weight-semi-bold;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  @include m(reset-password) {
+    width: 100%;
+    font-size: 16px;
+    font-weight: $font-weight-semi-bold;
+    line-height: 24px;
+    padding: 12px 16px;
+    border: none;
+    @include mq(md) {
+      width: 169px;
+    }
+  }
+
+  @include m(reverse-hover) {
+    color: $main-color;
+
+    &:hover {
+      color: #0556f3;
+    }
+  }
+
+  @include m(padding) {
+    padding: getSpacing("3x") getSpacing("4x");
+  }
+
+  @include m(account-setting) {
+    flex: 1;
+    display: block;
+    text-align: center;
+  }
+}
+
+.link-underline {
+  text-decoration-line: underline;
+}
+
+.btn-icon {
+  @include m("dashboard") {
+    margin-left: getSpacing("14x");
+    @include mq(md) {
+      margin-left: getSpacing("8x");
+    }
+  }
+}
+
+.navbar-btn-wrapper {
+  .desktop-btn {
+    @include m(subscribe-to-pro) {
+      display: none;
+
+      @include mq(md) {
+        display: block;
+      }
+    }
+  }
+}

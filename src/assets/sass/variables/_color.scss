@@ -1,0 +1,217 @@
+// Default Color
+$white: #fff;
+$black: #000;
+$light-dark: #1f2023;
+$blue: #0556f3;
+$purple: #6501e5;
+$purple-dark: #4f03af;
+$red: #e34c4c;
+$green: #56bd5b;
+$yellow: #f79522;
+$light-yellow: #ffe8d6;
+$darkIndigo: #25265e;
+$lightIndigo: #a8a8bf;
+$gray: #d3dce6;
+$gray-light: #f9fafc;
+$gray-alt: #e8e8e8;
+$gray8: #eff2f7;
+$subtle-gray: #f5f8ff;
+$light-grey: #f1f5fd;
+$faint-grey: #f2f2f2;
+$purple-grey: #f8faff;
+$dark-grey: #383b40;
+$silverGray: #c7c7c7;
+$light-green: #ddf2de;
+$black-russian: #202023;
+$soft-red: #f77062;
+$soft-pink: #fe5196;
+$bright-violet: #9327fe;
+$soft-violet: #6501e5;
+$snow: #fafafa;
+$solitude: #e3ebfe;
+$dark-blue: #010536;
+
+// Colors Added
+$purple-mid: #1c2130;
+$sweet-corn: #f093fb;
+$nero: #1d1d1d;
+$ripe-malinka: #f5576c;
+$purple-heart: #18034b;
+$rustic-red: #090340;
+$midnight-summer: #0f0345;
+$magic-whale: #150349;
+$pantone: #1b054d;
+$ral: #2d134e;
+$royal-purple: #32194e;
+$sunny-morning: #f6d365;
+$heliotrope: #fda085;
+$gradient-purple: #9327fe;
+$mandys-pink: #feccbf;
+$torea-bay: #323673;
+$saffron: #ffc33d;
+$peppermint: #ddf2de;
+$pink-lady: #fff1d6;
+$cream-can: #ffcd6d;
+$cornflowerblue: #00a3ff;
+$venice-blue: #085b8c;
+$woodsmoke: #171516;
+$magic-mint: #a3f6c1;
+$magnolia: #f8f7fc;
+$old-lace: #fff5e7;
+$color-text-87: rgba($darkIndigo, 0.87);
+$color-text-67: rgba($darkIndigo, 0.67);
+$offer-card-red: #370909;
+$very-dark-orange: #4d2d00;
+$mandy-red: #e34c4c;
+$ebony: #2d2f34;
+$dropdown-border: #57595d;
+$light-black: #00031e1a;
+$hover-black: #4b4b4b;
+$dark-mode-bg: #242b3c;
+$pale-turquoise: #affffa;
+$dusty-red: #cb6d6f;
+
+$primary: $blue;
+$secondary: $purple;
+$success: $green;
+$alert: $red;
+$warning: $yellow;
+$info: $blue;
+$color-text: transparentize($darkIndigo, 0.13);
+$darkIndigo87: rgba($darkIndigo, 0.87);
+$darkIndigo67: rgba($darkIndigo, 0.67);
+$color-text-light: $lightIndigo;
+$color-link: $primary;
+$link-hover: darken($primary, 20%);
+$color-link-hover: $link-hover;
+$dark-base: rgba(20, 28, 58, 0.9);
+$light-base: #fbfbfb;
+$code-base: #f5f5f5;
+$faint-base: $light-grey;
+$btn-gray: $gray8;
+$orange: #ff8b6c;
+$code-grey: $dark-grey;
+$compiler-grey: $code-base;
+$magneta: #140448;
+$blue-yonder: #25265f;
+$linkedIn: #0077b5;
+$teal-dark: #05171d;
+$void: #05171c;
+$night-rider: #2e2e2e;
+$tag-color: $saffron;
+$border-color: $gray;
+$summer-bg: #ffedd4;
+$summer-border: #feccbf;
+$summer-hero-bg: #fff5e7;
+$very-pale: #fff5e7;
+$slightly-cyan: #99cccc;
+$pure-cyan: #00bbe1;
+$mid-cyan: #00dbcd;
+$pale-blue: #d6ebff;
+$primary-card-bg: #fff4d6;
+$secondary-card-bg: #ffebe7;
+$tertiary-card-bg: #d6f5ff;
+$card-highlight-primary: #e8f5fe;
+$card-highlight-secondary: #faffd9;
+$very-soft-orange: #efd5ad;
+$dark-orange: #f79522;
+$pale-orange: #ffd29e;
+$very-pale-color: #fffbf6;
+$very-pale-blue: #d1e7ff;
+$lime-green: #d9ffe5;
+$very-pale-red: #ffd8da;
+$very-light-gray: #dadada;
+$dark-violet: #4f01b2;
+$shade-blue: #ccedff;
+$alice-blue: #f4f7fe;
+$field-highlight: #7ba7fc;
+$strong-blue: #0047d1;
+$landing-alternate-bg: $old-lace;
+$peach-orange: #ffc48d;
+$landing-table-bg: #f8faff;
+$code-tag-bgv2: $purple-mid;
+$pastel-sky-blue: #f4f8ff;
+
+// Custom Colors for Sale
+$banner-background: #ffeac1;
+$india-blue: #01d6d0;
+$black-friday-red: #f5576c;
+$black-friday-dark: #2e2e2e;
+$black-friday-black: #1d1d1d;
+$black-friday-magenta: #f093fb;
+$cyber-monday-salacia: #120347;
+$cyber-monday-blue: #a0fcfe;
+
+$christmas-yellow1: #b2782a;
+$christmas-yellow2: #b77f2e;
+$christmas-yellow3: #c49239;
+$christmas-yellow4: #dab14c;
+$christmas-yellow5: #f4d662;
+$christmas-yellow6: #f4de8b;
+
+$easter-banner-sticker-text: #202d73;
+
+//Color Palette
+$colorMap: (
+  "primary": (
+    "dark": darken($primary, 20%),
+    "base": $primary,
+    "light": #cdddfd,
+    "60": rgba($primary, 0.6),
+    "40": rgba($primary, 0.4),
+    "20": rgba($primary, 0.2),
+  ),
+  "secondary": (
+    "dark": $purple-dark,
+    "base": $secondary,
+    "60": rgba($secondary, 0.6),
+    "40": rgba($secondary, 0.4),
+    "20": rgba($secondary, 0.2),
+    "10": rgba($secondary, 0.1),
+  ),
+  "success": (
+    "dark": darken($green, 20%),
+    "base": $green,
+    "60": rgba($green, 0.6),
+    "40": rgba($green, 0.4),
+    "20": rgba($green, 0.2),
+    "10": rgba($green, 0.1),
+  ),
+  "danger": (
+    "dark": darken($alert, 20%),
+    "base": $alert,
+    "60": rgba($alert, 0.6),
+    "20": rgba($alert, 0.2),
+  ),
+  "warning": (
+    "base": $yellow,
+  ),
+  "info": (
+    "base": $info,
+  ),
+  "grey": (
+    "borderGrayAlt": $gray-alt,
+    "borderGray": $gray,
+    "borderRed": $red,
+    "borderBlue": $primary,
+    "hoverAccentBlue": rgba($primary, 0.2),
+    "mainBg": $code-base,
+  ),
+  "text": (
+    "main": $color-text,
+    "paragraph": rgba($color-text, 0.87),
+    "caption": rgba($color-text, 0.67),
+    "light": $color-text-light,
+  ),
+  "darkmode": (
+    "main": $white,
+    "paragraph": transparentize($white, 0.33),
+  ),
+  "white": (
+    "main": $white,
+  ),
+  "highlight": (
+    "orange": $orange,
+    "teal": #00dbcd,
+  ),
+);
