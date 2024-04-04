@@ -1,17 +1,19 @@
-import React, { ChangeEvent, useRef, useState } from "react";
-import DefaultNavbar from "./commons/DefaultNavbar";
-import DefaultAuthComponent from "./commons/DefaultAuthComponent";
-import { LOGIN } from "../constants/routes";
-import { Link } from "react-router-dom";
-import GoogleSignInButton from "./GoogleSignInButton";
+import React, { ChangeEvent, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import { LOGIN } from '../constants/routes';
+
+import DefaultAuthComponent from './commons/DefaultAuthComponent';
+import DefaultNavbar from './commons/DefaultNavbar';
+import GoogleSignInButton from './GoogleSignInButton';
 
 const Register = () => {
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const [userCredentials, setUserCredentials] = useState({
-    fullName: "",
-    email: "",
-    password: "",
+    fullName: '',
+    email: '',
+    password: ''
   });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -28,77 +30,74 @@ const Register = () => {
   return (
     <>
       <DefaultNavbar />
-      <div className='auth-form'>
+      <div className="auth-form">
         <DefaultAuthComponent />
-        <div className='register-form'>
-          <div className='form-wrapper'>
+        <div className="register-form">
+          <div className="form-wrapper">
             <GoogleSignInButton />
-            <div className='divider my-2x'>or</div>
-            <div className='d-md-flex justify-content-between align-items-end mb-4x'>
+            <div className="divider text-center my-4x">or</div>
+            <div className="d-md-flex justify-content-between align-items-end mb-4x">
               <h3>Create Account</h3>
-              <p className='m-0'>
+              <p className="m-0">
                 Have an account? <Link to={LOGIN}>Sign In</Link>
               </p>
             </div>
             <form onSubmit={handleSubmit}>
-              <div className='form-group'>
-                <label htmlFor='exampleInputEmail1'>Full Name</label>
+              <div className="form-group">
+                <label htmlFor="exampleInputEmail1">Full Name</label>
                 <input
-                  type='text'
-                  name='fullName'
-                  className='form-control'
-                  id='exampleInputfullName1'
-                  aria-describedby='nameHelp'
-                  placeholder='Enter your full name'
+                  type="text"
+                  name="fullName"
+                  className="form-control"
+                  id="exampleInputfullName1"
+                  aria-describedby="nameHelp"
+                  placeholder="Enter your full name"
                   onChange={handleChange}
-                  data-test-id='signup-full-name-input'
+                  data-test-id="signup-full-name-input"
                 />
               </div>
-              <div className='form-group'>
-                <label htmlFor='exampleInputEmail1'>Email</label>
+              <div className="form-group">
+                <label htmlFor="exampleInputEmail1">Email</label>
                 <input
-                  type='email'
-                  name='email'
-                  className='form-control'
-                  id='inputEmailAddress2'
-                  aria-describedby='emailHelp'
-                  placeholder='Enter your email'
+                  type="email"
+                  name="email"
+                  className="form-control"
+                  id="inputEmailAddress2"
+                  aria-describedby="emailHelp"
+                  placeholder="Enter your email"
                   onChange={handleChange}
-                  data-test-id='signup-email-input'
+                  data-test-id="signup-email-input"
                 />
               </div>
-              <div className='form-group'>
-                <label
-                  htmlFor='exampleInputPassword1'
-                  className='label--with-icon'
-                >
+              <div className="form-group">
+                <label htmlFor="exampleInputPassword1" className="label--with-icon">
                   Password
                 </label>
                 <input
-                  type='password'
-                  name='password'
-                  className='form-control'
-                  id='inputPassword'
-                  placeholder='Enter your password'
+                  type="password"
+                  name="password"
+                  className="form-control"
+                  id="inputPassword"
+                  placeholder="Enter your password"
                   ref={passwordRef}
                   value={userCredentials.password}
                   onChange={handleChange}
-                  data-test-id='signup-password-input'
+                  data-test-id="signup-password-input"
                 />
                 <div
                   // onClick={handleShowHidePassword}
-                  className='register-form__password-icon'
+                  className="register-form__password-icon"
                 >
                   {/* {!showPassword ? <FiEye /> : <FiEyeOff />} */}
                 </div>
               </div>
               <button
                 // disabled={isButtonDisabled}
-                type='submit'
-                title='Sign Up'
-                className='btn btn--primary btn--block mt-6x d-flex justify-content-center'
-                id='sign-up-with-email'
-                data-test-id='signup-submit-button'
+                type="submit"
+                title="Sign Up"
+                className="btn btn--primary btn--block mt-6x d-flex justify-content-center"
+                id="sign-up-with-email"
+                data-test-id="signup-submit-button"
               >
                 Sign Up
               </button>

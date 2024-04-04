@@ -1,11 +1,7 @@
-import axios, {
-  AxiosError,
-  AxiosRequestConfig,
-  Method,
-  ResponseType,
-} from "axios";
-import { ObjectKeysInterface } from "../interfaces/commonInterfaces";
-import { ApiErrorMessages } from "../constants/errorMessage";
+import axios, { AxiosError, AxiosRequestConfig, Method, ResponseType } from 'axios';
+
+import { ApiErrorMessages } from '../constants/errorMessage';
+import { ObjectKeysInterface } from '../interfaces/commonInterfaces';
 
 interface AxiosRequestInterface {
   method?: Method;
@@ -39,12 +35,10 @@ interface AxiosRequestInterface {
  * }
  * @return {*}  {Promise<T>}
  */
-export async function getApiData<T>(
-  options: AxiosRequestInterface
-): Promise<T> {
+export async function getApiData<T>(options: AxiosRequestInterface): Promise<T> {
   const {
-    method = "GET",
-    baseURL = "BASE_URL",
+    method = 'GET',
+    baseURL = 'BASE_URL',
     endPoint,
     queryParams = {},
     data = {},
@@ -53,7 +47,7 @@ export async function getApiData<T>(
     isFormData = false,
     responseType,
     accessToken,
-    signal,
+    signal
   } = options;
 
   try {
@@ -61,13 +55,13 @@ export async function getApiData<T>(
 
     if (isFormData) {
       headers = {
-        "Content-Type": "multipart/form-data",
-        ...additionalHeaders,
+        'Content-Type': 'multipart/form-data',
+        ...additionalHeaders
       };
     } else {
       headers = {
-        "Content-Type": "application/json",
-        ...additionalHeaders,
+        'Content-Type': 'application/json',
+        ...additionalHeaders
       };
     }
 
@@ -79,7 +73,7 @@ export async function getApiData<T>(
       params: queryParams,
       headers,
       timeout: 5 * 60 * 1000,
-      signal,
+      signal
     };
 
     if (responseType) {
@@ -94,7 +88,7 @@ export async function getApiData<T>(
         // Do something before request is sent
         // Append the access token to the request header, if needed
         if (requiresAuth) {
-          const token = accessToken?.length ? accessToken : "";
+          const token = accessToken?.length ? accessToken : '';
 
           config.headers.Authorization = `Bearer ${token}`;
         }
@@ -113,16 +107,16 @@ export async function getApiData<T>(
   } catch (err) {
     const error = err as AxiosError;
 
-    if (error.code === "ETIMEDOUT") {
+    if (error.code === 'ETIMEDOUT') {
       throw new Error(ApiErrorMessages.DemoTimeoutError);
-    } else if (error.code == "ECONNABORTED") {
+    } else if (error.code == 'ECONNABORTED') {
       throw new Error(ApiErrorMessages.TimeoutError);
     } else if (error?.response) {
       switch (error?.response?.status) {
         case 400:
           throw new Error(JSON.stringify(error?.response?.data));
         case 401:
-          if (error?.response?.data === "" || !error?.response?.data) {
+          if (error?.response?.data === '' || !error?.response?.data) {
             // logout();
 
             throw new Error(ApiErrorMessages.DefaultMessage);
@@ -131,19 +125,19 @@ export async function getApiData<T>(
           }
 
         case 404:
-          if (error?.response?.data === "" || !error?.response?.data) {
+          if (error?.response?.data === '' || !error?.response?.data) {
             throw new Error(ApiErrorMessages.NotFound404);
           }
 
           throw new Error(JSON.stringify(error?.response?.data));
         case 500:
-          if (error?.response?.data === "" || !error?.response?.data) {
+          if (error?.response?.data === '' || !error?.response?.data) {
             throw new Error(ApiErrorMessages.ServerError500);
           } else {
             throw new Error(JSON.stringify(error?.response?.data));
           }
         case 409:
-          if (error?.response?.data === "" || !error?.response?.data) {
+          if (error?.response?.data === '' || !error?.response?.data) {
             throw new Error(ApiErrorMessages.Conflict409);
           } else {
             throw new Error(JSON.stringify(error?.response?.data));

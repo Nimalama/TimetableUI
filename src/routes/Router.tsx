@@ -1,9 +1,10 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import NotFound from "../components/commons/NotFound";
-import { HOME, LOGIN, SIGNUP } from "../constants/routes";
-import Login from "../components/Login";
-import Register from "../components/Register";
-import Dashboard from "../components/Dashboard";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+import NotFound from '../components/commons/NotFound';
+import Dashboard from '../components/Dashboard';
+import Login from '../components/Login';
+import Register from '../components/Register';
+import { HOME, LOGIN, SIGNUP } from '../constants/routes';
 
 const Router = () => {
   return (
@@ -14,7 +15,7 @@ const Router = () => {
         <Route path={LOGIN} element={<Login />} />
         <Route path={SIGNUP} element={<Register />} />
 
-        <Route path='*' element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

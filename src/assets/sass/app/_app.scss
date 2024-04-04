@@ -11,7 +11,7 @@
 }
 
 body {
-  background-color: getColor("white.main");
+  background-color: getColor('white.main');
 }
 
 input::-ms-reveal,
@@ -25,12 +25,12 @@ input::-webkit-credentials-auto-fill-button {
 }
 
 .container {
-  padding: 0 getSpacing("6x");
+  padding: 0 getSpacing('6x');
   margin-right: auto;
   margin-left: auto;
 
   @include mq(md) {
-    padding: 0 getSpacing("8x");
+    padding: 0 getSpacing('8x');
   }
 
   @include mq(xl) {

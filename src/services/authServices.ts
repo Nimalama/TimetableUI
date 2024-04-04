@@ -1,4 +1,4 @@
-import { getApiData } from "../utility/httpHelper";
+import { getApiData } from '../utility/httpHelper';
 
 export interface AuthCodeInterface {
   code: string;
@@ -21,13 +21,13 @@ export const getTokenResponseFromGoogleAuthCode = async (
   data: AuthCodeInterface
 ): Promise<GoogleAuthResponseInterface> => {
   const response = await getApiData<GoogleAuthResponseInterface>({
-    baseURL: "https://oauth2.googleapis.com/token",
-    endPoint: "",
-    method: "POST",
+    baseURL: 'https://oauth2.googleapis.com/token',
+    endPoint: '',
+    method: 'POST',
     data: data,
     additionalHeaders: {
-      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-    },
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
   });
 
   return response;

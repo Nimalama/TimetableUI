@@ -1,10 +1,8 @@
-import { useGoogleLogin } from "@react-oauth/google";
-import {
-  GoogleAuthResponseInterface,
-  ObjectKeysInterface,
-} from "../interfaces/commonInterfaces";
-import { GOOGLE_PARAMS } from "../constants/authConsts";
-import { getTokenResponseFromGoogleAuthCode } from "../services/authServices";
+import { useGoogleLogin } from '@react-oauth/google';
+
+import { GOOGLE_PARAMS } from '../constants/authConsts';
+import { GoogleAuthResponseInterface, ObjectKeysInterface } from '../interfaces/commonInterfaces';
+import { getTokenResponseFromGoogleAuthCode } from '../services/authServices';
 
 interface GoogleLoginResponseInterface {
   authuser: string;
@@ -32,57 +30,50 @@ const GoogleSignInButton: React.FC = () => {
   const login = useGoogleLogin({
     onSuccess: async (codeResponse) => {
       const response = codeResponse as GoogleLoginResponseInterface;
+      console.debug(response);
 
-      if (response.hd === "parewalabs.com") {
-        try {
-          const data = {
-            code: response.code,
-            grant_type: "authorization_code", // grant_type needs to be authorization_code for auth-code login flow
-            client_id: GOOGLE_PARAMS.GOOGLE_LOGIN_CLIENT_ID,
-            client_secret: GOOGLE_PARAMS.GOOGLE_LOGIN_CLIENT_SECRET,
-            redirect_uri: window.location.origin,
-          };
+      try {
+        const data = {
+          code: response.code,
+          grant_type: 'authorization_code', // grant_type needs to be authorization_code for auth-code login flow
+          client_id: GOOGLE_PARAMS.GOOGLE_LOGIN_CLIENT_ID,
+          client_secret: GOOGLE_PARAMS.GOOGLE_LOGIN_CLIENT_SECRET,
+          redirect_uri: window.location.origin
+        };
 
-          const tokenResponse: GoogleAuthResponseInterface =
-            await getTokenResponseFromGoogleAuthCode(data);
+        const tokenResponse: GoogleAuthResponseInterface = await getTokenResponseFromGoogleAuthCode(data);
 
-          console.debug(tokenResponse);
+        console.debug(tokenResponse);
 
-          // const userInfo = await axios.get(
-          //   "https://www.googleapis.com/oauth2/v1/userinfo",
-          //   {
-          //     headers: {
-          //       Authorization: `Bearer ${tokenResponse.access_token}`,
-          //     },
-          //   }
-          // );
+        // const userInfo = await axios.get(
+        //   "https://www.googleapis.com/oauth2/v1/userinfo",
+        //   {
+        //     headers: {
+        //       Authorization: `Bearer ${tokenResponse.access_token}`,
+        //     },
+        //   }
+        // );
 
-          // const loginResponse = await handleGoogleLoginRequest({
-          //   token: tokenResponse.id_token,
-          //   email: userInfo.data.email,
-          // });
-
-          // if (loginResponse) {
-          //   // addAccessTokensToCookies(loginResponse.token);
-
-          //   navigate(HOME);
-          // }
-        } catch (err) {
-          handleFailureGoogleLogin(err);
-        }
-      } else {
-        // showToast({
-        //   message: "Please login using Parewa Labs account",
-        //   toastState: TOAST_STATES.ERROR,
+        // const loginResponse = await handleGoogleLoginRequest({
+        //   token: tokenResponse.id_token,
+        //   email: userInfo.data.email,
         // });
+
+        // if (loginResponse) {
+        //   // addAccessTokensToCookies(loginResponse.token);
+
+        //   navigate(HOME);
+        // }
+      } catch (err) {
+        handleFailureGoogleLogin(err);
       }
     },
-    flow: "auth-code",
+    flow: 'auth-code'
   });
 
   return (
-    <button title='Cancel' className='ml-3x' onClick={login}>
-      Sign in with Google 🚀
+    <button title="Cancel" className="btn btn--block btn--black" onClick={login}>
+      Continue with Google 🚀
     </button>
   );
 };

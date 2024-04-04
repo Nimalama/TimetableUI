@@ -1,14 +1,18 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
+import './assets/sass/style.scss';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { createRoot } from 'react-dom/client';
+import { IconContext } from 'react-icons';
 
-import "./assets/sass/style.scss";
-import { GoogleOAuthProvider } from "@react-oauth/google";
+import { GOOGLE_PARAMS } from './constants/authConsts.ts';
+import Router from './routes/Router.tsx';
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <GoogleOAuthProvider clientId='386932037035-k8v833noqjk7m4***********.apps.googleusercontent.com'>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+const container = document.getElementById('root');
+const root = container && createRoot(container); // createRoot(container!) if you use TypeScript
+
+root?.render(
+  <GoogleOAuthProvider clientId={GOOGLE_PARAMS.GOOGLE_LOGIN_CLIENT_ID}>
+    <IconContext.Provider value={{ size: '24px' }}>
+      <Router />
+    </IconContext.Provider>
   </GoogleOAuthProvider>
 );

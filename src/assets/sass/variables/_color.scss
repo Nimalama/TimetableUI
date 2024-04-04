@@ -153,65 +153,65 @@ $easter-banner-sticker-text: #202d73;
 
 //Color Palette
 $colorMap: (
-  "primary": (
-    "dark": darken($primary, 20%),
-    "base": $primary,
-    "light": #cdddfd,
-    "60": rgba($primary, 0.6),
-    "40": rgba($primary, 0.4),
-    "20": rgba($primary, 0.2),
+  'primary': (
+    'dark': darken($primary, 20%),
+    'base': $primary,
+    'light': #cdddfd,
+    '60': rgba($primary, 0.6),
+    '40': rgba($primary, 0.4),
+    '20': rgba($primary, 0.2)
   ),
-  "secondary": (
-    "dark": $purple-dark,
-    "base": $secondary,
-    "60": rgba($secondary, 0.6),
-    "40": rgba($secondary, 0.4),
-    "20": rgba($secondary, 0.2),
-    "10": rgba($secondary, 0.1),
+  'secondary': (
+    'dark': $purple-dark,
+    'base': $secondary,
+    '60': rgba($secondary, 0.6),
+    '40': rgba($secondary, 0.4),
+    '20': rgba($secondary, 0.2),
+    '10': rgba($secondary, 0.1)
   ),
-  "success": (
-    "dark": darken($green, 20%),
-    "base": $green,
-    "60": rgba($green, 0.6),
-    "40": rgba($green, 0.4),
-    "20": rgba($green, 0.2),
-    "10": rgba($green, 0.1),
+  'success': (
+    'dark': darken($green, 20%),
+    'base': $green,
+    '60': rgba($green, 0.6),
+    '40': rgba($green, 0.4),
+    '20': rgba($green, 0.2),
+    '10': rgba($green, 0.1)
   ),
-  "danger": (
-    "dark": darken($alert, 20%),
-    "base": $alert,
-    "60": rgba($alert, 0.6),
-    "20": rgba($alert, 0.2),
+  'danger': (
+    'dark': darken($alert, 20%),
+    'base': $alert,
+    '60': rgba($alert, 0.6),
+    '20': rgba($alert, 0.2)
   ),
-  "warning": (
-    "base": $yellow,
+  'warning': (
+    'base': $yellow
   ),
-  "info": (
-    "base": $info,
+  'info': (
+    'base': $info
   ),
-  "grey": (
-    "borderGrayAlt": $gray-alt,
-    "borderGray": $gray,
-    "borderRed": $red,
-    "borderBlue": $primary,
-    "hoverAccentBlue": rgba($primary, 0.2),
-    "mainBg": $code-base,
+  'grey': (
+    'borderGrayAlt': $gray-alt,
+    'borderGray': $gray,
+    'borderRed': $red,
+    'borderBlue': $primary,
+    'hoverAccentBlue': rgba($primary, 0.2),
+    'mainBg': $code-base
   ),
-  "text": (
-    "main": $color-text,
-    "paragraph": rgba($color-text, 0.87),
-    "caption": rgba($color-text, 0.67),
-    "light": $color-text-light,
+  'text': (
+    'main': $color-text,
+    'paragraph': rgba($color-text, 0.87),
+    'caption': rgba($color-text, 0.67),
+    'light': $color-text-light
   ),
-  "darkmode": (
-    "main": $white,
-    "paragraph": transparentize($white, 0.33),
+  'darkmode': (
+    'main': $white,
+    'paragraph': transparentize($white, 0.33)
   ),
-  "white": (
-    "main": $white,
+  'white': (
+    'main': $white
   ),
-  "highlight": (
-    "orange": $orange,
-    "teal": #00dbcd,
-  ),
+  'highlight': (
+    'orange': $orange,
+    'teal': #00dbcd
+  )
 );

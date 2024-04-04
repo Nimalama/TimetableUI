@@ -41,7 +41,7 @@ code,
 kbd,
 var,
 samp {
-  font-family: "Droid Sans Mono", monospace;
+  font-family: 'Droid Sans Mono', monospace;
   display: inline-block;
   font-size: 14px;
   font-weight: normal;
@@ -50,7 +50,7 @@ samp {
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: getColor("text.paragraph");
+  color: getColor('text.paragraph');
   font-weight: $font-weight-normal !important;
   font-size: $base__font-size;
   text-rendering: optimizeLegibility;
@@ -58,13 +58,13 @@ body {
 }
 
 a {
-  color: getColor("primary.base");
+  color: getColor('primary.base');
   @include transition();
   outline: none;
   text-decoration: none;
 
   &:hover {
-    color: getColor("primary.dark");
+    color: getColor('primary.dark');
     text-decoration: underline;
   }
 
@@ -104,23 +104,23 @@ h6 {
 }
 
 h1 {
-  @include getHeaderFontSize("h1");
+  @include getHeaderFontSize('h1');
 }
 
 h2 {
-  @include getHeaderFontSize("h2");
+  @include getHeaderFontSize('h2');
 }
 
 h3 {
-  @include getHeaderFontSize("h3");
+  @include getHeaderFontSize('h3');
 }
 
 h4 {
-  @include getHeaderFontSize("h4");
+  @include getHeaderFontSize('h4');
 }
 
 h5 {
-  @include getHeaderFontSize("h5");
+  @include getHeaderFontSize('h5');
 }
 
 // h6 {
@@ -150,7 +150,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type="number"] {
+input[type='number'] {
   -moz-appearance: textfield;
   -webkit-appearance: textfield;
   appearance: textfield;
@@ -166,7 +166,7 @@ select {
 }
 
 hr {
-  border-top: 1px solid getColor("grey.borderGray");
+  border-top: 1px solid getColor('grey.borderGray');
 }
 
 .h-42px {
@@ -224,7 +224,7 @@ hr {
   overflow: hidden;
   text-overflow: ellipsis;
   @include m(lesson) {
-    line-height: getSpacing("5x");
+    line-height: getSpacing('5x');
     font-weight: 500;
   }
   @include m(short) {
@@ -244,8 +244,8 @@ hr {
 
 .ptb-sm-1x {
   @include mqmax(sm) {
-    padding-top: getSpacing("1x");
-    padding-bottom: getSpacing("1x");
+    padding-top: getSpacing('1x');
+    padding-bottom: getSpacing('1x');
   }
 }
 .prl-sm-0 {
@@ -269,14 +269,14 @@ hr {
 
 .mleft-sm-14x {
   @include mqmax(sm) {
-    margin-left: getSpacing("14x");
+    margin-left: getSpacing('14x');
   }
 }
 
 .mboth-sm-6x {
   @include mqmax(sm) {
-    margin-left: getSpacing("6x");
-    margin-right: getSpacing("6x");
+    margin-left: getSpacing('6x');
+    margin-right: getSpacing('6x');
   }
 }
 
