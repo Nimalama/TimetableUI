@@ -3,6 +3,7 @@ import DefaultNavbar from "./commons/DefaultNavbar";
 import DefaultAuthComponent from "./commons/DefaultAuthComponent";
 import { Link } from "react-router-dom";
 import { SIGNUP } from "../constants/routes";
+import GoogleSignInButton from "./GoogleSignInButton";
 
 const Login = () => {
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -31,6 +32,8 @@ const Login = () => {
 
         <div className='register-form'>
           <div className='form-wrapper'>
+            <GoogleSignInButton />
+            <div className='divider my-2x'>or</div>
             <div className='d-md-flex justify-content-between align-items-end mb-4x'>
               <h3>Sign In</h3>
               <p className='m-0'>
