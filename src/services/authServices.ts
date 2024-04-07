@@ -1,3 +1,9 @@
+/* eslint-disable no-useless-catch */
+import {
+  UserRegisterPayloadInterface,
+  UserInformationInterface,
+  UserLoginPayloadInterface
+} from '../interfaces/commonInterfaces';
 import { getApiData } from '../utility/httpHelper';
 
 export interface AuthCodeInterface {
@@ -32,3 +38,74 @@ export const getTokenResponseFromGoogleAuthCode = async (
 
   return response;
 };
+
+/**
+ * API handler to log in.
+ *
+ * @export
+ * @param {AuthPayloadInterface} data
+ * @return {*}  {Promise<UserInformationInterface>}
+ */
+export const loginUserWithEmail = async (data: UserLoginPayloadInterface): Promise<UserInformationInterface> => {
+  try {
+    const loginResponse = await getApiData<{ data: UserInformationInterface }>({
+      method: 'POST',
+      data: data,
+      endPoint: '/api/user/login'
+    });
+
+    return loginResponse.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
+ * API handler to sign up.
+ *
+ * @export
+ * @param {AuthPayloadInterface} data
+ * @return {*}  {Promise<UserInformationInterface>}
+ */
+export const signUpWithEmail = async (data: UserRegisterPayloadInterface): Promise<UserInformationInterface> => {
+  try {
+    const response = await getApiData<{ data: UserInformationInterface }>({
+      method: 'POST',
+      data: data,
+      endPoint: '/api/user/register'
+    });
+
+    return response.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export async function signInWithGoogle(data: { idToken: string; userType: string }): Promise<UserInformationInterface> {
+  try {
+    const response = await getApiData<{ data: UserInformationInterface }>({
+      endPoint: '/api/user/google-signin',
+      method: 'POST',
+      data
+    });
+
+    return response.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+//validate token
+export async function validateToken(token: string): Promise<UserInformationInterface> {
+  try {
+    const response = await getApiData<{ data: UserInformationInterface }>({
+      endPoint: '/api/user/validateToken',
+      method: 'GET',
+      queryParams: { token: token }
+    });
+
+    return response.data;
+  } catch (err) {
+    throw err;
+  }
+}

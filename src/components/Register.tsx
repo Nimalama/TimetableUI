@@ -1,31 +1,77 @@
-import React, { ChangeEvent, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { ChangeEvent, FormEvent, useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
-import { LOGIN } from '../constants/routes';
+import { HOME, LOGIN } from '../constants/routes';
 
 import DefaultAuthComponent from './commons/DefaultAuthComponent';
 import DefaultNavbar from './commons/DefaultNavbar';
 import GoogleSignInButton from './GoogleSignInButton';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
+import { signUpWithEmail } from '../services/authServices';
 
 const Register = () => {
-  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const navigate = useNavigate();
+
+  const passwordElemRef = useRef<HTMLInputElement | null>(null);
 
   const [userCredentials, setUserCredentials] = useState({
     fullName: '',
     email: '',
-    password: ''
+    password: '',
+    userType: 'Student'
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
 
+    setErrorMessage('');
     setUserCredentials({ ...userCredentials, [name]: value.trim() });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const signup = async () => {
+    try {
+      setIsLoading(true);
+
+      const userData = await signUpWithEmail(userCredentials);
+
+      if (userData) {
+        localStorage.setItem('userInformation', JSON.stringify(userData));
+        navigate(HOME);
+      }
+    } catch (err) {
+      const errorResponse = err as Error;
+      const errorsObj = errorResponse.message;
+      setErrorMessage(errorsObj);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSubmit = (e: FormEvent): void => {
     e.preventDefault();
     // Handle form submission logic here
+    signup();
   };
+
+  const handleShowHidePassword = (): void => {
+    const inputType = showPassword ? 'password' : 'text';
+
+    if (passwordElemRef?.current) {
+      passwordElemRef.current.setAttribute('type', inputType);
+    }
+
+    setShowPassword(!showPassword);
+  };
+
+  const isButtonDisabled =
+    isLoading ||
+    userCredentials.email === '' ||
+    userCredentials.password === '' ||
+    userCredentials.fullName === '' ||
+    userCredentials.password.length < 8;
 
   return (
     <>
@@ -42,7 +88,10 @@ const Register = () => {
                 Have an account? <Link to={LOGIN}>Sign In</Link>
               </p>
             </div>
-            <form onSubmit={handleSubmit}>
+
+            {errorMessage.length > 0 ? <div className="error-message">{errorMessage}</div> : null}
+
+            <form onSubmit={handleSubmit} className="mt-2x">
               <div className="form-group">
                 <label htmlFor="exampleInputEmail1">Full Name</label>
                 <input
@@ -56,6 +105,42 @@ const Register = () => {
                   data-test-id="signup-full-name-input"
                 />
               </div>
+
+              {/* radio group for userType selection */}
+              <div className="form-group">
+                <label htmlFor="userType">User Type</label>
+                <div className="d-flex justify-content-between">
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="userType"
+                      id="student"
+                      value="Student"
+                      checked={userCredentials.userType === 'Student'}
+                      onChange={handleChange}
+                    />
+                    <label className="form-check-label" htmlFor="student">
+                      Student
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="userType"
+                      id="teacher"
+                      value="Teacher"
+                      checked={userCredentials.userType === 'Teacher'}
+                      onChange={handleChange}
+                    />
+                    <label className="form-check-label" htmlFor="teacher">
+                      Teacher
+                    </label>
+                  </div>
+                </div>
+              </div>
+
               <div className="form-group">
                 <label htmlFor="exampleInputEmail1">Email</label>
                 <input
@@ -69,7 +154,7 @@ const Register = () => {
                   data-test-id="signup-email-input"
                 />
               </div>
-              <div className="form-group">
+              <div className="form-group form-group--password">
                 <label htmlFor="exampleInputPassword1" className="label--with-icon">
                   Password
                 </label>
@@ -79,20 +164,17 @@ const Register = () => {
                   className="form-control"
                   id="inputPassword"
                   placeholder="Enter your password"
-                  ref={passwordRef}
+                  ref={passwordElemRef}
                   value={userCredentials.password}
                   onChange={handleChange}
                   data-test-id="signup-password-input"
                 />
-                <div
-                  // onClick={handleShowHidePassword}
-                  className="register-form__password-icon"
-                >
-                  {/* {!showPassword ? <FiEye /> : <FiEyeOff />} */}
+                <div onClick={handleShowHidePassword} className="password-icon">
+                  {!showPassword ? <FiEye /> : <FiEyeOff />}
                 </div>
               </div>
               <button
-                // disabled={isButtonDisabled}
+                disabled={isButtonDisabled}
                 type="submit"
                 title="Sign Up"
                 className="btn btn--primary btn--block mt-6x d-flex justify-content-center"

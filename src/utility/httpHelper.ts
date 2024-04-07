@@ -13,7 +13,7 @@ interface AxiosRequestInterface {
   requiresAuth?: boolean;
   isFormData?: boolean;
   responseType?: ResponseType;
-  accessToken?: string;
+  userInformation?: string;
   signal?: AbortSignal;
 }
 
@@ -38,7 +38,7 @@ interface AxiosRequestInterface {
 export async function getApiData<T>(options: AxiosRequestInterface): Promise<T> {
   const {
     method = 'GET',
-    baseURL = 'BASE_URL',
+    baseURL = 'http://localhost:6173',
     endPoint,
     queryParams = {},
     data = {},
@@ -46,7 +46,6 @@ export async function getApiData<T>(options: AxiosRequestInterface): Promise<T> 
     requiresAuth = false,
     isFormData = false,
     responseType,
-    accessToken,
     signal
   } = options;
 
@@ -88,7 +87,10 @@ export async function getApiData<T>(options: AxiosRequestInterface): Promise<T> 
         // Do something before request is sent
         // Append the access token to the request header, if needed
         if (requiresAuth) {
-          const token = accessToken?.length ? accessToken : '';
+          const user = localStorage.getItem('userInformation');
+
+          const parsedUser = JSON.parse(user as string);
+          const token = parsedUser?.token ?? '';
 
           config.headers.Authorization = `Bearer ${token}`;
         }

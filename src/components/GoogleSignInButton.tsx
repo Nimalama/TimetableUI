@@ -2,7 +2,9 @@ import { useGoogleLogin } from '@react-oauth/google';
 
 import { GOOGLE_PARAMS } from '../constants/authConsts';
 import { GoogleAuthResponseInterface, ObjectKeysInterface } from '../interfaces/commonInterfaces';
-import { getTokenResponseFromGoogleAuthCode } from '../services/authServices';
+import { getTokenResponseFromGoogleAuthCode, signInWithGoogle } from '../services/authServices';
+import { HOME } from '../constants/routes';
+import { useNavigate } from 'react-router-dom';
 
 interface GoogleLoginResponseInterface {
   authuser: string;
@@ -13,7 +15,7 @@ interface GoogleLoginResponseInterface {
 }
 
 const GoogleSignInButton: React.FC = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // Function for handling google login failure
   const handleFailureGoogleLogin = (data: unknown): void => {
@@ -30,7 +32,6 @@ const GoogleSignInButton: React.FC = () => {
   const login = useGoogleLogin({
     onSuccess: async (codeResponse) => {
       const response = codeResponse as GoogleLoginResponseInterface;
-      console.debug(response);
 
       try {
         const data = {
@@ -43,27 +44,16 @@ const GoogleSignInButton: React.FC = () => {
 
         const tokenResponse: GoogleAuthResponseInterface = await getTokenResponseFromGoogleAuthCode(data);
 
-        console.debug(tokenResponse);
+        const userData = await signInWithGoogle({
+          idToken: tokenResponse.id_token,
+          userType: 'Student'
+        });
 
-        // const userInfo = await axios.get(
-        //   "https://www.googleapis.com/oauth2/v1/userinfo",
-        //   {
-        //     headers: {
-        //       Authorization: `Bearer ${tokenResponse.access_token}`,
-        //     },
-        //   }
-        // );
+        if (userData) {
+          localStorage.setItem('userInformation', userData.token);
 
-        // const loginResponse = await handleGoogleLoginRequest({
-        //   token: tokenResponse.id_token,
-        //   email: userInfo.data.email,
-        // });
-
-        // if (loginResponse) {
-        //   // addAccessTokensToCookies(loginResponse.token);
-
-        //   navigate(HOME);
-        // }
+          navigate(HOME);
+        }
       } catch (err) {
         handleFailureGoogleLogin(err);
       }

@@ -60,7 +60,7 @@ html.full-height {
 
 // Navbar styles
 .default-navbar {
-  background: #fff;
+  background: #5c581b;
   border-bottom: 1px solid $gray;
 
   .brand-logo {
@@ -109,6 +109,16 @@ html.full-height {
     height: 100%;
     flex-grow: 1;
   }
+
+  .form-group--password {
+    position: relative;
+
+    .password-icon {
+      position: absolute;
+      top: 46px;
+      right: 10px;
+    }
+  }
 }
 
 .default-auth {
@@ -145,3 +155,5 @@ html.full-height {
     }
   }
 }
+
+

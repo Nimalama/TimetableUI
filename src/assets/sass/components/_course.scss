@@ -1,0 +1,32 @@
+.common-table {
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid $border-color;
+  thead {
+    border-radius: 4px 4px 0px 0px;
+    background: $magnolia;
+    color: $main-color;
+    z-index: $zindex-overlay;
+
+    th {
+      padding: getSpacing('4x');
+      font-weight: $font-weight-medium;
+    }
+  }
+  tbody {
+    background: $white;
+
+    tr {
+      border-bottom: 1px solid $border-color;
+
+      &:last-child {
+        border: none;
+      }
+
+      td {
+        white-space: nowrap;
+        padding: getSpacing('4x');
+      }
+    }
+  }
+}

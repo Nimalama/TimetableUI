@@ -1,0 +1,659 @@
+%outline-as-border {
+  outline-offset: -1px;
+  outline: 1px solid $border-color;
+}
+
+.dashboard {
+  display: flex;
+
+  @include e(sidebar) {
+    width: 100%;
+    height: 100vh;
+    flex-shrink: 0;
+    border-right: 1px solid $border-color;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: $zindex-sticky;
+    background-color: $white;
+    transition: left 0.3s ease-in-out;
+
+    @include mq(md) {
+      position: static;
+      width: 256px;
+    }
+
+    @include m(hidden) {
+      left: -100%;
+      transition: left 0.3s ease-in-out;
+    }
+
+    //logo and playground
+    @include e(header) {
+      height: 68px;
+      position: relative;
+      padding: getSpacing('4x') getSpacing('6x');
+      align-items: flex-end;
+      border-bottom: 1px solid $border-color;
+
+      @include mq(md) {
+        padding: 13px 22px 19px getSpacing('6x');
+      }
+
+      @include e(title) {
+        margin: 0 0 2px;
+        font-weight: $font-weight-medium;
+        color: $main-color;
+      }
+
+      .image {
+        img {
+          width: 122px;
+        }
+      }
+
+      .cross-icon {
+        position: absolute;
+        top: 20px;
+        right: 24px;
+        cursor: pointer;
+      }
+    }
+
+    @include e(empty) {
+      flex-grow: 1;
+    }
+
+    //navigation
+    %activeProperty {
+      background: #e9f0ff;
+      border-radius: 4px;
+      color: $blue;
+      svg {
+        stroke: $blue;
+      }
+    }
+
+    @include e(navigation-desktop) {
+      padding: getSpacing('4x');
+      gap: 8px;
+      list-style: none;
+      margin-bottom: 0;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+
+      .item {
+        @include e(link) {
+          gap: 8px;
+          display: flex;
+          cursor: pointer;
+          align-items: center;
+          font-weight: $font-weight-medium;
+          padding: getSpacing('2x') getSpacing('4x');
+          color: rgba($color: $main-color, $alpha: 0.67);
+          svg {
+            flex-shrink: 0;
+            color: rgba($color: $main-color, $alpha: 0.87);
+            stroke: rgba($color: $main-color, $alpha: 0.87);
+          }
+
+          &:hover {
+            @extend %activeProperty;
+          }
+
+          @include m(active) {
+            @extend %activeProperty;
+          }
+        }
+      }
+    }
+
+    @include e(navigation-mobile) {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      justify-content: center;
+      gap: 80px;
+      align-items: center;
+      z-index: $zindex-overlay;
+      flex-direction: row;
+      width: 100vw;
+      background: $purple-grey;
+      box-shadow: 0px -4px 12px rgba(0, 10, 44, 0.1);
+      margin-bottom: 0;
+      padding: getSpacing('4x') getSpacing('6x');
+      .item {
+        list-style: none;
+        align-items: center;
+        @include e(link) {
+          display: flex;
+          cursor: pointer;
+          stroke: $main-color;
+          color: $main-color;
+
+          @include m(active) {
+            color: $blue;
+
+            svg {
+              stroke: $blue;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  //mobile nav
+  @include e(mobile-nav) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: getSpacing('3x') getSpacing('6x');
+    border-bottom: 1px solid $border-color;
+    @include e(home) {
+      display: flex;
+      gap: 16px;
+
+      p {
+        color: $main-color;
+        font-weight: $font-weight-medium;
+      }
+    }
+  }
+
+  @include e(contents) {
+    height: calc(100vh - 60px);
+    overflow: hidden;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+
+    @include mq(md) {
+      overflow-x: auto;
+      height: 100dvh;
+    }
+
+    .playground-wrapper {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+
+      @include mq(md) {
+        min-width: 944px;
+      }
+    }
+
+    @include e(details) {
+      height: 100%;
+      padding-bottom: 142px;
+
+      @include mq(xxxl) {
+        width: 1508px;
+        margin: 0 auto;
+      }
+    }
+  }
+
+  @include e(projects-toggle) {
+    display: flex;
+    border-bottom: 1px solid $border-color;
+
+    .search-icon {
+      display: flex;
+      align-items: center;
+      border-right: 1px solid $border-color;
+    }
+
+    .active-item {
+      color: $blue;
+      position: relative;
+      font-weight: $font-weight-medium;
+      font-size: 14px;
+      line-height: 20px;
+      margin-bottom: 0;
+      cursor: pointer;
+
+      &::before {
+        content: '';
+        position: absolute;
+        height: 4px;
+        width: 4px;
+        border-radius: 2px;
+        background: $blue;
+        top: calc(100% + 2px);
+        left: calc(50% - 2px);
+      }
+    }
+  }
+
+  @include e(search) {
+    @include e(form) {
+      position: relative;
+      display: block;
+
+      .search-field-terms {
+        @extend %outline-as-border;
+        height: 36px;
+        display: block;
+        font-size: 14px;
+        line-height: 20px;
+        color: rgba($color: $main-color, $alpha: 0.67);
+        width: calc(100vw - 48px);
+        padding: getSpacing('2x') getSpacing('8x');
+        margin: getSpacing('2x') getSpacing('6x');
+        position: relative;
+        border: none;
+
+        @include mq(md) {
+          margin: 0;
+          padding: 8px 16px 8px 44px;
+          width: 220px;
+        }
+      }
+      .icon {
+        position: absolute;
+        left: 16px;
+        top: 8px;
+      }
+
+      .clear-icon {
+        position: absolute;
+        top: 16px;
+        right: 32px;
+      }
+
+      .back-icon {
+        position: absolute;
+        top: 16px;
+        left: 32px;
+      }
+    }
+  }
+
+  @include e(header) {
+    height: 68px;
+    justify-content: space-between;
+    border-bottom: 1px solid $border-color;
+    @include e(title) {
+      font-size: 24px;
+      line-height: 36px;
+
+      @extend %ellipsis;
+      min-width: 0;
+    }
+  }
+
+  @include e(topbar-actions) {
+    gap: 16px;
+
+    @include mq(md) {
+      gap: 24px;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 36px;
+      font-size: 14px;
+      line-height: 20px;
+      padding: getSpacing('2x') getSpacing('3x') getSpacing('2x') getSpacing('2x');
+
+      @include m(import) {
+        @extend %outline-as-border;
+        background: $white;
+      }
+    }
+
+    .active {
+      outline: 1px solid $blue;
+      color: $blue;
+    }
+  }
+
+  @include e(get-started) {
+    display: flex;
+    justify-content: space-between;
+    background: #fff5e7;
+    padding: getSpacing('4x') getSpacing('6x');
+    border-bottom: 1px solid $border-color;
+
+    @include mq(md) {
+      border: 1px solid $border-color;
+      border-radius: 4px;
+      padding: getSpacing('6x');
+      margin: getSpacing('6x') getSpacing('8x');
+    }
+
+    @include e(title) {
+      font-size: 16px;
+      line-height: 24px;
+
+      @include mq(md) {
+        font-size: 18px;
+        line-height: 28px;
+      }
+    }
+
+    @include e(desc) {
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .buttons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      @include mq(md) {
+        gap: 24px;
+      }
+
+      .btn {
+        @extend %outline-as-border;
+        background: $white;
+        padding: getSpacing('2x') getSpacing('3x') getSpacing('2x') getSpacing('2x');
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: $font-weight-medium;
+        font-size: 14px;
+        line-height: 20px;
+
+        @include mq(md) {
+          padding: getSpacing('3x') getSpacing('5x') getSpacing('3x') getSpacing('4x');
+          font-size: 16px;
+          line-height: 24px;
+        }
+      }
+    }
+
+    .unlimited-saves {
+      border-radius: 4px;
+      border-left: 1px solid $border-color;
+      padding: getSpacing('4x') getSpacing('4x') getSpacing('4x') getSpacing('10x');
+
+      @include e(title) {
+        gap: 8px;
+        align-items: end;
+
+        h4 {
+          font-size: 18px;
+          line-height: 30px;
+        }
+
+        .image {
+          img {
+            height: 36px;
+          }
+        }
+
+        .upgrade {
+          font-weight: $font-weight-semi-bold;
+        }
+      }
+
+      @include e(text) {
+        font-weight: $font-weight-medium;
+        font-size: 14px;
+        line-height: 20px;
+        max-width: 318px;
+        color: rgba($color: $main-color, $alpha: 0.67);
+      }
+
+      .btn {
+        @include m(unlock-saves) {
+          gap: 8px;
+          align-items: center;
+          background: $purple;
+          color: $white;
+          font-weight: $font-weight-medium;
+          font-size: 14px;
+          line-height: 20px;
+          justify-content: center;
+        }
+      }
+    }
+  }
+
+  @include e(upgrade) {
+    display: flex;
+    align-items: center;
+    padding: getSpacing('4x') getSpacing('6x');
+    gap: 16px;
+    background: #fff5e7;
+    border-bottom: 1px solid $border-color;
+
+    @include mq(md) {
+      border: none;
+      border-radius: 4px;
+      padding: getSpacing('4x');
+      margin: getSpacing('6x') getSpacing('8x');
+    }
+
+    .book-image {
+      display: none;
+      @include mq(md) {
+        display: block;
+        flex-shrink: 0;
+      }
+
+      img {
+        height: 44px;
+      }
+    }
+
+    .description {
+      @include e(title) {
+        margin-bottom: 0;
+        font-weight: $font-weight-bold;
+      }
+
+      @include e(text) {
+        margin-bottom: 0;
+        font-size: 14px;
+        line-height: 20px;
+        color: $main-color;
+        font-weight: $font-weight-medium;
+      }
+    }
+
+    .btn {
+      @include m(unlock) {
+        background: $purple;
+        border: none;
+        color: $white;
+        font-size: 14px;
+        line-height: 20px;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        padding: getSpacing('2x') getSpacing('2x') getSpacing('2x') getSpacing('3x');
+        margin-left: auto;
+
+        @include mq(md) {
+          padding: getSpacing('3x') getSpacing('2x') getSpacing('3x') getSpacing('3x');
+        }
+      }
+    }
+  }
+
+  @include e(projects-header) {
+    padding: 0 getSpacing('8x');
+    justify-content: space-between;
+
+    .projects-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      @include e(title) {
+        margin-bottom: 0;
+        color: $main-color;
+        font-weight: $font-weight-medium;
+      }
+    }
+  }
+
+  .background-overlay {
+    background: rgba(0, 0, 0, 0.85);
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: $zindex-sticky;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @include e(details) {
+    gap: 24px;
+    height: 100%;
+    display: flex;
+    overflow-y: auto;
+    flex-direction: column;
+    padding: getSpacing('6x');
+    @include mq(md) {
+      display: grid;
+      row-gap: 24px;
+      column-gap: 32px;
+      grid-template-columns: repeat(auto-fill, calc(50% - 16px));
+      grid-template-rows: repeat(auto-fit, min(74px));
+      grid-auto-flow: row;
+      padding: 0 getSpacing('8x') getSpacing('6x');
+    }
+
+    @include mq(xl) {
+      grid-template-columns: repeat(auto-fill, calc(33% - 21px));
+    }
+
+    @include mq(xxxl) {
+      grid-template-columns: repeat(auto-fill, 336px);
+    }
+
+    .add-playground {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+      padding: 25px 0;
+      background: $code-base;
+      border: 1px dashed $border-color;
+      border-radius: 4px;
+      align-items: center;
+      justify-content: center;
+
+      @include e(desc) {
+        margin-bottom: 0;
+        font-weight: $font-weight-medium;
+      }
+
+      &:hover {
+        color: $blue;
+        border: 1px dashed $blue;
+      }
+
+      .add-icon {
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    %common-buttons {
+      font-size: 14px;
+      line-height: 20px;
+      width: calc(50% - 8px);
+      font-weight: $font-weight-medium;
+    }
+
+    @include e(no-result) {
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 28px;
+      text-align: center;
+      color: rgba($color: $main-color, $alpha: 0.67);
+    }
+  }
+
+  @include e(dropdown) {
+    box-shadow: none !important;
+    border: 1px solid $border-color;
+    .common-div {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      font-weight: $font-weight-medium;
+      font-size: 16px;
+      line-height: 24px;
+      gap: 8px;
+
+      svg {
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  @include e(unlock-modal) {
+    .image {
+      height: 124px;
+
+      @include mq(md) {
+        height: 206px;
+      }
+    }
+
+    @include e(title) {
+      font-size: 24px;
+      line-height: 36px;
+      text-align: center;
+      margin-bottom: getSpacing('6x');
+
+      span {
+        color: $purple;
+      }
+    }
+
+    @include e(link) {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .btn {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+      padding: getSpacing('3x') getSpacing('4x') getSpacing('3x') getSpacing('5x');
+
+      @include mq(md) {
+        width: 244px;
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
+  }
+
+  @include e(create-project) {
+    @include e(title) {
+      font-size: 24px;
+      line-height: 36px;
+    }
+
+    .linear-progress-bar {
+      position: relative;
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: #99cccc;
+
+      .filler {
+        background: linear-gradient(180deg, #00dbcd 0%, #00bbe1 100%);
+      }
+    }
+  }
+}
