@@ -1,0 +1,40 @@
+.default-dash {
+  overflow: auto;
+  height: 100dvh;
+
+  .wrapper {
+    overflow-y: auto;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 24px;
+
+    @include mq(md) {
+      margin: 140px 48px;
+      gap: 96px;
+    }
+  }
+
+  @include e(item) {
+    padding: 26px 40px;
+    background: $white;
+    border-radius: 8px;
+    color: $darkIndigo;
+    font-size: 24px;
+    line-height: 36px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+    @include mq(md) {
+      padding: 48px 64px;
+    }
+
+    //add box shadow on hover
+
+    &:hover {
+      background: rgba($color: $black, $alpha: 0.1);
+      text-decoration: underline;
+    }
+  }
+}

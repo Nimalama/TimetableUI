@@ -1,44 +1,26 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
-import { LOGIN } from '../constants/routes';
-import { UserInformationInterface } from '../interfaces/commonInterfaces';
 import { logout } from '../utility/helper';
 import { DASHBOARD_NAV_TABS } from '../constants/dashboardConst';
-import { DASHBOARD_TAB_INDICES } from '../enums/enums';
 import Courses from './Courses';
 import Classrooms from './Classrooms';
 import useDashboardContext from '../hooks/useChallengesDashboardContext';
+import DefaultDashboard from '../pages/DefaultDashboard';
+import Profile from '../pages/Profile';
+import classNames from 'classnames';
 
 const Dashboard = () => {
-  const navigate = useNavigate();
   const { category } = useParams();
 
-  const [userInfo, setUserInfo] = useState<UserInformationInterface | null>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const { userInformation, menuBar } = useDashboardContext();
 
-  const { activeTab } = useDashboardContext();
-
-  useEffect(() => {
-    const user = localStorage.getItem('userInformation');
-
-    const parsedUser = JSON.parse(user as string);
-
-    if (!user) {
-      navigate(LOGIN);
-    }
-
-    setUserInfo(parsedUser);
-    setIsAdmin(parsedUser.userType === 'admin');
-  }, []);
-
-  console.log(isAdmin);
+  const sidebarClass = classNames('dashboard__sidebar', { 'dashboard__sidebar--hidden': !menuBar });
 
   return (
     <section className="d-flex">
-      <div className="dashboard__sidebar">
+      <div className={sidebarClass}>
         <div className="dashboard__sidebar__header">
-          <p className="dashboard__sidebar__header__title">TimeTable</p>
+          <p className="dashboard__sidebar__header__title">Scheduler</p>
         </div>
         <ul className="dashboard__sidebar__navigation-desktop">
           {DASHBOARD_NAV_TABS.map((tab) => {
@@ -59,12 +41,12 @@ const Dashboard = () => {
           })}
         </ul>
         {/* // display user name */}
-        <div className="dashboard__sidebar__footer m-2x p-2x">
-          <p className="dashboard__sidebar__footer__title">{userInfo?.fullName}</p>
-          <p className="dashboard__sidebar__footer__subtitle">{userInfo?.email}</p>
+        <div className="dashboard__sidebar__footer">
+          <span className="dashboard__sidebar__footer__title">{userInformation?.fullName}</span>
+          <span className="dashboard__sidebar__footer__subtitle">{userInformation?.email}</span>
         </div>
         <button onClick={logout} className="btn mx-2x my-4x p-2x">
-          Logout{' '}
+          Logout
         </button>
       </div>
 
@@ -84,7 +66,7 @@ const CurrentTabContent = ({ activeTab }: { activeTab: string }) => {
       return <Classrooms />;
 
     case 'home':
-      return <>home</>;
+      return <DefaultDashboard />;
 
     case 'lectures':
       return <>lectures</>;
@@ -97,6 +79,9 @@ const CurrentTabContent = ({ activeTab }: { activeTab: string }) => {
 
     case 'tutors':
       return <>tutors</>;
+
+    case 'profile':
+      return <Profile />;
 
     default:
       return <>hh</>;

@@ -52,7 +52,7 @@ export interface CourseInterface {
 export interface CoursePayloadInterface {
   name: string;
   code: string;
-  credits: number;
+  credits: number | null;
 }
 
 export interface ClassroomPayloadInterface {
@@ -73,4 +73,8 @@ export interface DashboardContextInterface {
   setMenuBar: React.Dispatch<SetStateAction<boolean>>;
   activeTab: number;
   setActiveTab: React.Dispatch<SetStateAction<number>>;
+  userInformation: UserInformationInterface | null;
+  isAdmin: boolean;
+  isStudent: boolean;
+  isTeacher: boolean;
 }

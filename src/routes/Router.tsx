@@ -4,9 +4,10 @@ import NotFound from '../components/commons/NotFound';
 import Dashboard from '../components/Dashboard';
 import Login from '../components/Login';
 import Register from '../components/Register';
-import { DASHBOARD, DASHBOARD_WITH_PARAM, HOME, LOGIN, SIGNUP } from '../constants/routes';
+import { DASHBOARD_WITH_PARAM, HOME, LOGIN, SIGNUP } from '../constants/routes';
 import PrivateRoute from './PrivateRoute';
 import DashboardContextProvider from '../context/DashboardContext';
+import HomePage from '../pages/HomePage';
 
 const Router = () => {
   return (
@@ -24,14 +25,6 @@ const Router = () => {
           }
         >
           <Route
-            path={DASHBOARD}
-            element={
-              <DashboardContextProvider>
-                <Dashboard />
-              </DashboardContextProvider>
-            }
-          />
-          <Route
             path={DASHBOARD_WITH_PARAM}
             element={
               <DashboardContextProvider>
@@ -39,7 +32,7 @@ const Router = () => {
               </DashboardContextProvider>
             }
           />
-          <Route path={HOME} element={<Dashboard />} />
+          <Route path={HOME} element={<HomePage />} />
         </Route>
       </Routes>
     </BrowserRouter>

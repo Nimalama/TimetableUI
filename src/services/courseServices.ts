@@ -23,6 +23,17 @@ export const createCourse = async (course: CoursePayloadInterface): Promise<Cour
   return response.data;
 };
 
+export const updateCourse = async (course: CoursePayloadInterface, courseId: number): Promise<CourseInterface> => {
+  const response = await getApiData<{ data: CourseInterface }>({
+    endPoint: `/api/course/${courseId}`,
+    method: 'PUT',
+    requiresAuth: true,
+    data: course
+  });
+
+  return response.data;
+};
+
 //delete course
 export const deleteCourse = async (courseId: number): Promise<boolean> => {
   const response = await getApiData<{ data: boolean }>({

@@ -3,7 +3,6 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { GOOGLE_PARAMS } from '../constants/authConsts';
 import { GoogleAuthResponseInterface, ObjectKeysInterface } from '../interfaces/commonInterfaces';
 import { getTokenResponseFromGoogleAuthCode, signInWithGoogle } from '../services/authServices';
-import { HOME } from '../constants/routes';
 import { useNavigate } from 'react-router-dom';
 
 interface GoogleLoginResponseInterface {
@@ -50,9 +49,9 @@ const GoogleSignInButton: React.FC = () => {
         });
 
         if (userData) {
-          localStorage.setItem('userInformation', userData.token);
+          localStorage.setItem('userInformation', JSON.stringify(userData));
 
-          navigate(HOME);
+          navigate('/home');
         }
       } catch (err) {
         handleFailureGoogleLogin(err);

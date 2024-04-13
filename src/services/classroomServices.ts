@@ -23,6 +23,20 @@ export const createClassroom = async (classroom: ClassroomPayloadInterface): Pro
   return response.data;
 };
 
+export const updateClassroom = async (
+  classroom: ClassroomPayloadInterface,
+  classroomId: number
+): Promise<ClassroomInterface> => {
+  const response = await getApiData<{ data: ClassroomInterface }>({
+    endPoint: `/api/classroom/${classroomId}`,
+    method: 'PUT',
+    requiresAuth: true,
+    data: classroom
+  });
+
+  return response.data;
+};
+
 // remove classroom
 export const deleteClassroom = async (classroomId: number): Promise<boolean> => {
   const response = await getApiData<{ data: boolean }>({

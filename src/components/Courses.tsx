@@ -1,11 +1,15 @@
 // Courses.tsx
 import React, { useEffect, useState } from 'react';
-import { createCourse, deleteCourse, getCourses } from '../services/courseServices';
+import { createCourse, deleteCourse, getCourses, updateCourse } from '../services/courseServices';
 import { CourseInterface, CoursePayloadInterface } from '../interfaces/commonInterfaces';
 import CommonRemoveModal from './modals/CommonRemoveModal';
 import CreateCourseModal from './modals/CreateCoursesModal';
+import { MODAL_TYPES } from '../constants/consts';
+import useDashboardContext from '../hooks/useChallengesDashboardContext';
 
 const Courses: React.FC = () => {
+  const { isAdmin } = useDashboardContext();
+
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
@@ -13,8 +17,10 @@ const Courses: React.FC = () => {
   const [payload, setPayload] = useState<CoursePayloadInterface>({
     code: '',
     name: '',
-    credits: 0
+    credits: null
   });
+
+  const [modalMode, setModalMode] = useState(MODAL_TYPES.CREATE_MODE);
 
   useEffect(() => {
     fetchCourses();
@@ -38,20 +44,40 @@ const Courses: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    try {
-      const response = await createCourse(payload);
+    if (modalMode === MODAL_TYPES.CREATE_MODE) {
+      try {
+        const response = await createCourse(payload);
 
-      if (response) {
-        fetchCourses();
-        toggleCreateModal();
-        setPayload({
-          name: '',
-          code: '',
-          credits: 0
-        });
+        if (response) {
+          fetchCourses();
+          toggleCreateModal();
+          setPayload({
+            name: '',
+            code: '',
+            credits: 0
+          });
+        }
+      } catch (error) {
+        console.error('Error creating classroom:', error);
       }
-    } catch (error) {
-      console.error('Error creating classroom:', error);
+    }
+
+    if (modalMode === MODAL_TYPES.EDIT_MODE) {
+      try {
+        const response = await updateCourse(payload, selectedId);
+
+        if (response) {
+          fetchCourses();
+          toggleCreateModal();
+          setPayload({
+            name: '',
+            code: '',
+            credits: 0
+          });
+        }
+      } catch (error) {
+        console.error('Error creating classroom:', error);
+      }
     }
   };
 
@@ -74,10 +100,26 @@ const Courses: React.FC = () => {
     <section className="container">
       <div className="d-flex justify-content-between my-2x">
         <h2>Courses</h2>
+        <div>
+          {isAdmin ? (
+            <button
+              onClick={() => {
+                setModalMode(MODAL_TYPES.CREATE_MODE);
 
-        <button onClick={toggleCreateModal} className="btn btn--primary btn--sm">
-          Create Course
-        </button>
+                setPayload({
+                  name: '',
+                  code: '',
+                  credits: 0
+                });
+
+                toggleCreateModal();
+              }}
+              className="btn btn--primary btn--sm"
+            >
+              Create Course
+            </button>
+          ) : null}
+        </div>
       </div>
 
       <div className="table-wrapper">
@@ -90,23 +132,43 @@ const Courses: React.FC = () => {
               <th />
             </tr>
           </thead>
+
           <tbody>
             {courses.map((course) => (
               <tr key={course.id}>
                 <td>{course.code}</td>
                 <td>{course.name}</td>
                 <td>{course.credits}</td>
-                <td>
-                  <button
-                    className="btn btn--danger btn--sm"
-                    onClick={() => {
-                      setSelectedId(+course.id);
-                      toggleDeleteModal();
-                    }}
-                  >
-                    Delete
-                  </button>
-                </td>
+
+                {isAdmin ? (
+                  <td>
+                    <button
+                      className="btn btn--teritiary btn--sm mr-2x"
+                      onClick={() => {
+                        setModalMode(MODAL_TYPES.EDIT_MODE);
+                        setSelectedId(+course.id);
+                        setPayload({
+                          code: course.code,
+                          name: course.name,
+                          credits: course.credits
+                        });
+
+                        toggleCreateModal();
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn btn--danger btn--sm"
+                      onClick={() => {
+                        setSelectedId(+course.id);
+                        toggleDeleteModal();
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                ) : null}
               </tr>
             ))}
           </tbody>
@@ -127,6 +189,7 @@ const Courses: React.FC = () => {
         data={payload}
         setData={setPayload}
         handleSubmit={handleSubmit}
+        mode={modalMode}
       />
     </section>
   );
