@@ -11,7 +11,7 @@ const root = container && createRoot(container); // createRoot(container!) if yo
 
 root?.render(
   <GoogleOAuthProvider clientId={GOOGLE_PARAMS.GOOGLE_LOGIN_CLIENT_ID}>
-    <IconContext.Provider value={{ size: '24px' }}>
+    <IconContext.Provider value={{ size: '20px' }}>
       <Router />
     </IconContext.Provider>
   </GoogleOAuthProvider>

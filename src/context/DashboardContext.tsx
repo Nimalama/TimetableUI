@@ -1,7 +1,8 @@
-import { createContext, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { DashboardContextInterface } from '../interfaces/commonInterfaces';
+import { createContext, useMemo, useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { DashboardContextInterface, UserInformationInterface } from '../interfaces/commonInterfaces';
 import { DASHBOARD_TAB_INDICES } from '../enums/enums';
+import { LOGIN } from '../constants/routes';
 
 export const DashboardContext = createContext<DashboardContextInterface>({} as DashboardContextInterface);
 
@@ -11,32 +12,48 @@ interface AppContextProvider {
 
 const DashboardContextProvider = ({ children }: AppContextProvider): JSX.Element => {
   const { category } = useParams();
+  const navigate = useNavigate();
 
-  console.log({ category });
+  const [userInformation, setUserInformation] = useState<UserInformationInterface | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isStudent, setIsStudent] = useState(false);
+  const [isTeacher, setIsTeacher] = useState(false);
+
+  useEffect(() => {
+    const user = localStorage.getItem('userInformation');
+    const parsedUser = JSON.parse(user as string);
+
+    if (parsedUser) {
+      setUserInformation(parsedUser);
+      setIsAdmin(parsedUser.userType === 'admin');
+      setIsTeacher(parsedUser.userType === 'teacher');
+      setIsStudent(parsedUser.userType === 'student');
+    } else {
+      navigate(LOGIN);
+    }
+  }, []); // Run only once on component mount
+
+  useEffect(() => {
+    // Update active tab based on category
+    setActiveTab(getCurrentTabIndexValue());
+  }, [category]); // Re-run whenever category changes
 
   const getCurrentTabIndexValue = (): number => {
     switch (category) {
       case 'home':
         return DASHBOARD_TAB_INDICES.DASHBOARD;
-
       case 'lectures':
         return DASHBOARD_TAB_INDICES.LECTURES;
-
       case 'tutors':
         return DASHBOARD_TAB_INDICES.TUTORS;
-
       case 'rooms':
         return DASHBOARD_TAB_INDICES.ROOMS;
-
       case 'courses':
         return DASHBOARD_TAB_INDICES.COURSES;
-
       case 'timetable':
         return DASHBOARD_TAB_INDICES.TIMETABLE;
-
       case 'settings':
         return DASHBOARD_TAB_INDICES.SETTINGS;
-
       default:
         return DASHBOARD_TAB_INDICES.DASHBOARD;
     }
@@ -46,16 +63,18 @@ const DashboardContextProvider = ({ children }: AppContextProvider): JSX.Element
   const [menuBar, setMenuBar] = useState(false);
   const [activeTab, setActiveTab] = useState(getCurrentTabIndexValue());
 
-  console.log('activeTab', activeTab);
-
   const value = useMemo<DashboardContextInterface>(
     () => ({
       menuBar,
       setMenuBar,
       activeTab,
-      setActiveTab
+      setActiveTab,
+      userInformation,
+      isAdmin,
+      isStudent,
+      isTeacher
     }),
-    [menuBar, activeTab]
+    [menuBar, activeTab, userInformation, isAdmin, isStudent, isTeacher]
   );
 
   return <DashboardContext.Provider value={value}>{children}</DashboardContext.Provider>;

@@ -1,31 +1,40 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Modal } from '../Modal';
 import { CoursePayloadInterface } from '../../interfaces/commonInterfaces';
+import { MODAL_TYPES } from '../../constants/consts';
 
 const CreateCourseModal = ({
   show,
   handleClose,
   handleSubmit,
   data,
-  setData
+  setData,
+  mode
 }: {
   data: CoursePayloadInterface;
   show: boolean;
   handleClose: () => void;
   handleSubmit: () => void;
+  mode: string;
   setData: Dispatch<SetStateAction<CoursePayloadInterface>>;
 }) => {
+  let title = 'Create Course';
+
+  if (mode === MODAL_TYPES.EDIT_MODE) {
+    title = 'Edit Course';
+  }
+
   return (
     <Modal
       shouldShowModal={show}
       size={'md'}
       handleClose={handleClose}
-      header="Create Course"
+      header={title}
       footer={
         <button
           className="btn btn--primary"
           onClick={handleSubmit}
-          disabled={data.name.length < 1 || data.code.length < 0 || data.credits < 1}
+          disabled={data.name.length < 1 || data.code.length < 0 || !!(data.credits && data.credits < 1)}
         >
           Save
         </button>
@@ -61,7 +70,7 @@ const CreateCourseModal = ({
             type="number"
             className="form-control"
             placeholder="Enter course credits"
-            value={data.credits}
+            value={data.credits ?? ''}
             onChange={(e) => setData({ ...data, credits: +e.target.value })}
           />
         </div>
