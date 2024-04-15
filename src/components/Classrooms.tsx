@@ -15,7 +15,7 @@ const Classrooms: React.FC = () => {
   const [classrooms, setClassrooms] = useState<ClassroomInterface[]>([]);
   const [payload, setPayload] = useState<ClassroomPayloadInterface>({
     name: '',
-    capacity: 0
+    capacity: ''
   });
 
   const [modalMode, setModalMode] = useState(MODAL_TYPES.CREATE_MODE);
@@ -51,7 +51,7 @@ const Classrooms: React.FC = () => {
           toggleCreateModal();
           setPayload({
             name: '',
-            capacity: 0
+            capacity: ''
           });
         }
       } catch (error) {
@@ -68,7 +68,7 @@ const Classrooms: React.FC = () => {
           toggleCreateModal();
           setPayload({
             name: '',
-            capacity: 0
+            capacity: ''
           });
         }
       } catch (error) {
@@ -104,14 +104,14 @@ const Classrooms: React.FC = () => {
 
               setPayload({
                 name: '',
-                capacity: 0
+                capacity: ''
               });
 
               toggleCreateModal();
             }}
-            className="btn btn--primary btn--sm"
+            className="btn btn--primary btn--sm ml-8x"
           >
-            Create Classroom
+            Create
           </button>
         ) : null}
       </div>
@@ -120,7 +120,7 @@ const Classrooms: React.FC = () => {
           <thead>
             <tr>
               <th>Classroom Name</th>
-              <th>Capacity</th>
+              <th>Students Count</th>
               <th></th>
               {/* Add additional columns if needed */}
             </tr>
@@ -140,7 +140,7 @@ const Classrooms: React.FC = () => {
                         setSelectedId(+classroom.id);
                         setPayload({
                           name: classroom.name,
-                          capacity: classroom.capacity
+                          capacity: classroom.capacity.toString()
                         });
 
                         toggleCreateModal();

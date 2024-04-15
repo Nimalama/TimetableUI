@@ -1,4 +1,4 @@
-import { FiBook, FiBookOpen, FiClock, FiHash, FiHome, FiLink2, FiSettings, FiUser, FiUsers } from 'react-icons/fi';
+import { FiBook, FiBookOpen, FiClock, FiHash, FiHome, FiLink2, FiUser } from 'react-icons/fi';
 import { NavigationTabInterface } from '../interfaces/commonInterfaces';
 import { DASHBOARD_TAB_INDICES } from '../enums/enums';
 
@@ -17,19 +17,19 @@ export const DASHBOARD_NAV_TABS: NavigationTabInterface[] = [
     icon: FiBookOpen,
     link: '/lectures'
   },
-  {
-    title: 'Tutors',
-    subTitle: 'tutors',
-    tabNumber: DASHBOARD_TAB_INDICES.TUTORS,
-    icon: FiUsers,
-    link: '/tutors'
-  },
+  // {
+  //   title: 'Tutors',
+  //   subTitle: 'tutors',
+  //   tabNumber: DASHBOARD_TAB_INDICES.TUTORS,
+  //   icon: FiUsers,
+  //   link: '/tutors'
+  // },
   {
     title: 'Rooms',
     subTitle: 'rooms',
     tabNumber: DASHBOARD_TAB_INDICES.ROOMS,
     icon: FiLink2,
-    link: '/classrooms'
+    link: '/rooms'
   },
   {
     title: 'Courses',
@@ -58,12 +58,5 @@ export const DASHBOARD_NAV_TABS: NavigationTabInterface[] = [
     tabNumber: DASHBOARD_TAB_INDICES.PROFILE,
     icon: FiUser,
     link: '/profile'
-  },
-  {
-    title: 'Settings',
-    subTitle: 'settings',
-    tabNumber: DASHBOARD_TAB_INDICES.SETTINGS,
-    icon: FiSettings,
-    link: '/settings'
   }
 ];

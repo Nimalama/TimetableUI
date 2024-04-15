@@ -146,7 +146,7 @@
       }
     }
   }
-
+  
   //mobile nav
   @include e(mobile-nav) {
     display: flex;
@@ -154,6 +154,7 @@
     justify-content: space-between;
     padding: getSpacing('3x') getSpacing('6x');
     border-bottom: 1px solid $border-color;
+
     @include e(home) {
       display: flex;
       gap: 16px;
@@ -161,6 +162,15 @@
       p {
         color: $main-color;
         font-weight: $font-weight-medium;
+      }
+    }
+
+    @include e(image) {
+      max-height: 24px;
+      img {
+        height: 24px;
+        width: 100%;
+        object-fit: contain;
       }
     }
   }

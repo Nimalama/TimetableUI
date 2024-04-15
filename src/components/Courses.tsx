@@ -54,7 +54,7 @@ const Courses: React.FC = () => {
           setPayload({
             name: '',
             code: '',
-            credits: 0
+            credits: null
           });
         }
       } catch (error) {
@@ -72,7 +72,7 @@ const Courses: React.FC = () => {
           setPayload({
             name: '',
             code: '',
-            credits: 0
+            credits: null
           });
         }
       } catch (error) {
@@ -109,14 +109,14 @@ const Courses: React.FC = () => {
                 setPayload({
                   name: '',
                   code: '',
-                  credits: 0
+                  credits: null
                 });
 
                 toggleCreateModal();
               }}
-              className="btn btn--primary btn--sm"
+              className="btn btn--primary btn--sm ml-8x"
             >
-              Create Course
+              Create
             </button>
           ) : null}
         </div>

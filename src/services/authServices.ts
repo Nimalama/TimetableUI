@@ -2,7 +2,9 @@
 import {
   UserRegisterPayloadInterface,
   UserInformationInterface,
-  UserLoginPayloadInterface
+  UserLoginPayloadInterface,
+  UserProfileInterface,
+  ProfilePayloadInterface
 } from '../interfaces/commonInterfaces';
 import { getApiData } from '../utility/httpHelper';
 
@@ -102,6 +104,37 @@ export async function validateToken(token: string): Promise<UserInformationInter
       endPoint: '/api/user/validateToken',
       method: 'GET',
       queryParams: { token: token }
+    });
+
+    return response.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+//get profile
+export async function getProfile(): Promise<UserProfileInterface> {
+  try {
+    const response = await getApiData<{ data: UserProfileInterface }>({
+      endPoint: '/api/user/authProfile',
+      method: 'GET',
+      requiresAuth: true
+    });
+
+    return response.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+//patch profile
+export async function patchProfile(data: ProfilePayloadInterface): Promise<boolean> {
+  try {
+    const response = await getApiData<{ data: boolean }>({
+      endPoint: '/api/user/authProfile',
+      method: 'PATCH',
+      requiresAuth: true,
+      data
     });
 
     return response.data;

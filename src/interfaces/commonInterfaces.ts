@@ -57,7 +57,7 @@ export interface CoursePayloadInterface {
 
 export interface ClassroomPayloadInterface {
   name: string;
-  capacity: number;
+  capacity: string;
 }
 
 export interface NavigationTabInterface {
@@ -77,4 +77,19 @@ export interface DashboardContextInterface {
   isAdmin: boolean;
   isStudent: boolean;
   isTeacher: boolean;
+}
+
+export interface ProfilePayloadInterface {
+  profilePic: string | null;
+  address: string | null;
+  department: string | null;
+  fullName: string;
+}
+
+export interface UserProfileInterface extends ProfilePayloadInterface {
+  id: number;
+  email: string;
+  userType: string;
+  createdAt: string;
+  updatedAt: string;
 }

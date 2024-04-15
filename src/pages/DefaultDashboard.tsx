@@ -1,17 +1,11 @@
-import { Link } from 'react-router-dom';
-import { DASHBOARD_NAV_TABS } from '../constants/dashboardConst';
+import CourseOverview from '../components/misc/CourseOverview';
+import { courses } from '../constants/consts';
 
 const DefaultDashboard = () => {
-  const listing = DASHBOARD_NAV_TABS.filter((dash) => dash.title !== 'Dashboard');
-
   return (
     <section className="default-dash">
-      <div className="wrapper">
-        {listing.map((item) => (
-          <Link className="default-dash__item" to={item.link}>
-            {item.title}
-          </Link>
-        ))}
+      <div className="container">
+        <CourseOverview courses={courses} isInnerDashboard />
       </div>
     </section>
   );

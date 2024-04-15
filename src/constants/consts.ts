@@ -2,7 +2,7 @@ export const MODAL_TYPES = {
   CREATE_MODE: 'create',
   EDIT_MODE: 'edit'
 };
- 
+
 export const courses = [
   {
     imageUrl: 'https://3rdwavemedia.com/demo-images/slides/maker-module-1.jpg',
@@ -35,4 +35,3 @@ export const courses = [
     description: 'Learn techniques for optimizing CSS performance to enhance website loading speed.'
   }
 ];
- 

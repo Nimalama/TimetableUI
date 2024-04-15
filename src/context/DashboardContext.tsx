@@ -52,8 +52,6 @@ const DashboardContextProvider = ({ children }: AppContextProvider): JSX.Element
         return DASHBOARD_TAB_INDICES.COURSES;
       case 'timetable':
         return DASHBOARD_TAB_INDICES.TIMETABLE;
-      case 'settings':
-        return DASHBOARD_TAB_INDICES.SETTINGS;
       default:
         return DASHBOARD_TAB_INDICES.DASHBOARD;
     }

@@ -1,0 +1,83 @@
+$color_2: #000;
+$color_4: #898989;
+$color_5: #303030;
+$color_6: rgba(255, 255, 255, 0.87);
+$color_7: #fcd462;
+
+.footer {
+  #footer {
+    background: #f7f7f7;
+    padding: 3rem;
+    background-image: url(https://ketyapi.com.tr/wp-content/uploads/2016/01/footer-bg-770x330.jpg);
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: $color_6;
+  }
+  .social-links {
+    img {
+      padding-bottom: 25px;
+    }
+  }
+  .social-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    color: $color_6;
+    a {
+      color: $color_6;
+      &:hover {
+        color: $color_2;
+      }
+    }
+  }
+  li {
+    list-style: none;
+  }
+
+  .address {
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    img {
+      padding-bottom: 15px;
+    }
+  }
+  .address-links {
+    li {
+      a {
+        color: $color_5;
+        font-size: 15px;
+        font-weight: 500;
+        color: $color_6;
+      }
+    }
+    .address1 {
+      font-weight: 500;
+      font-size: 15px;
+      display: flex;
+    }
+    line-height: 32px;
+    color: $color_6;
+  }
+  .copy-right-sec {
+    padding: 1.8rem;
+    background: #523646;
+    color: $color_6;
+    text-align: center;
+    a {
+      color: $color_7;
+      font-weight: 500;
+    }
+  }
+  a {
+    text-decoration: none;
+  }
+
+  .footer-about {
+    color: $color_6;
+  }
+}

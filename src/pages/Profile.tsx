@@ -1,48 +1,41 @@
 import useDashboardContext from '../hooks/useChallengesDashboardContext';
- 
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
- 
-interface User {
-  id: number;
-  profilePic: string | null;
-  address: string | null;
-  department: string | null;
-  fullName: string;
-  userType: 'admin' | 'teacher' | 'student';
-  email: string;
-}
- 
+
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ProfilePayloadInterface, UserProfileInterface } from '../interfaces/commonInterfaces';
+import { getProfile, patchProfile } from '../services/authServices';
+
 const UserProfile: React.FC = () => {
   const { userInformation } = useDashboardContext();
- 
-  const [user, setUser] = useState<User | null>(null);
-  const [profileData, setProfileData] = useState({
+
+  const userProfilePicInputRef = useRef<HTMLInputElement | null>(null);
+  const profilePicRef = useRef<HTMLImageElement | null>(null);
+
+  const [user, setUser] = useState<UserProfileInterface | null>(null);
+  const [profileData, setProfileData] = useState<ProfilePayloadInterface>({
     profilePic: '',
-    address: '',
+    address: null,
     department: '',
     fullName: ''
   });
- 
+
+  const fetchUserProfile = async () => {
+    try {
+      const response = await getProfile();
+      setUser(response);
+      setProfileData({
+        profilePic: response.profilePic,
+        address: response.address,
+        department: response.department,
+        fullName: response.fullName
+      });
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+    }
+  };
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const response = await axios.get<User>('/api/users/profile');
-        setUser(response.data);
-        setProfileData({
-          profilePic: response.data.profilePic || '',
-          address: response.data.address || '',
-          department: response.data.department || '',
-          fullName: response.data.fullName || userInformation?.fullName || ''
-        });
-      } catch (error) {
-        console.error('Error fetching user profile:', error);
-      }
-    };
- 
     fetchUserProfile();
   }, []);
- 
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setProfileData((prevData) => ({
@@ -50,63 +43,132 @@ const UserProfile: React.FC = () => {
       [name]: value
     }));
   };
- 
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.patch('/api/users/profile', profileData);
-      alert('Profile updated successfully');
+      const response = await patchProfile(profileData);
+
+      if (response) {
+        alert('Profile updated successfully');
+      }
     } catch (error) {
       console.error('Error updating profile:', error);
     }
   };
- 
+
   if (!user) {
     return <div>Loading...</div>;
   }
- 
-  const isSubmissionButtonDisabled = true;
- 
+
+  // Function for handling pic upload
+  const openChooseAFile = () => {
+    userProfilePicInputRef?.current && userProfilePicInputRef.current.click();
+  };
+
+  const handlePicChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    // As per the doc, file reader works asynchronously, so adding try catch block for preventing crashes.
+
+    try {
+      const { files } = event.target;
+
+      if (!files?.length) {
+        if (profilePicRef?.current) {
+          profilePicRef.current.src = profileData.profilePic ?? '';
+        }
+
+        return;
+      }
+
+      const file = files[0] as File;
+
+      const reader = new FileReader();
+
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        // Base64 url to load image
+        const fileData = reader.result as string;
+
+        if (profilePicRef?.current) {
+          profilePicRef.current.src = fileData;
+        }
+
+        const newUserInformation = {
+          ...profileData,
+          profilePic: fileData
+        };
+
+        setProfileData(newUserInformation);
+        // setUserSelectedImageFile(file);
+      };
+    } catch (err) {
+      console.debug(err);
+    }
+  };
+
+  const resetPersonalInfo = () => {
+    setProfileData({
+      profilePic: user.profilePic,
+      address: user.address,
+      department: user.department,
+      fullName: user.fullName
+    });
+  };
+
+  const isSubmissionButtonDisabled =
+    profileData.profilePic === user.profilePic &&
+    profileData.address === user.address &&
+    profileData.department === user.department &&
+    profileData.fullName === user.fullName;
+
+  const UserProfilePicture = (): JSX.Element => {
+    if (!user.profilePic) return <></>;
+
+    return (
+      <div className="avatar avatar--md avatar--round">
+        <img ref={profilePicRef} src={user.profilePic} alt={user?.fullName} />
+      </div>
+    );
+  };
+
   return (
-<div>
-<>
-<h2 className="fs-h2main mb-8x">Personal Information</h2>
-<form method="POST" onSubmit={handleSubmit}>
-<div className="account-setting__picture d-flex align-items-center mb-9x">
-<div className="avatar-container mr-6x text-center">
-<div
+    <section className="personal-info">
+      <div className="container">
+        <h2 className="fs-h2main mb-8x">Personal Information</h2>
+        <form method="POST" onSubmit={handleSubmit}>
+          <div className="account-setting__picture d-flex align-items-center mb-9x">
+            <div className="avatar-container mr-6x text-center">
+              <div
                 style={{ display: !profileData?.profilePic ? 'flex' : 'none' }}
                 className="avatar avatar--md avatar--round"
->
-<span className="avatar--text">{profileData.fullName ?? 'ads'}</span>
-</div>
-              {/* <UserProfilePicture /> */}
-</div>
- 
+              >
+                <span className="avatar--text">A</span>
+              </div>
+              <UserProfilePicture />
+            </div>
+
             <div className="avatar-upload">
-              {/* <button type="button" onClick={() => openChooseAFile()} className="btn btn--primary py-2x outline btn--sm">
-              {personalInfoErrMsg?.profilePic?.length ? 'Choose Another Image' : 'Choose Photo'}
-</button> */}
-              {/* <input
-              name="uploadFile"
-              type="file"
-              accept="image/*"
-              ref={userProfilePicInputRef}
-              onChange={handlePicChange}
-              className="d-none"
-            /> */}
-              {/* {personalInfoErrMsg?.profilePic?.length ? (
-<p className="error-text mb-0x mt-1x text-center text-danger">{personalInfoErrMsg?.profilePic}</p>
-            ) : (
-<p className="mb-0x mt-1x text-center">
-<small className="account-setting__picture-size">Maximum Size: 2MB</small>
-</p>
-            )} */}
-</div>
-</div>
-<div className="form-group mb-6x">
-<label htmlFor="fullName">Your Full Name</label>
-<input
+              <button
+                type="button"
+                onClick={() => openChooseAFile()}
+                className="btn btn--primary py-2x outline btn--sm"
+              >
+                Choose Photo
+              </button>
+              <input
+                name="uploadFile"
+                type="file"
+                accept="image/*"
+                ref={userProfilePicInputRef}
+                onChange={handlePicChange}
+                className="d-none"
+              />
+            </div>
+          </div>
+          <div className="form-group mb-6x">
+            <label htmlFor="fullName">Your Full Name</label>
+            <input
               type="text"
               className="form-control"
               id="fullName"
@@ -115,10 +177,10 @@ const UserProfile: React.FC = () => {
               placeholder="Enter your full name"
               onChange={handleChange}
             />
-</div>
-<div className="form-group mb-6x disabled">
-<label htmlFor="emailAddress">Your Email Address</label>
-<input
+          </div>
+          <div className="form-group mb-6x disabled">
+            <label htmlFor="emailAddress">Your Email Address</label>
+            <input
               type="email"
               className="form-control"
               id="emailAddress"
@@ -127,32 +189,32 @@ const UserProfile: React.FC = () => {
               onChange={handleChange}
               disabled
             />
-</div>
- 
+          </div>
+
           <div className="form-group mb-6x disabled">
-<label>UserType</label>
-<input
+            <label>UserType</label>
+            <input
               type="text"
               className="form-control"
               value={userInformation?.userType}
               onChange={handleChange}
               disabled
             />
-</div>
-<div className="form-group mb-6x">
-<label>Your Department</label>
-<input
-              // onChange={handleChange}
+          </div>
+          <div className="form-group mb-6x">
+            <label>Your Department</label>
+            <input
+              onChange={handleChange}
               name="department"
               className="form-control p-3x"
               id="bio"
-              // value={profileData?.bio ?? ''}
+              value={profileData?.department ?? ''}
               placeholder="enter your department"
-></input>
-</div>
-<div className="form-group mb-6x">
-<label htmlFor="location">Your Location</label>
-<input
+            ></input>
+          </div>
+          <div className="form-group mb-6x">
+            <label htmlFor="location">Your Location</label>
+            <input
               type="text"
               name="address"
               className="form-control"
@@ -161,30 +223,29 @@ const UserProfile: React.FC = () => {
               placeholder="City, Country"
               onChange={handleChange}
             />
-</div>
- 
+          </div>
+
           <div className="account-setting__action d-flex justify-content-end">
-<button
+            <button
               type="button"
               disabled={isSubmissionButtonDisabled}
-              // onClick={() => resetPersonalInfo()}
+              onClick={resetPersonalInfo}
               className="btn btn--ghost btn--sm py-2x"
->
+            >
               Cancel
-</button>
-<button
+            </button>
+            <button
               disabled={isSubmissionButtonDisabled}
               type="submit"
               className={`btn btn--primary btn--sm ${isSubmissionButtonDisabled ? 'btn-disabled' : ''}`}
->
-              Save
-              {/* {isprofileDataUpdating : 'Save Changes'} */}
-</button>
-</div>
-</form>
-</>
-</div>
+            >
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
   );
 };
- 
+
 export default UserProfile;

@@ -1,40 +1,98 @@
 .default-dash {
   overflow: auto;
-  height: 100dvh;
+  height: calc(100dvh - 50px);
+  flex-grow: 1;
 
-  .wrapper {
-    overflow-y: auto;
-    display: flex;
-    align-items: center;
-    gap: 32px;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 24px;
+  @include mq(md) {
+    height: 100dvh;
+  }
+}
 
+.personal-info {
+  padding: 40px;
+  flex-grow: 1;
+
+  overflow: auto;
+  height: calc(100dvh - 50px);
+
+  @include mq(md) {
+    height: 100dvh;
+  }
+
+  form {
     @include mq(md) {
-      margin: 140px 48px;
-      gap: 96px;
+      max-width: 500px;
+    }
+  }
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background-color: getColor('grey.borderGray');
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $blue;
+
+  img {
+    outline: 1px solid $border-color;
+  }
+
+  .img-alternative-letter {
+    font-size: 24px;
+    line-height: 26px;
+    text-transform: uppercase;
+    color: getColor('primary.base');
+    text-align: center;
+  }
+
+  @include m(round) {
+    border-radius: 100%;
+  }
+
+  @include m(text) {
+    font-size: 56px;
+    color: $blue;
+    line-height: 90px;
+  }
+
+  @include m(lg) {
+    width: 120px;
+    height: 120px;
+    .img-alternative-letter {
+      font-size: 72px;
+      line-height: 120px;
     }
   }
 
-  @include e(item) {
-    padding: 26px 40px;
-    background: $white;
-    border-radius: 8px;
-    color: $darkIndigo;
-    font-size: 24px;
-    line-height: 36px;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  @include m(md) {
+    width: 90px;
+    height: 90px;
+  }
 
-    @include mq(md) {
-      padding: 48px 64px;
-    }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    @include transition;
+  }
+  &-profile {
+    cursor: pointer;
+  }
+  @include m(active) {
+    outline-offset: -2px;
+    outline: 2px solid $blue;
+  }
 
-    //add box shadow on hover
+  @include m(sm) {
+    width: 30px;
+    height: 30px;
+  }
 
-    &:hover {
-      background: rgba($color: $black, $alpha: 0.1);
-      text-decoration: underline;
-    }
+  @include m(hamburger) {
+    width: 52px;
+    height: 52px;
   }
 }

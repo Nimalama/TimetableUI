@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { HOME, SIGNUP } from '../constants/routes';
+import { SIGNUP } from '../constants/routes';
 
 import DefaultAuthComponent from './commons/DefaultAuthComponent';
 import DefaultNavbar from './commons/DefaultNavbar';
@@ -39,7 +39,7 @@ const Login = () => {
       if (userData) {
         localStorage.setItem('userInformation', JSON.stringify(userData));
 
-        navigate(HOME);
+        navigate('/home');
       }
     } catch (err) {
       const errorResponse = err as Error;

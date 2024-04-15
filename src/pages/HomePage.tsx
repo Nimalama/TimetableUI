@@ -1,11 +1,16 @@
+import CourseOverview from '../components/misc/CourseOverview';
+import Footer from '../components/misc/Footer';
 import DefaultNavbar from '../components/commons/DefaultNavbar';
+import { courses } from '../constants/consts';
 
 const HomePage = () => {
   return (
-    <section>
+    <>
       <DefaultNavbar />
-      <div className="container">HomePage</div>
-    </section>
+      <CourseOverview courses={courses} />
+      {/* <Carousel items={courses} /> */}
+      <Footer />
+    </>
   );
 };
 
