@@ -86,7 +86,7 @@ const UserProfile: React.FC = () => {
     try {
       const { files } = event.target;
 
-      if(!files?.length)return;
+      if (!files?.length) return;
 
       const file = files[0];
 
@@ -105,7 +105,6 @@ const UserProfile: React.FC = () => {
         console.debug(file);
 
         setProfileData({ ...profileData, profilePic: file });
-        // setUserSelectedImageFile(file);
       };
     } catch (err) {
       console.debug(err);

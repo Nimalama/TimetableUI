@@ -4,7 +4,6 @@ import {
   UserInformationInterface,
   UserLoginPayloadInterface,
   UserProfileInterface
-
 } from '../interfaces/commonInterfaces';
 import { getApiData } from '../utility/httpHelper';
 

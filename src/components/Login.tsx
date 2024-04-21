@@ -122,11 +122,15 @@ const Login = () => {
                   {!showPassword ? <FiEye /> : <FiEyeOff />}
                 </div>
               </div>
+              
+              <div className="form-group mt-4x">
+                <Link to="/forgot-password">Forgot Password?</Link>
+              </div>
               <button
                 disabled={isButtonDisabled}
                 type="submit"
                 title="Sign Up"
-                className="btn btn--primary btn--block mt-6x d-flex justify-content-center"
+                className="btn btn--primary btn--block mt-2x d-flex justify-content-center"
                 id="sign-up-with-email"
               >
                 Sign In
