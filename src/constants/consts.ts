@@ -35,3 +35,5 @@ export const courses = [
     description: 'Learn techniques for optimizing CSS performance to enhance website loading speed.'
   }
 ];
+
+export const API_BASE_URL = 'http://localhost:6173/';

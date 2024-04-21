@@ -3,8 +3,8 @@ import {
   UserRegisterPayloadInterface,
   UserInformationInterface,
   UserLoginPayloadInterface,
-  UserProfileInterface,
-  ProfilePayloadInterface
+  UserProfileInterface
+
 } from '../interfaces/commonInterfaces';
 import { getApiData } from '../utility/httpHelper';
 
@@ -128,12 +128,13 @@ export async function getProfile(): Promise<UserProfileInterface> {
 }
 
 //patch profile
-export async function patchProfile(data: ProfilePayloadInterface): Promise<boolean> {
+export async function patchProfile(data: FormData): Promise<boolean> {
   try {
     const response = await getApiData<{ data: boolean }>({
       endPoint: '/api/user/authProfile',
       method: 'PATCH',
       requiresAuth: true,
+      additionalHeaders: { 'Content-Type': 'multipart/form-data' },
       data
     });
 

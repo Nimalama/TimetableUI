@@ -3,6 +3,7 @@ import useDashboardContext from '../hooks/useChallengesDashboardContext';
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { ProfilePayloadInterface, UserProfileInterface } from '../interfaces/commonInterfaces';
 import { getProfile, patchProfile } from '../services/authServices';
+import { API_BASE_URL } from '../constants/consts';
 
 const UserProfile: React.FC = () => {
   const { userInformation } = useDashboardContext();
@@ -12,7 +13,7 @@ const UserProfile: React.FC = () => {
 
   const [user, setUser] = useState<UserProfileInterface | null>(null);
   const [profileData, setProfileData] = useState<ProfilePayloadInterface>({
-    profilePic: '',
+    profilePic: null,
     address: null,
     department: '',
     fullName: ''
@@ -47,10 +48,23 @@ const UserProfile: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await patchProfile(profileData);
+      const formData = new FormData();
+
+      // Add profile data to FormData
+      formData.append('address', profileData.address ?? '');
+      formData.append('department', profileData.department ?? '');
+      formData.append('fullName', profileData.fullName);
+
+      // If profilePic exists, append it to FormData as req.file
+      if (profileData.profilePic) {
+        formData.append('profilePic', profileData.profilePic);
+      }
+
+      const response = await patchProfile(formData);
 
       if (response) {
         alert('Profile updated successfully');
+        fetchUserProfile();
       }
     } catch (error) {
       console.error('Error updating profile:', error);
@@ -72,15 +86,9 @@ const UserProfile: React.FC = () => {
     try {
       const { files } = event.target;
 
-      if (!files?.length) {
-        if (profilePicRef?.current) {
-          profilePicRef.current.src = profileData.profilePic ?? '';
-        }
+      if(!files?.length)return;
 
-        return;
-      }
-
-      const file = files[0] as File;
+      const file = files[0];
 
       const reader = new FileReader();
 
@@ -94,12 +102,9 @@ const UserProfile: React.FC = () => {
           profilePicRef.current.src = fileData;
         }
 
-        const newUserInformation = {
-          ...profileData,
-          profilePic: fileData
-        };
+        console.debug(file);
 
-        setProfileData(newUserInformation);
+        setProfileData({ ...profileData, profilePic: file });
         // setUserSelectedImageFile(file);
       };
     } catch (err) {
@@ -127,7 +132,7 @@ const UserProfile: React.FC = () => {
 
     return (
       <div className="avatar avatar--md avatar--round">
-        <img ref={profilePicRef} src={user.profilePic} alt={user?.fullName} />
+        <img ref={profilePicRef} src={`${API_BASE_URL}${user.profilePic}`} alt={user?.fullName} />
       </div>
     );
   };
@@ -149,11 +154,7 @@ const UserProfile: React.FC = () => {
             </div>
 
             <div className="avatar-upload">
-              <button
-                type="button"
-                onClick={() => openChooseAFile()}
-                className="btn btn--primary py-2x outline btn--sm"
-              >
+            <button type="button" onClick={() => openChooseAFile()} className="btn btn--primary py-2x btn--sm">
                 Choose Photo
               </button>
               <input

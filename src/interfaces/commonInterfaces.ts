@@ -80,7 +80,7 @@ export interface DashboardContextInterface {
 }
 
 export interface ProfilePayloadInterface {
-  profilePic: string | null;
+  profilePic: File | null;
   address: string | null;
   department: string | null;
   fullName: string;
