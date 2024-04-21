@@ -142,3 +142,18 @@ export async function patchProfile(data: FormData): Promise<boolean> {
     throw err;
   }
 }
+
+// forgot password
+export async function forgotPassword(email: string): Promise<{ message: string }> {
+  try {
+    const response = await getApiData<{ data: { message: string } }>({
+      endPoint: '/api/user/forgot-password',
+      method: 'POST',
+      data: { email }
+    });
+ 
+    return response.data;
+  } catch (err) {
+    throw err;
+  }
+}
