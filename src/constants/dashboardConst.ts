@@ -1,4 +1,4 @@
-import { FiBook, FiBookOpen, FiClock, FiHash, FiHome, FiLink2, FiUser } from 'react-icons/fi';
+import { FiBook, FiClock, FiHash, FiHome, FiLink2, FiUser } from 'react-icons/fi';
 import { NavigationTabInterface } from '../interfaces/commonInterfaces';
 import { DASHBOARD_TAB_INDICES } from '../enums/enums';
 
@@ -10,13 +10,7 @@ export const DASHBOARD_NAV_TABS: NavigationTabInterface[] = [
     icon: FiHome,
     link: '/home'
   },
-  {
-    title: 'Lectures',
-    subTitle: 'lectures',
-    tabNumber: DASHBOARD_TAB_INDICES.LECTURES,
-    icon: FiBookOpen,
-    link: '/lectures'
-  },
+  
   // {
   //   title: 'Tutors',
   //   subTitle: 'tutors',

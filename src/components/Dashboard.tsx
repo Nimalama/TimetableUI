@@ -75,9 +75,7 @@ const CurrentTabContent = ({ activeTab }: { activeTab: string }) => {
     case 'home':
       return <DefaultDashboard />;
 
-    case 'lectures':
-      return <>lectures</>;
-
+    
     case 'timetable':
       return <>table</>;
 
