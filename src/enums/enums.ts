@@ -1,6 +1,5 @@
 export enum DASHBOARD_TAB_INDICES {
   DASHBOARD,
-  
   TUTORS,
   ROOMS,
   COURSES,

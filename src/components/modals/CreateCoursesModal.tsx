@@ -1,7 +1,7 @@
-import { Dispatch, SetStateAction } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useRef } from 'react';
 import { Modal } from '../Modal';
 import { CoursePayloadInterface } from '../../interfaces/commonInterfaces';
-import { MODAL_TYPES } from '../../constants/consts';
+import { API_BASE_URL, MODAL_TYPES } from '../../constants/consts';
 
 const CreateCourseModal = ({
   show,
@@ -18,11 +18,58 @@ const CreateCourseModal = ({
   mode: string;
   setData: Dispatch<SetStateAction<CoursePayloadInterface>>;
 }) => {
+  const coursePicRef = useRef<HTMLImageElement | null>(null);
+  const coursePicInputRef = useRef<HTMLInputElement | null>(null);
+
   let title = 'Create Course';
 
   if (mode === MODAL_TYPES.EDIT_MODE) {
     title = 'Edit Course';
   }
+
+  const CoursePicture = (): JSX.Element => {
+    if (!data.coursePic) return <></>;
+
+    return (
+      <div className="avatar avatar--md avatar--round">
+        <img ref={coursePicRef} src={`${API_BASE_URL}${data.coursePic}`} alt="Course Image" />
+      </div>
+    );
+  };
+
+  // Function for handling pic upload
+  const openChooseAFile = () => {
+    coursePicInputRef?.current && coursePicInputRef.current.click();
+  };
+
+  const handlePicChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    // As per the doc, file reader works asynchronously, so adding try catch block for preventing crashes.
+
+    try {
+      const { files } = event.target;
+
+      if (!files?.length) return;
+
+      const file = files[0];
+
+      const reader = new FileReader();
+
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        // Base64 url to load image
+        const fileData = reader.result as string;
+
+        if (coursePicRef?.current) {
+          coursePicRef.current.src = fileData;
+        }
+
+        setData({ ...data, coursePic: file });
+      };
+    } catch (err) {
+      console.debug(err);
+    }
+  };
 
   return (
     <Modal
@@ -43,6 +90,20 @@ const CreateCourseModal = ({
     >
       <>
         <div className="form-group">
+          <CoursePicture />
+          <div className="avatar-upload">
+            <button type="button" onClick={() => openChooseAFile()} className="btn btn--primary py-2x btn--sm">
+              Choose Photo
+            </button>
+            <input
+              name="uploadFile"
+              type="file"
+              accept="image/*"
+              ref={coursePicInputRef}
+              onChange={handlePicChange}
+              className="d-none"
+            />
+          </div>
           <label>Course Name</label>
           <input
             type="text"
@@ -72,6 +133,17 @@ const CreateCourseModal = ({
             placeholder="Enter course credits"
             value={data.credits ?? ''}
             onChange={(e) => setData({ ...data, credits: +e.target.value })}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Category</label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Enter course category"
+            value={data.category ?? ''}
+            onChange={(e) => setData({ ...data, category: e.target.value })}
           />
         </div>
       </>

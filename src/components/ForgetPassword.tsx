@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import DefaultNavbar from './commons/DefaultNavbar';
-import { forgetPassword} from '../services/authServices';
+import { forgotPassword } from '../services/authServices';
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState('');
@@ -11,8 +11,8 @@ const ForgetPassword = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await forgetPassword.post('/api/forgot-password', { email });
-      setMessage(response.data.message);
+      const response = await forgotPassword(email);
+      setMessage(response.message);
     } catch (error) {
       setMessage('An error occurred. Please try again later.');
     }

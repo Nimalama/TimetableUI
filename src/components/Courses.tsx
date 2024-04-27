@@ -4,7 +4,7 @@ import { createCourse, deleteCourse, getCourses, updateCourse } from '../service
 import { CourseInterface, CoursePayloadInterface } from '../interfaces/commonInterfaces';
 import CommonRemoveModal from './modals/CommonRemoveModal';
 import CreateCourseModal from './modals/CreateCoursesModal';
-import { MODAL_TYPES } from '../constants/consts';
+import { API_BASE_URL, MODAL_TYPES } from '../constants/consts';
 import useDashboardContext from '../hooks/useChallengesDashboardContext';
 
 const Courses: React.FC = () => {
@@ -17,7 +17,9 @@ const Courses: React.FC = () => {
   const [payload, setPayload] = useState<CoursePayloadInterface>({
     code: '',
     name: '',
-    credits: null
+    credits: null,
+    category: null,
+    coursePic: null
   });
 
   const [modalMode, setModalMode] = useState(MODAL_TYPES.CREATE_MODE);
@@ -54,7 +56,9 @@ const Courses: React.FC = () => {
           setPayload({
             name: '',
             code: '',
-            credits: null
+            credits: null,
+            coursePic: null,
+            category: null
           });
         }
       } catch (error) {
@@ -72,7 +76,9 @@ const Courses: React.FC = () => {
           setPayload({
             name: '',
             code: '',
-            credits: null
+            credits: null,
+            coursePic: null,
+            category: null
           });
         }
       } catch (error) {
@@ -109,7 +115,9 @@ const Courses: React.FC = () => {
                 setPayload({
                   name: '',
                   code: '',
-                  credits: null
+                  credits: null,
+                  coursePic: null,
+                  category: null
                 });
 
                 toggleCreateModal();
@@ -129,6 +137,7 @@ const Courses: React.FC = () => {
               <th>Course Code</th>
               <th>Course Name</th>
               <th>Credits</th>
+              <th>Category</th>
               <th />
             </tr>
           </thead>
@@ -137,8 +146,16 @@ const Courses: React.FC = () => {
             {courses.map((course) => (
               <tr key={course.id}>
                 <td>{course.code}</td>
-                <td>{course.name}</td>
+                <td className="d-flex align-items-center">
+                  {course.coursePic?.length && (
+                    <div className="course-image mr-2x">
+                      <img src={`${API_BASE_URL}${course.coursePic}`} alt="Course Image" />
+                    </div>
+                  )}
+                  {course.name}
+                </td>
                 <td>{course.credits}</td>
+                <td>{course.category}</td>
 
                 {isAdmin ? (
                   <td>
@@ -150,7 +167,9 @@ const Courses: React.FC = () => {
                         setPayload({
                           code: course.code,
                           name: course.name,
-                          credits: course.credits
+                          credits: course.credits,
+                          category: course.category,
+                          coursePic: null
                         });
 
                         toggleCreateModal();

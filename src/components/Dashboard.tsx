@@ -24,7 +24,7 @@ const Dashboard = () => {
         <></>
       </MobileTopBar>
       <section className="d-flex">
-      <div className={sidebarClass}>
+        <div className={sidebarClass}>
           <div className="dashboard__sidebar__header d-flex align-items-center">
             <p className="dashboard__sidebar__header__title">Scheduler</p>
             <FiX size={24} className="pointer ml-auto d-md-none" onClick={() => setMenuBar(!menuBar)} />
@@ -75,7 +75,6 @@ const CurrentTabContent = ({ activeTab }: { activeTab: string }) => {
     case 'home':
       return <DefaultDashboard />;
 
-    
     case 'timetable':
       return <>table</>;
 

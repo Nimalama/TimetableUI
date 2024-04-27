@@ -3,5 +3,6 @@ import DefaultPNG from './images/tight-bounds.png';
 import Logo from './images/timetable-brand.png';
 import acuLogo from './images/acu-logo.jpeg';
 import courseDum from './images/3974104.jpg';
+import building from './images/building.jpg';
 
-export { smallLogo, Logo, DefaultPNG, acuLogo, courseDum };
+export { smallLogo, Logo, DefaultPNG, acuLogo, courseDum, building };
