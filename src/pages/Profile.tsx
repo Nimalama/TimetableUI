@@ -102,8 +102,6 @@ const UserProfile: React.FC = () => {
           profilePicRef.current.src = fileData;
         }
 
-        console.debug(file);
-
         setProfileData({ ...profileData, profilePic: file });
       };
     } catch (err) {
@@ -153,7 +151,7 @@ const UserProfile: React.FC = () => {
             </div>
 
             <div className="avatar-upload">
-            <button type="button" onClick={() => openChooseAFile()} className="btn btn--primary py-2x btn--sm">
+              <button type="button" onClick={() => openChooseAFile()} className="btn btn--primary py-2x btn--sm">
                 Choose Photo
               </button>
               <input

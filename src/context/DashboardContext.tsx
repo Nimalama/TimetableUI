@@ -42,8 +42,6 @@ const DashboardContextProvider = ({ children }: AppContextProvider): JSX.Element
     switch (category) {
       case 'home':
         return DASHBOARD_TAB_INDICES.DASHBOARD;
-      case 'lectures':
-        return DASHBOARD_TAB_INDICES.LECTURES;
       case 'tutors':
         return DASHBOARD_TAB_INDICES.TUTORS;
       case 'rooms':

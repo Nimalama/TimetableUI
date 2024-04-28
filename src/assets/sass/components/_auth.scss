@@ -61,8 +61,17 @@ html.full-height {
 
 // Navbar styles
 .default-navbar {
-  background: #fff;
+  background: $white;
   border-bottom: 1px solid $gray;
+  top: 0;
+  z-index: $zindex-overlay;
+  width: 100%;
+
+  @include m(transparent) {
+    position: fixed;
+    background: rgba($color: $white, $alpha: 0.67);
+    border-bottom: none;
+  }
 
   .brand-logo {
     img {

@@ -4,7 +4,7 @@ import { createCourse, deleteCourse, getCourses, updateCourse } from '../service
 import { CourseInterface, CoursePayloadInterface } from '../interfaces/commonInterfaces';
 import CommonRemoveModal from './modals/CommonRemoveModal';
 import CreateCourseModal from './modals/CreateCoursesModal';
-import { MODAL_TYPES } from '../constants/consts';
+import { API_BASE_URL, MODAL_TYPES } from '../constants/consts';
 import useDashboardContext from '../hooks/useChallengesDashboardContext';
 
 const Courses: React.FC = () => {
@@ -17,7 +17,10 @@ const Courses: React.FC = () => {
   const [payload, setPayload] = useState<CoursePayloadInterface>({
     code: '',
     name: '',
-    credits: null
+    credits: null,
+    category: null,
+    coursePic: null,
+    description: null
   });
 
   const [modalMode, setModalMode] = useState(MODAL_TYPES.CREATE_MODE);
@@ -26,14 +29,6 @@ const Courses: React.FC = () => {
     fetchCourses();
   }, []);
 
-  const toggleCreateModal = () => {
-    setShowCreateModal(!showCreateModal);
-  };
-
-  const toggleDeleteModal = () => {
-    setShowDeleteModal(!showDeleteModal);
-  };
-
   const fetchCourses = async () => {
     try {
       const response = await getCourses(); // Replace with your API endpoint
@@ -41,6 +36,14 @@ const Courses: React.FC = () => {
     } catch (error) {
       console.error('Error fetching courses:', error);
     }
+  };
+
+  const toggleCreateModal = () => {
+    setShowCreateModal(!showCreateModal);
+  };
+
+  const toggleDeleteModal = () => {
+    setShowDeleteModal(!showDeleteModal);
   };
 
   const handleSubmit = async () => {
@@ -54,7 +57,10 @@ const Courses: React.FC = () => {
           setPayload({
             name: '',
             code: '',
-            credits: null
+            credits: null,
+            coursePic: null,
+            category: null,
+            description: null
           });
         }
       } catch (error) {
@@ -72,7 +78,10 @@ const Courses: React.FC = () => {
           setPayload({
             name: '',
             code: '',
-            credits: null
+            credits: null,
+            coursePic: null,
+            category: null,
+            description: null
           });
         }
       } catch (error) {
@@ -98,7 +107,7 @@ const Courses: React.FC = () => {
 
   return (
     <section className="container">
-      <div className="d-flex justify-content-between my-2x">
+      <div className="d-flex justify-content-between my-4x">
         <h2>Courses</h2>
         <div>
           {isAdmin ? (
@@ -109,7 +118,10 @@ const Courses: React.FC = () => {
                 setPayload({
                   name: '',
                   code: '',
-                  credits: null
+                  credits: null,
+                  coursePic: null,
+                  category: null,
+                  description: null
                 });
 
                 toggleCreateModal();
@@ -121,59 +133,75 @@ const Courses: React.FC = () => {
           ) : null}
         </div>
       </div>
-
-      <div className="table-wrapper">
-        <table className="common-table">
-          <thead>
-            <tr>
-              <th>Course Code</th>
-              <th>Course Name</th>
-              <th>Credits</th>
-              <th />
-            </tr>
-          </thead>
-
-          <tbody>
-            {courses.map((course) => (
-              <tr key={course.id}>
-                <td>{course.code}</td>
-                <td>{course.name}</td>
-                <td>{course.credits}</td>
-
-                {isAdmin ? (
-                  <td>
-                    <button
-                      className="btn btn--teritiary btn--sm mr-2x"
-                      onClick={() => {
-                        setModalMode(MODAL_TYPES.EDIT_MODE);
-                        setSelectedId(+course.id);
-                        setPayload({
-                          code: course.code,
-                          name: course.name,
-                          credits: course.credits
-                        });
-
-                        toggleCreateModal();
-                      }}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="btn btn--danger btn--sm"
-                      onClick={() => {
-                        setSelectedId(+course.id);
-                        toggleDeleteModal();
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                ) : null}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      
+      {isAdmin ? (
+<div className="table-wrapper">
+<table className="common-table">
+<thead>
+<tr>
+<th>Course Code</th>
+<th>Course Name</th>
+<th>Credits</th>
+<th>Category</th>
+<th />
+</tr>
+</thead>
+ 
+            <tbody>
+              {courses.map((course) => (
+<tr key={course.id}>
+<td>{course.code}</td>
+<td className="d-flex align-items-center">
+                    {course.coursePic?.length && (
+<div className="course-image mr-2x">
+<img src={`${API_BASE_URL}${course.coursePic}`} alt="Course Image" />
+</div>
+                    )}
+                    {course.name}
+</td>
+<td>{course.credits}</td>
+<td>{course.category}</td>
+ 
+                  {isAdmin ? (
+<td>
+<button
+                        className="btn btn--teritiary btn--sm mr-2x"
+                        onClick={() => {
+                          setModalMode(MODAL_TYPES.EDIT_MODE);
+                          setSelectedId(+course.id);
+                          setPayload({
+                            code: course.code,
+                            name: course.name,
+                            credits: course.credits,
+                            category: course.category,
+                            coursePic: null,
+                            description: course.description
+                          });
+ 
+                          toggleCreateModal();
+                        }}
+>
+                        Edit
+</button>
+<button
+                        className="btn btn--danger btn--sm"
+                        onClick={() => {
+                          setSelectedId(+course.id);
+                          toggleDeleteModal();
+                        }}
+>
+                        Delete
+</button>
+</td>
+                  ) : null}
+</tr>
+              ))}
+</tbody>
+</table>
+</div>
+      ) : null}
+     
+           
 
       <CommonRemoveModal
         title="Delete Classroom"

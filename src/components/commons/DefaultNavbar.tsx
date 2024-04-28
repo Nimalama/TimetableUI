@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Logo } from '../../assets/images';
 import { HOME, LOGIN, SIGNUP } from '../../constants/routes';
 
-const DefaultNavbar = () => {
+const DefaultNavbar = ({ classes = '' }: { classes?: string }) => {
   //get pathname
   const location = useLocation();
   const loginClass = classNames('default-navbar-links__items', {
@@ -12,7 +12,7 @@ const DefaultNavbar = () => {
   });
 
   return (
-    <section className="default-navbar">
+    <section className={`default-navbar ${classes}`}>
       <div className="container d-flex justify-content-between">
         <div className="brand-logo">
           <Link to={HOME}>

@@ -96,3 +96,35 @@
     height: 52px;
   }
 }
+
+.parallax-image {
+  height: 350px;
+
+  @include mq(md) {
+    height: 600px;
+  }
+  @include mq(xl) {
+    height: 700px;
+  }
+}
+
+.react-parallax-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .content {
+    background: rgba($color: $white, $alpha: 0.67);
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-weight: $font-weight-medium;
+    margin-bottom: 32px;
+
+    // hover bg white pointer
+    &:hover {
+      background: $white;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+}

@@ -45,14 +45,20 @@ export interface CourseInterface {
   name: string;
   code: string;
   credits: number;
+  category: string;
+  coursePic: string | null;
   createdAt: string;
   updatedAt: string;
+  description: string |  null;
 }
 
 export interface CoursePayloadInterface {
   name: string;
   code: string;
   credits: number | null;
+  category: string | null;
+  coursePic: File | null;
+  description: string |  null;
 }
 
 export interface ClassroomPayloadInterface {

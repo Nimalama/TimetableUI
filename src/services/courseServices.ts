@@ -17,7 +17,8 @@ export const createCourse = async (course: CoursePayloadInterface): Promise<Cour
     endPoint: '/api/course',
     method: 'POST',
     requiresAuth: true,
-    data: course
+    data: course,
+    additionalHeaders: { 'Content-Type': 'multipart/form-data' }
   });
 
   return response.data;
@@ -26,9 +27,10 @@ export const createCourse = async (course: CoursePayloadInterface): Promise<Cour
 export const updateCourse = async (course: CoursePayloadInterface, courseId: number): Promise<CourseInterface> => {
   const response = await getApiData<{ data: CourseInterface }>({
     endPoint: `/api/course/${courseId}`,
-    method: 'PUT',
+    method: 'PATCH',
     requiresAuth: true,
-    data: course
+    data: course,
+    additionalHeaders: { 'Content-Type': 'multipart/form-data' }
   });
 
   return response.data;

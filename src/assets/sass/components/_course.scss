@@ -38,9 +38,15 @@
 
   .course-list {
     margin-top: 24px;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(300px, 1fr));
     gap: 30px;
-    flex-wrap: wrap;
+
+    @include e(image) {
+      img {
+        height: 195px;
+      }
+    }
   }
 
   .course {
@@ -53,7 +59,6 @@
 
   .course img {
     width: 100%;
-    height: auto;
     display: block;
   }
 
@@ -68,12 +73,5 @@
   @include m(inner) {
     background: none;
     overflow: auto;
-    padding: 40px;
-
-    .course-list {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(300px, 1fr));
-      gap: 30px;
-    }
   }
 }

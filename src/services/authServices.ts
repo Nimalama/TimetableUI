@@ -151,7 +151,7 @@ export async function forgotPassword(email: string): Promise<{ message: string }
       method: 'POST',
       data: { email }
     });
- 
+
     return response.data;
   } catch (err) {
     throw err;
