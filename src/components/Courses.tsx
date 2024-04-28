@@ -28,14 +28,6 @@ const Courses: React.FC = () => {
     fetchCourses();
   }, []);
 
-  const toggleCreateModal = () => {
-    setShowCreateModal(!showCreateModal);
-  };
-
-  const toggleDeleteModal = () => {
-    setShowDeleteModal(!showDeleteModal);
-  };
-
   const fetchCourses = async () => {
     try {
       const response = await getCourses(); // Replace with your API endpoint
@@ -43,6 +35,14 @@ const Courses: React.FC = () => {
     } catch (error) {
       console.error('Error fetching courses:', error);
     }
+  };
+
+  const toggleCreateModal = () => {
+    setShowCreateModal(!showCreateModal);
+  };
+
+  const toggleDeleteModal = () => {
+    setShowDeleteModal(!showDeleteModal);
   };
 
   const handleSubmit = async () => {

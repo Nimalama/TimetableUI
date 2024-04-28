@@ -135,16 +135,18 @@ const CreateCourseModal = ({
             onChange={(e) => setData({ ...data, credits: +e.target.value })}
           />
         </div>
-
         <div className="form-group">
           <label>Category</label>
-          <input
-            type="text"
+          <select
+            style={{ height: '60px' }}
             className="form-control"
-            placeholder="Enter course category"
             value={data.category ?? ''}
             onChange={(e) => setData({ ...data, category: e.target.value })}
-          />
+          >
+            <option value="">Select category</option>
+            <option value="Bachelors">Bachelors</option>
+            <option value="Masters">Masters</option>
+          </select>
         </div>
       </>
     </Modal>
