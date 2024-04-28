@@ -6,6 +6,7 @@ import CommonRemoveModal from './modals/CommonRemoveModal';
 import CreateCourseModal from './modals/CreateCoursesModal';
 import { API_BASE_URL, MODAL_TYPES } from '../constants/consts';
 import useDashboardContext from '../hooks/useChallengesDashboardContext';
+import CoursesList from './misc/CoursesList';
 
 const Courses: React.FC = () => {
   const { isAdmin } = useDashboardContext();
@@ -19,7 +20,8 @@ const Courses: React.FC = () => {
     name: '',
     credits: null,
     category: null,
-    coursePic: null
+    coursePic: null,
+    description: null
   });
 
   const [modalMode, setModalMode] = useState(MODAL_TYPES.CREATE_MODE);
@@ -58,7 +60,8 @@ const Courses: React.FC = () => {
             code: '',
             credits: null,
             coursePic: null,
-            category: null
+            category: null,
+            description: null
           });
         }
       } catch (error) {
@@ -78,7 +81,8 @@ const Courses: React.FC = () => {
             code: '',
             credits: null,
             coursePic: null,
-            category: null
+            category: null,
+            description: null
           });
         }
       } catch (error) {
@@ -102,31 +106,38 @@ const Courses: React.FC = () => {
     }
   };
 
+  if (!isAdmin) {
+    return (
+      <section className="container">
+        <CoursesList />
+      </section>
+    );
+  }
+
   return (
     <section className="container">
-      <div className="d-flex justify-content-between my-2x">
+      <div className="d-flex justify-content-between my-4x">
         <h2>Courses</h2>
         <div>
-          {isAdmin ? (
-            <button
-              onClick={() => {
-                setModalMode(MODAL_TYPES.CREATE_MODE);
+          <button
+            onClick={() => {
+              setModalMode(MODAL_TYPES.CREATE_MODE);
 
-                setPayload({
-                  name: '',
-                  code: '',
-                  credits: null,
-                  coursePic: null,
-                  category: null
-                });
+              setPayload({
+                name: '',
+                code: '',
+                credits: null,
+                coursePic: null,
+                category: null,
+                description: null
+              });
 
-                toggleCreateModal();
-              }}
-              className="btn btn--primary btn--sm ml-8x"
-            >
-              Create
-            </button>
-          ) : null}
+              toggleCreateModal();
+            }}
+            className="btn btn--primary btn--sm ml-8x"
+          >
+            Create
+          </button>
         </div>
       </div>
 
@@ -169,7 +180,8 @@ const Courses: React.FC = () => {
                           name: course.name,
                           credits: course.credits,
                           category: course.category,
-                          coursePic: null
+                          coursePic: null,
+                          description: course.description
                         });
 
                         toggleCreateModal();

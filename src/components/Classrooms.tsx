@@ -94,7 +94,7 @@ const Classrooms: React.FC = () => {
 
   return (
     <section className="container">
-      <div className="d-flex justify-content-between my-2x">
+      <div className="d-flex justify-content-between my-4x">
         <h2>Classrooms</h2>
 
         {isAdmin ? (

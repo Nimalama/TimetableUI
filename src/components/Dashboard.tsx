@@ -10,6 +10,7 @@ import Profile from '../pages/Profile';
 import classNames from 'classnames';
 import MobileTopBar from './commons/MobileTopBar';
 import { FiX } from 'react-icons/fi';
+import Timetable from '../pages/Timetable';
 
 const Dashboard = () => {
   const { category } = useParams();
@@ -39,6 +40,7 @@ const Dashboard = () => {
                     }}
                     title={tab.title}
                     className={'item__link'}
+                    onClick={() => setMenuBar(false)}
                   >
                     <tab.icon size={20} />
                     <span>{tab.title}</span>
@@ -76,10 +78,7 @@ const CurrentTabContent = ({ activeTab }: { activeTab: string }) => {
       return <DefaultDashboard />;
 
     case 'timetable':
-      return <>table</>;
-
-    case 'tutors':
-      return <>tutors</>;
+      return <Timetable />;
 
     case 'profile':
       return <Profile />;

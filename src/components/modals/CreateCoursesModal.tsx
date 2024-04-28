@@ -148,6 +148,17 @@ const CreateCourseModal = ({
             <option value="Masters">Masters</option>
           </select>
         </div>
+
+        <div className="form-group">
+          <label>Course Description</label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Enter course description"
+            value={data.description ?? ''}
+            onChange={(e) => setData({ ...data, description: e.target.value })}
+          />
+        </div>
       </>
     </Modal>
   );

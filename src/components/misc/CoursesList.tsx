@@ -3,8 +3,11 @@ import { CourseInterface } from '../../interfaces/commonInterfaces';
 import { getCourses } from '../../services/courseServices';
 import { API_BASE_URL } from '../../constants/consts';
 import { SearchInput } from './SearchInput';
+import useDashboardContext from '../../hooks/useChallengesDashboardContext';
 
 const CoursesList = () => {
+  const { isAdmin } = useDashboardContext();
+
   const [courses, setCourses] = useState<CourseInterface[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -36,14 +39,14 @@ const CoursesList = () => {
 
   return (
     <section className="module-overview bg-white">
-      <div className="container">
-        <div className="d-flex align-items-center justify-content-between">
-          <h2>Available Courses </h2>
-          <div className="d-flex ">
+      <div className="d-flex-md align-items-center justify-content-between">
+        <h2>Available Courses </h2>
+        {isAdmin && (
+          <div className="d-flex-md ">
             {/* need a filter to select category */}
-            <div className="form-group mr-4x d-flex align-items-center">
+            <div className="form-group mb-1x mr-4x d-flex align-items-center">
               <select
-                className="form-control ml-2x py-2x"
+                className="form-control ml-2x-md py-2x"
                 value={selectedCategory ?? ''}
                 onChange={(e) => setSelectedCategory(e.target.value)}
               >
@@ -54,35 +57,36 @@ const CoursesList = () => {
             </div>
             <SearchInput value={searchTerm} placeholder="search courses" handler={handleSearchTermChange} />
           </div>
-        </div>
-
-        {filteredCourses.length > 0 ? (
-          <div className="course-list">
-            {filteredCourses.map((course) => (
-              <div className="course" key={course.name}>
-                <div className="course-list__image">
-                  <img
-                    src={
-                      course.coursePic
-                        ? `${API_BASE_URL}${course.coursePic}`
-                        : 'https://3rdwavemedia.com/demo-images/slides/maker-module-2.jpg'
-                    }
-                    alt={course.name}
-                  />
-                </div>
-                <div className="course-info">
-                  <h3>{course.name}</h3>
-                  <p>
-                    {course.code} | {course.credits} | {course.category}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="d-flex align-items-center justify-content-between py-4x">No results found</div>
         )}
       </div>
+
+      {filteredCourses.length > 0 ? (
+        <div className="course-list">
+          {filteredCourses.map((course) => (
+            <div className="course" key={course.name}>
+              <div className="course-list__image">
+                <img
+                  src={
+                    course.coursePic
+                      ? `${API_BASE_URL}${course.coursePic}`
+                      : 'https://3rdwavemedia.com/demo-images/slides/maker-module-2.jpg'
+                  }
+                  alt={course.name}
+                />
+              </div>
+              <div className="course-info">
+                <h3>{course.name}</h3>
+                <p>
+                  {course.code} | {course.credits} | {course.category}
+                </p>
+                <p>{course.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="d-flex align-items-center justify-content-between py-4x">No results found</div>
+      )}
     </section>
   );
 };

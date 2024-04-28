@@ -9,13 +9,14 @@
 }
 
 .personal-info {
-  padding: 40px;
   flex-grow: 1;
+  padding: 24px 0;
 
   overflow: auto;
   height: calc(100dvh - 50px);
 
   @include mq(md) {
+    padding: 40px;
     height: 100dvh;
   }
 
@@ -127,4 +128,8 @@
       text-decoration: underline;
     }
   }
+}
+
+.table-wrapper {
+  overflow-x: auto;
 }
