@@ -49,6 +49,7 @@ export interface CourseInterface {
   coursePic: string | null;
   createdAt: string;
   updatedAt: string;
+  description: string |  null;
 }
 
 export interface CoursePayloadInterface {
@@ -57,6 +58,7 @@ export interface CoursePayloadInterface {
   credits: number | null;
   category: string | null;
   coursePic: File | null;
+  description: string |  null;
 }
 
 export interface ClassroomPayloadInterface {
