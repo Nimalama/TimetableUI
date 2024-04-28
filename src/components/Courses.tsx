@@ -123,7 +123,6 @@ const Courses: React.FC = () => {
             onClick={() => {
               setModalMode(MODAL_TYPES.CREATE_MODE);
 
-<<<<<<< HEAD
               setPayload({
                 name: '',
                 code: '',
@@ -132,16 +131,6 @@ const Courses: React.FC = () => {
                 category: null,
                 description: null
               });
-=======
-                setPayload({
-                  name: '',
-                  code: '',
-                  credits: null,
-                  coursePic: null,
-                  category: null,
-                  description: null
-                });
->>>>>>> 6ffa940099922b15ad1cc74fabb1e30253b36adb
 
               toggleCreateModal();
             }}
@@ -151,7 +140,6 @@ const Courses: React.FC = () => {
           </button>
         </div>
       </div>
-<<<<<<< HEAD
 
       <div className="table-wrapper">
         <table className="common-table">
@@ -217,77 +205,6 @@ const Courses: React.FC = () => {
           </tbody>
         </table>
       </div>
-=======
-      
-      {isAdmin ? (
-<div className="table-wrapper">
-<table className="common-table">
-<thead>
-<tr>
-<th>Course Code</th>
-<th>Course Name</th>
-<th>Credits</th>
-<th>Category</th>
-<th />
-</tr>
-</thead>
- 
-            <tbody>
-              {courses.map((course) => (
-<tr key={course.id}>
-<td>{course.code}</td>
-<td className="d-flex align-items-center">
-                    {course.coursePic?.length && (
-<div className="course-image mr-2x">
-<img src={`${API_BASE_URL}${course.coursePic}`} alt="Course Image" />
-</div>
-                    )}
-                    {course.name}
-</td>
-<td>{course.credits}</td>
-<td>{course.category}</td>
- 
-                  {isAdmin ? (
-<td>
-<button
-                        className="btn btn--teritiary btn--sm mr-2x"
-                        onClick={() => {
-                          setModalMode(MODAL_TYPES.EDIT_MODE);
-                          setSelectedId(+course.id);
-                          setPayload({
-                            code: course.code,
-                            name: course.name,
-                            credits: course.credits,
-                            category: course.category,
-                            coursePic: null,
-                            description: course.description
-                          });
- 
-                          toggleCreateModal();
-                        }}
->
-                        Edit
-</button>
-<button
-                        className="btn btn--danger btn--sm"
-                        onClick={() => {
-                          setSelectedId(+course.id);
-                          toggleDeleteModal();
-                        }}
->
-                        Delete
-</button>
-</td>
-                  ) : null}
-</tr>
-              ))}
-</tbody>
-</table>
-</div>
-      ) : null}
-     
-           
->>>>>>> 6ffa940099922b15ad1cc74fabb1e30253b36adb
 
       <CommonRemoveModal
         title="Delete Classroom"

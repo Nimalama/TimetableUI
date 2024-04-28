@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import useDashboardContext from '../hooks/useChallengesDashboardContext';
 import { ClassRoutineData } from '../interfaces/classInterfaces';
 import { getClassRoutines, getClassRoutinesStudent, getClassRoutinesTeacher } from '../services/timetableServices';
-<<<<<<< HEAD
 import { convertTimeTableToCSV } from '../utility/helper';
 
 const Timetable = () => {
@@ -16,14 +15,6 @@ const Timetable = () => {
     fetchClassRoutines();
   }, [userInformation]);
 
-=======
- 
-const Timetable = () => {
-  const { isAdmin, isStudent } = useDashboardContext();
- 
-  const [classes, setClasses] = useState<ClassRoutineData[]>([]);
- 
->>>>>>> 6ffa940099922b15ad1cc74fabb1e30253b36adb
   const fetchClassRoutines = async () => {
     const apiToFetch = isAdmin ? getClassRoutines : isStudent ? getClassRoutinesStudent : getClassRoutinesTeacher;
     try {
@@ -33,7 +24,6 @@ const Timetable = () => {
       console.error('Error fetching courses:', error);
     }
   };
-<<<<<<< HEAD
 
   const handleExportCSV = () => {
     const csvData = convertTimeTableToCSV(classes ?? []);
@@ -100,14 +90,3 @@ const Timetable = () => {
 };
 
 export default Timetable;
-=======
- 
-  useEffect(() => {
-    fetchClassRoutines();
-  }, []);
- 
-  return <div>{JSON.stringify(classes)}</div>;
-};
- 
-export default Timetable;
->>>>>>> 6ffa940099922b15ad1cc74fabb1e30253b36adb
