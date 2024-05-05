@@ -34,7 +34,7 @@ const CreateClassroomModal = ({
         <button
           className="btn btn--primary"
           onClick={handleSubmit}
-          disabled={data.name.length < 1 || data.capacity < 1}
+          disabled={data.name.length < 1 || data.capacity.length < 0}
         >
           Save
         </button>
@@ -60,7 +60,7 @@ const CreateClassroomModal = ({
             className="form-control"
             placeholder="Enter capacity"
             value={data.capacity}
-            onChange={(e) => setData({ ...data, capacity: +e.target.value })}
+            onChange={(e) => setData({ ...data, capacity: e.target.value })}
           />
         </div>
       </>

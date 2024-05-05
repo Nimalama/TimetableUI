@@ -33,3 +33,39 @@ export interface ClassRoutineData {
 export interface ClassRoutineResponse {
   data: ClassRoutineData[];
 }
+
+export interface Course {
+  id: number;
+  name: string;
+  description: string;
+}
+
+export interface User {
+  id: number;
+  fullName: string;
+  email: string;
+}
+
+export interface Classroom {
+  id: number;
+  name: string;
+}
+
+export interface TimeSlot {
+  id: number;
+  day: string;
+  startTime: string;
+  endTime: string;
+}
+
+export interface ClassRoutineRequirementsInterface {
+  courses: Course[];
+  lecturers: User[];
+  students: User[];
+  classrooms: Classroom[];
+  timeSlots: TimeSlot[];
+}
+
+export interface ClassRoutineRequirementsResponseInterface {
+  data: ClassRoutineRequirementsInterface;
+}

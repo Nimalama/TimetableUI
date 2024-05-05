@@ -1,4 +1,4 @@
-import { ClassRoutineData } from '../interfaces/classInterfaces';
+import { ClassRoutineData, User } from '../interfaces/classInterfaces';
 import { ObjectKeysInterface } from '../interfaces/commonInterfaces';
 
 export const isObjectEmpty = (obj: ObjectKeysInterface): boolean => !Object.keys(obj).length;
@@ -12,7 +12,16 @@ export const logout = () => {
 };
 
 export const convertTimeTableToCSV = (data: ClassRoutineData[]) => {
-  const generalHeader = ['Subject Id', 'Subject Name', 'Day', 'Start Time', 'End Time', 'Room Name', 'Faculty Name'];
+  const generalHeader = [
+    'Subject Id',
+    'Subject Name',
+    'Day',
+    'Start Time',
+    'End Time',
+    'Room Name',
+    'Faculty Name',
+    'Students'
+  ];
 
   const escapeCSV = (text: string) => `"${text.replace(/"/g, '""')}"`;
 
@@ -23,7 +32,8 @@ export const convertTimeTableToCSV = (data: ClassRoutineData[]) => {
     escapeCSV(item.timeSlot.startTime),
     escapeCSV(item.timeSlot.endTime),
     escapeCSV(item.classroom.name),
-    escapeCSV(`${item.lecturer.fullName} and ${item.lecturer.email}`)
+    escapeCSV(`${item.lecturer.fullName}`),
+    escapeCSV(item.students.map((ss: User) => ss.email).join(','))
   ]);
 
   return [generalHeader.join(','), ...generalRows].join('\n');

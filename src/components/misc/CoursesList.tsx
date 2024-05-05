@@ -6,7 +6,7 @@ import { SearchInput } from './SearchInput';
 import useDashboardContext from '../../hooks/useChallengesDashboardContext';
 
 const CoursesList = () => {
-  const { isAdmin } = useDashboardContext();
+  const { isStudent } = useDashboardContext();
 
   const [courses, setCourses] = useState<CourseInterface[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -41,9 +41,10 @@ const CoursesList = () => {
     <section className="module-overview bg-white">
       <div className="d-flex-md align-items-center justify-content-between">
         <h2>Available Courses </h2>
-        {isAdmin && (
-          <div className="d-flex-md ">
-            {/* need a filter to select category */}
+
+        <div className="d-flex-md ">
+          {/* need a filter to select category */}
+          {!isStudent ? (
             <div className="form-group mb-1x mr-4x d-flex align-items-center">
               <select
                 className="form-control ml-2x-md py-2x"
@@ -55,9 +56,9 @@ const CoursesList = () => {
                 <option value="Masters">Masters</option>
               </select>
             </div>
-            <SearchInput value={searchTerm} placeholder="search courses" handler={handleSearchTermChange} />
-          </div>
-        )}
+          ) : null}
+          <SearchInput value={searchTerm} placeholder="search courses" handler={handleSearchTermChange} />
+        </div>
       </div>
 
       {filteredCourses.length > 0 ? (
