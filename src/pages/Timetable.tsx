@@ -10,12 +10,15 @@ import {
 } from '../services/timetableServices';
 import { convertTimeTableToCSV } from '../utility/helper';
 import CreateClassRoutineModal, { TimeFormData } from '../components/modals/CreateTimeTableModal';
+import { Button } from 'react-bootstrap';
+import SaveAttendanceModal from '../components/modals/SaveAttendanceModal';
 
 const Timetable = () => {
-  const { isAdmin, isStudent, userInformation } = useDashboardContext();
+  const { isAdmin, isStudent,isTeacher, userInformation } = useDashboardContext();
 
   const [classes, setClasses] = useState<ClassRoutineData[]>([]);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showAttendanceModal, setShowAttendanceModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [classRequirements, setClassRequirements] = useState<ClassRoutineRequirementsInterface>();
 
@@ -57,6 +60,9 @@ const Timetable = () => {
   const toggleCreateModal = () => {
     setShowCreateModal(!showCreateModal);
   };
+  const toggleAttendanceModal = () => {
+    setShowAttendanceModal(!showAttendanceModal);
+  };
 
   const handleExportCSV = () => {
     const csvData = convertTimeTableToCSV(classes ?? []);
@@ -75,7 +81,7 @@ const Timetable = () => {
 
       if (response) {
         fetchClassRoutines();
-        toggleCreateModal();
+        setShowCreateModal(false);
         setFormData({
           classRoomId: 0,
           courseId: 0,
@@ -157,7 +163,7 @@ const Timetable = () => {
               <th>End Time</th>
               <th>Room Name</th>
               <th>Faculty Name</th>
-              <th />
+              {isTeacher ?<th /> : null}
             </tr>
           </thead>
           <tbody>
@@ -178,6 +184,19 @@ const Timetable = () => {
                       <td>{endTime}</td>
                       <td>{roomName}</td>
                       <td>{fullName}</td>
+                      {isTeacher && (
+                        <>
+                          <Button className="mt-1x" onClick={toggleAttendanceModal}>
+                            Take attendance
+                          </Button>
+ 
+                          <SaveAttendanceModal
+                            handleClose={toggleAttendanceModal}
+                            show={showAttendanceModal}
+                            classRoutine={classRoutine}
+                          />
+                        </>
+                      )}
                     </tr>
                   );
                 })

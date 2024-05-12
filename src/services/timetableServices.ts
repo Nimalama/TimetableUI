@@ -47,13 +47,28 @@ export const getClassRoutineRequirements = async (): Promise<ClassRoutineRequire
   return response.data;
 };
 
-export const createTimeSlots = async (payload: TimeFormData): Promise<TimeFormData> => {
-  const response = await getApiData<{ data: TimeFormData }>({
+export const createTimeSlots = async (payload: TimeFormData): Promise<boolean> => {
+  const response = await getApiData<{ data: boolean }>({
     endPoint: '/api/classroutine',
     method: 'POST',
     requiresAuth: true,
     data: { ...payload }
   });
 
+  return response.data;
+};
+
+export const saveAttendance = async (payload: {
+  classRoutineId: number;
+  lecturerId: number;
+  studentIds: number[];
+}): Promise<boolean> => {
+  const response = await getApiData<{ data: boolean }>({
+    endPoint: '/api/attendance',
+    method: 'POST',
+    requiresAuth: true,
+    data: { ...payload }
+  });
+ 
   return response.data;
 };

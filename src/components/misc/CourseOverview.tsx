@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import React from 'react';
 
 interface Course {
@@ -13,21 +12,26 @@ interface Props {
 }
 
 const CourseOverview: React.FC<Props> = ({ courses, isInnerDashboard = false }) => {
-  const wrapperClass = classNames('module-overview', { 'module-overview--inner': isInnerDashboard });
+  const sectionClassName = isInnerDashboard ? 'module-overview module-overview--inner' : 'module-overview';
+ 
+  const wrapper = !isInnerDashboard ? 'container' : '';
 
   return (
-    <section className={wrapperClass}>
-      <h2>Courses Overview</h2>
-      <div className="course-list">
-        {courses.map((course) => (
-          <div className="course" key={course.title}>
-            <img src={course.imageUrl} alt={course.title} />
-            <div className="course-info">
-              <h3>{course.title}</h3>
-              <p>{course.description}</p>
+    <section className={sectionClassName}>
+      <div className={wrapper}>
+        <h2>Courses Overview</h2>
+ 
+        <div className="course-list">
+          {courses.map((course) => (
+            <div className="course" key={course.title}>
+<             img src={course.imageUrl} alt={course.title} />
+              <div className="course-info">
+                <h3>{course.title}</h3>
+                <p>{course.description}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>   
       </div>
     </section>
   );

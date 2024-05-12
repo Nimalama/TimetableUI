@@ -8,7 +8,7 @@ import 'react-multi-email/dist/style.css';
 interface CreateClassRoutineModalProps {
   show: boolean;
   handleClose: () => void;
-  handleSubmit: () => void;
+  handleSubmit: () => Promise<void>;
   classRequirements?: ClassRoutineRequirementsInterface;
   formData: TimeFormData;
   setFormData: Dispatch<SetStateAction<TimeFormData>>;
