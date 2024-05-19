@@ -21,7 +21,8 @@ const Courses: React.FC = () => {
     credits: null,
     category: null,
     coursePic: null,
-    description: null
+    description: null,
+    status: ''
   });
 
   const [modalMode, setModalMode] = useState(MODAL_TYPES.CREATE_MODE);
@@ -61,7 +62,8 @@ const Courses: React.FC = () => {
             credits: null,
             coursePic: null,
             category: null,
-            description: null
+            description: null,
+            status: 'unenrolled'
           });
         }
       } catch (error) {
@@ -82,7 +84,8 @@ const Courses: React.FC = () => {
             credits: null,
             coursePic: null,
             category: null,
-            description: null
+            description: null,
+            status: 'unenrolled'
           });
         }
       } catch (error) {
@@ -129,7 +132,8 @@ const Courses: React.FC = () => {
                 credits: null,
                 coursePic: null,
                 category: null,
-                description: null
+                description: null,
+                status: 'unenrolled'
               });
 
               toggleCreateModal();
@@ -181,7 +185,8 @@ const Courses: React.FC = () => {
                           credits: course.credits,
                           category: course.category,
                           coursePic: null,
-                          description: course.description
+                          description: course.description,
+                          status: course.status
                         });
 
                         toggleCreateModal();

@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
 import { CourseInterface } from '../../interfaces/commonInterfaces';
 import { getCourses } from '../../services/courseServices';
-import { API_BASE_URL } from '../../constants/consts';
+import { API_BASE_URL, COURSE_STATUS, FAKE_COURSES } from '../../constants/consts';
 import { SearchInput } from './SearchInput';
 import useDashboardContext from '../../hooks/useChallengesDashboardContext';
 
 const CoursesList = () => {
-  const { isStudent } = useDashboardContext();
+  const { isStudent, userInformation } = useDashboardContext();
 
   const [courses, setCourses] = useState<CourseInterface[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('');
 
   useEffect(() => {
     fetchCourses();
@@ -29,12 +30,16 @@ const CoursesList = () => {
     }
   };
 
-  let filteredCourses = courses.filter((data) => data.name.toLowerCase().includes(searchTerm.toLowerCase()));
+let filteredCourses = [...courses, ...FAKE_COURSES].filter((data) =>
 
-  if (selectedCategory !== '') {
-    filteredCourses = filteredCourses.filter((data) =>
-      data.category.toLowerCase().includes(selectedCategory.toLowerCase())
-    );
+    data.name.toLowerCase().includes(searchTerm.toLowerCase())
+
+  );
+ 
+  if (isStudent) {
+
+    filteredCourses = filteredCourses.filter((data) => data.category === userInformation?.category);
+
   }
 
   return (
