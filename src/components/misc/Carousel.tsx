@@ -4,7 +4,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 
 interface CarouselItem {
-  imageUrl: string;
+  coursePic: string;
   title: string;
   description: string;
 }
@@ -28,7 +28,7 @@ const Carousel: React.FC<Props> = ({ items }) => {
     <Slider {...settings}>
       {items.map((item, index) => (
         <div key={index}>
-          <img src={item.imageUrl} alt={item.title} />
+          <img src={item.coursePic} alt={item.title} />
           <div className="carousel-caption">
             <h3>{item.title}</h3>
             <p>{item.description}</p>

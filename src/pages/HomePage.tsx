@@ -1,7 +1,7 @@
 import CourseOverview from '../components/misc/CourseOverview';
 import Footer from '../components/misc/Footer';
 import DefaultNavbar from '../components/commons/DefaultNavbar';
-import { courses } from '../constants/consts';
+import { FAKE_COURSES } from '../constants/consts';
 import { Parallax } from 'react-parallax';
 import { building } from '../assets/images';
 import { LOGIN } from '../constants/routes';
@@ -19,7 +19,7 @@ const HomePage = () => {
         </div>
         <div className="parallax-image" />
       </Parallax>
-      <CourseOverview courses={courses} />
+      <CourseOverview courses={FAKE_COURSES} />
       <Footer />
     </section>
   );

@@ -50,6 +50,7 @@ export interface CourseInterface {
   createdAt: string;
   updatedAt: string;
   description: string | null;
+  status?: string;
 }
 
 export interface CoursePayloadInterface {

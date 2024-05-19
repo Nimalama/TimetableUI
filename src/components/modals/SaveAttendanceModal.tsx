@@ -55,26 +55,28 @@ const SaveAttendanceModal = ({
       isOverFlowModal
       wrapperClass="create-class-routine-modal"
 >
+<>
 <p>
-        {classRoutine.timeSlot.day} | {classRoutine.lecturer.fullName} | {classRoutine.course.name}
+          {classRoutine.timeSlot.day} | {classRoutine.lecturer.fullName} | {classRoutine.course.name}
 </p>
 <Form>
 <Form.Group>
 <Form.Label>Students</Form.Label>
 <ListGroup>
-            {classRoutine?.students.map((student: User) => (
+              {classRoutine?.students.map((student: User) => (
 <ListGroup.Item key={student.id}>
 <Form.Check
-                  type="checkbox"
-                  id={`student-${student.id}`}
-                  label={student.fullName}
-                  onChange={(e) => handleMultiSelectChange(e, student.id)}
-                />
+                    type="checkbox"
+                    id={`student-${student.id}`}
+                    label={student.fullName}
+                    onChange={(e) => handleMultiSelectChange(e, student.id)}
+                  />
 </ListGroup.Item>
-            ))}
+              ))}
 </ListGroup>
 </Form.Group>
 </Form>
+</>
 </Modal>
   );
 };

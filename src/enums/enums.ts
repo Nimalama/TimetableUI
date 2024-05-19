@@ -7,3 +7,8 @@ export enum DASHBOARD_TAB_INDICES {
   ATTENDANCE,
   PROFILE
 }
+
+export enum COURSE_STATUS {
+  ENROLLED = 1,
+  COMPLETED = 2
+}

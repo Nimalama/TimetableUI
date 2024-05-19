@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { CourseInterface } from '../../interfaces/commonInterfaces';
 import { getCourses } from '../../services/courseServices';
-import { API_BASE_URL } from '../../constants/consts';
+import { API_BASE_URL, FAKE_COURSES } from '../../constants/consts';
 import { SearchInput } from './SearchInput';
 import useDashboardContext from '../../hooks/useChallengesDashboardContext';
+import { COURSE_STATUS } from '../../enums/enums'; 
 
 const CoursesList = () => {
   const { isStudent } = useDashboardContext();
@@ -11,7 +12,8 @@ const CoursesList = () => {
   const [courses, setCourses] = useState<CourseInterface[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
-
+  const [selectedStatus, setSelectedStatus] = useState(0);
+  
   useEffect(() => {
     fetchCourses();
   }, []);
@@ -29,12 +31,21 @@ const CoursesList = () => {
     }
   };
 
-  let filteredCourses = courses.filter((data) => data.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  let filteredCourses = [
+
+    ...courses.map((course) => {
+      return { ...course, status: COURSE_STATUS.ENROLLED };
+    }),
+    ...FAKE_COURSES
+  ].filter((data) => data.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
   if (selectedCategory !== '') {
     filteredCourses = filteredCourses.filter((data) =>
       data.category.toLowerCase().includes(selectedCategory.toLowerCase())
     );
+  }
+  if (selectedStatus !== 0) {
+    filteredCourses = filteredCourses.filter((data) => data.status === selectedStatus);
   }
 
   return (
@@ -56,7 +67,19 @@ const CoursesList = () => {
                 <option value="Masters">Masters</option>
               </select>
             </div>
-          ) : null}
+          ) : (
+            <div className="form-group mb-1x mr-4x d-flex align-items-center">
+            <select
+                            className="form-control ml-2x-md py-2x"
+                            value={selectedStatus}
+                            onChange={(e) => setSelectedStatus(+e.target.value)}
+            >
+            <option value={0}>Select Status</option>
+            <option value={COURSE_STATUS.ENROLLED}>Enrolled</option>
+            <option value={COURSE_STATUS.COMPLETED}>Completed</option>
+            </select>
+            </div>
+                      )}
           <SearchInput value={searchTerm} placeholder="search courses" handler={handleSearchTermChange} />
         </div>
       </div>
@@ -67,11 +90,7 @@ const CoursesList = () => {
             <div className="course" key={course.name}>
               <div className="course-list__image">
                 <img
-                  src={
-                    course.coursePic
-                      ? `${API_BASE_URL}${course.coursePic}`
-                      : 'https://3rdwavemedia.com/demo-images/slides/maker-module-2.jpg'
-                  }
+                  src={!course.coursePic?.startsWith('http') ? `${API_BASE_URL}${course.coursePic}` : course.coursePic}
                   alt={course.name}
                 />
               </div>
