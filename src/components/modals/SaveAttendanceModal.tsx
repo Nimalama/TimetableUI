@@ -2,7 +2,7 @@ import { Form, ListGroup } from 'react-bootstrap';
 import { ClassRoutineData, User } from '../../interfaces/classInterfaces';
 import { Modal } from '../Modal';
 import { useState } from 'react';
-import { saveAttendance } from '../../services/timetableServices';
+import { saveAttendance } from '../../services/attendanceServices';
  
 const SaveAttendanceModal = ({
   classRoutine,
@@ -28,8 +28,7 @@ const SaveAttendanceModal = ({
     try {
       const response = await saveAttendance({
         studentIds: selectedStudentIds,
-        classRoutineId: classRoutine.id,
-        lecturerId: classRoutine.id
+        classRoutineId: classRoutine.id
       });
  
       if (response) {

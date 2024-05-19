@@ -16,6 +16,7 @@ export interface GoogleAuthResponseInterface {
 }
 
 export interface UserInformationInterface {
+  id: string;
   fullName: string;
   email: string;
   userType: string;
@@ -84,6 +85,7 @@ export interface DashboardContextInterface {
   isAdmin: boolean;
   isStudent: boolean;
   isTeacher: boolean;
+  isUserProcessing: boolean;
 }
 
 export interface ProfilePayloadInterface {
