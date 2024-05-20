@@ -10,13 +10,6 @@ export const DASHBOARD_NAV_TABS: NavigationTabInterface[] = [
     icon: FiHome,
     link: '/home'
   },
-  // {
-  //   title: 'Tutors',
-  //   subTitle: 'tutors',
-  //   tabNumber: DASHBOARD_TAB_INDICES.TUTORS,
-  //   icon: FiUsers,
-  //   link: '/tutors'
-  // },
   {
     title: 'Rooms',
     subTitle: 'rooms',

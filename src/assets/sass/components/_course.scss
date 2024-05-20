@@ -35,6 +35,15 @@
   padding: 40px 0;
   background-color: #f5f5f5;
   overflow-x: hidden;
+  position: relative;
+
+  @include e(header) {
+    @include mq(md) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
 
   .course-list {
     margin-top: 24px;
@@ -81,7 +90,7 @@
 
 .course_page {
   flex-grow: 1;
-  overflow-y:auto;
+  overflow-y: auto;
   display: flex;
   justify-content: center;
 }

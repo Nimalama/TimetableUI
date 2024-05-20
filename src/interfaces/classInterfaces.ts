@@ -69,3 +69,12 @@ export interface ClassRoutineRequirementsInterface {
 export interface ClassRoutineRequirementsResponseInterface {
   data: ClassRoutineRequirementsInterface;
 }
+
+export interface CommentInterface {
+  id: number;
+  classRoutineId: number;
+  comment: string;
+  createdAt: string;
+  updatedAt: string;
+  students: User;
+}

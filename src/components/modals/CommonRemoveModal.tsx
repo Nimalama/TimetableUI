@@ -5,8 +5,10 @@ const CommonRemoveModal = ({
   handleClose,
   handleClick,
   selectedId,
-  title
+  title,
+  source
 }: {
+  source: string;
   title: string;
   show: boolean;
   selectedId: number;
@@ -31,7 +33,7 @@ const CommonRemoveModal = ({
       }
       isOverFlowModal
     >
-      <p>Are you sure you want to delete this classroom?</p>
+      <p>Are you sure you want to delete this&nbsp;{source}?</p>
     </Modal>
   );
 };

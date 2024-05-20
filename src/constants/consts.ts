@@ -1,8 +1,16 @@
-import { COURSE_STATUS } from '../../enums/enums';
+
 export const MODAL_TYPES = {
   CREATE_MODE: 'create',
   EDIT_MODE: 'edit'
 };
+
+
+export const COURSE_STATUS = {
+  UNENROLLED: 'unenrolled',
+  ENROLLED: 'enrolled',
+  COMPLETED: 'completed'
+};
+
 
 export const FAKE_COURSES = [
   {
@@ -12,7 +20,7 @@ export const FAKE_COURSES = [
     code: 'ITH_2323',
     credits: 120,
     category: 'Bachelors',
-    status: COURSE_STATUS.COMPLETED 
+    status: COURSE_STATUS.COMPLETED
   },
   {
     coursePic: 'https://3rdwavemedia.com/demo-images/slides/maker-module-2.jpg',

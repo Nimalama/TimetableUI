@@ -9,13 +9,15 @@ import DefaultDashboard from '../pages/DefaultDashboard';
 import Profile from '../pages/Profile';
 import classNames from 'classnames';
 import MobileTopBar from './commons/MobileTopBar';
-import { FiX } from 'react-icons/fi';
+import { FiMessageCircle, FiX } from 'react-icons/fi';
 import Timetable from '../pages/Timetable';
+import Attendance from '../pages/Attendance';
+import Comments from '../pages/Comments';
 
 const Dashboard = () => {
   const { category } = useParams();
 
-  const { userInformation, menuBar, setMenuBar } = useDashboardContext();
+  const { userInformation, menuBar, setMenuBar, isAdmin } = useDashboardContext();
 
   const sidebarClass = classNames('dashboard__sidebar', { 'dashboard__sidebar--hidden': !menuBar });
 
@@ -48,6 +50,14 @@ const Dashboard = () => {
                 </li>
               );
             })}
+            {isAdmin && (
+              <li className="item">
+                <Link to="/comment" title="Comments" className={'item__link'} onClick={() => setMenuBar(false)}>
+                  <FiMessageCircle size={20} />
+                  <span>Comments</span>
+                </Link>
+              </li>
+            )}
           </ul>
           {/* // display user name */}
           <div className="dashboard__sidebar__footer border-top">
@@ -83,7 +93,13 @@ const CurrentTabContent = ({ activeTab }: { activeTab: string }) => {
     case 'profile':
       return <Profile />;
 
+    case 'attendance':
+      return <Attendance />;
+
+    case 'comment':
+      return <Comments />;
+
     default:
-      return <>Not found</>;
+      return <>Not Found</>;
   }
 };

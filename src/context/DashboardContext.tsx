@@ -31,7 +31,7 @@ const DashboardContextProvider = ({ children }: AppContextProvider): JSX.Element
       setIsTeacher(parsedUser.userType === 'teacher');
       setIsStudent(parsedUser.userType === 'student');
 
-      setIsUserProcessing(true)
+      setIsUserProcessing(true);
     } else {
       navigate(LOGIN);
     }
@@ -75,7 +75,7 @@ const DashboardContextProvider = ({ children }: AppContextProvider): JSX.Element
       isTeacher,
       isUserProcessing
     }),
-    [menuBar, activeTab, userInformation, isAdmin, isStudent, isTeacher,isUserProcessing]
+    [menuBar, activeTab, userInformation, isAdmin, isStudent, isTeacher, isUserProcessing]
   );
 
   return <DashboardContext.Provider value={value}>{children}</DashboardContext.Provider>;

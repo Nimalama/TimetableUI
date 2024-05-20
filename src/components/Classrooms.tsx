@@ -174,6 +174,7 @@ const Classrooms: React.FC = () => {
         handleClose={toggleDeleteModal}
         handleClick={removeClassroom}
         selectedId={selectedId}
+        source="classroom"
       />
       <CreateClassroomModal
         show={showCreateModal}

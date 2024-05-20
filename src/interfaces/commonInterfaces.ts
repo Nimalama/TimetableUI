@@ -21,6 +21,7 @@ export interface UserInformationInterface {
   email: string;
   userType: string;
   token: string;
+  category: string
 }
 
 export interface UserLoginPayloadInterface {
@@ -51,7 +52,7 @@ export interface CourseInterface {
   createdAt: string;
   updatedAt: string;
   description: string | null;
-  status?: string;
+  status: string;
 }
 
 export interface CoursePayloadInterface {
@@ -61,6 +62,7 @@ export interface CoursePayloadInterface {
   category: string | null;
   description: string | null;
   coursePic: File | null;
+  status: string
 }
 
 export interface ClassroomPayloadInterface {
@@ -99,6 +101,7 @@ export interface UserProfileInterface extends ProfilePayloadInterface {
   id: number;
   email: string;
   userType: string;
+  category: string
   createdAt: string;
   updatedAt: string;
 }

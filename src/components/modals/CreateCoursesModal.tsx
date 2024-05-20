@@ -159,6 +159,21 @@ const CreateCourseModal = ({
             onChange={(e) => setData({ ...data, description: e.target.value })}
           />
         </div>
+
+        <div className="form-group">
+          <label>Course Status</label>
+          <select
+            style={{ height: '60px' }}
+            className="form-control"
+            value={data.status ?? ''}
+            onChange={(e) => setData({ ...data, status: e.target.value })}
+          >
+            <option value="">Select category</option>
+            <option value="unenrolled">Unenrolled</option>
+            <option value="enrolled">Enrolled</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
       </>
     </Modal>
   );

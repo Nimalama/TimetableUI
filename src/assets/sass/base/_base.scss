@@ -298,6 +298,15 @@ hr {
   color: $red !important;
 }
 
+.text-blue {
+  color: $blue !important;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
 .text-ellipsis-one-line {
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -377,4 +386,8 @@ hr {
 
 .error-message {
   color: $red;
+}
+
+.fg-1 {
+  flex-grow: 1;
 }

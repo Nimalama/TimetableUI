@@ -113,8 +113,8 @@ const Courses: React.FC = () => {
     return (
       <section className="course_page">
         <div className="container overflow-hidden">
-        <CoursesList />
-        </div> 
+          <CoursesList />
+        </div>
       </section>
     );
   }
@@ -214,11 +214,12 @@ const Courses: React.FC = () => {
       </div>
 
       <CommonRemoveModal
-        title="Delete Classroom"
+        title="Delete Course"
         show={showDeleteModal}
         handleClose={toggleDeleteModal}
         handleClick={removeCourse}
         selectedId={selectedId}
+        source="course"
       />
 
       <CreateCourseModal

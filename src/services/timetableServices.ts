@@ -51,6 +51,17 @@ export const createTimeSlots = async (payload: TimeFormData): Promise<boolean> =
   const response = await getApiData<{ data: boolean }>({
     endPoint: '/api/classroutine',
     method: 'POST',
+    requiresAuth: true, 
+    data: { ...payload }
+  });
+
+  return response.data;
+};
+
+export const updateTimeSlots = async (payload: TimeFormData, id: number): Promise<boolean> => {
+  const response = await getApiData<{ data: boolean }>({
+    endPoint: `/api/classroutine/${id}`,
+    method: 'PATCH',
     requiresAuth: true,
     data: { ...payload }
   });

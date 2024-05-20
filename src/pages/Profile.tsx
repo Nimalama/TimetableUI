@@ -199,6 +199,12 @@ const UserProfile: React.FC = () => {
               disabled
             />
           </div>
+
+          <div className="form-group mb-6x disabled">
+            <label>Category</label>
+            <input type="text" className="form-control" value={user?.category} disabled />
+          </div>
+
           <div className="form-group mb-6x">
             <label>Your Department</label>
             <input
@@ -210,6 +216,7 @@ const UserProfile: React.FC = () => {
               placeholder="enter your department"
             ></input>
           </div>
+
           <div className="form-group mb-6x">
             <label htmlFor="location">Your Location</label>
             <input

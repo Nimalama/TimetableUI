@@ -1,9 +1,9 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import { Form, ListGroup } from 'react-bootstrap';
 import { ClassRoutineRequirementsInterface, Classroom, Course, TimeSlot, User } from '../../interfaces/classInterfaces';
 import { Modal } from '../Modal';
 
-import 'react-multi-email/dist/style.css';
+import { MODAL_TYPES } from '../../constants/consts';
 
 interface CreateClassRoutineModalProps {
   show: boolean;
@@ -11,6 +11,7 @@ interface CreateClassRoutineModalProps {
   handleSubmit: () => Promise<void>;
   classRequirements?: ClassRoutineRequirementsInterface;
   formData: TimeFormData;
+  mode: string;
   setFormData: Dispatch<SetStateAction<TimeFormData>>;
 }
 
@@ -28,12 +29,21 @@ const CreateClassRoutineModal: React.FC<CreateClassRoutineModalProps> = ({
   classRequirements,
   handleSubmit,
   formData,
-  setFormData
+  setFormData,
+  mode
 }) => {
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    if (mode === MODAL_TYPES.EDIT_MODE) {
+      // Populate form data if in edit mode
+      // Assuming formData is already populated with the data to be edited
+    }
+  }, [mode, formData]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: Number(value)
     });
   };
 
@@ -52,12 +62,17 @@ const CreateClassRoutineModal: React.FC<CreateClassRoutineModalProps> = ({
     }
   };
 
+  let title = 'Create Routine';
+  if (mode === MODAL_TYPES.EDIT_MODE) {
+    title = 'Edit Routine';
+  }
+
   return (
     <Modal
       shouldShowModal={show}
       size="md"
       handleClose={handleClose}
-      header="Create Routine"
+      header={title}
       footer={
         <button
           className="btn btn--primary"
@@ -79,7 +94,7 @@ const CreateClassRoutineModal: React.FC<CreateClassRoutineModalProps> = ({
       <Form>
         <Form.Group>
           <Form.Label>Classroom</Form.Label>
-          <Form.Control as="select" name="classRoomId" onChange={handleInputChange}>
+          <Form.Control as="select" name="classRoomId" value={formData.classRoomId} onChange={handleInputChange}>
             <option value="">Select Classroom</option>
             {classRequirements?.classrooms.map((classroom: Classroom) => (
               <option key={classroom.id} value={classroom.id}>
@@ -90,7 +105,7 @@ const CreateClassRoutineModal: React.FC<CreateClassRoutineModalProps> = ({
         </Form.Group>
         <Form.Group>
           <Form.Label>Course</Form.Label>
-          <Form.Control as="select" name="courseId" onChange={handleInputChange}>
+          <Form.Control as="select" name="courseId" value={formData.courseId} onChange={handleInputChange}>
             <option value="">Select Course</option>
             {classRequirements?.courses.map((course: Course) => (
               <option key={course.id} value={course.id}>
@@ -101,7 +116,7 @@ const CreateClassRoutineModal: React.FC<CreateClassRoutineModalProps> = ({
         </Form.Group>
         <Form.Group>
           <Form.Label>Lecturer</Form.Label>
-          <Form.Control as="select" name="lecturerId" onChange={handleInputChange}>
+          <Form.Control as="select" name="lecturerId" value={formData.lecturerId} onChange={handleInputChange}>
             <option value="">Select Lecturer</option>
             {classRequirements?.lecturers.map((lecturer: User) => (
               <option key={lecturer.id} value={lecturer.id}>
@@ -110,7 +125,6 @@ const CreateClassRoutineModal: React.FC<CreateClassRoutineModalProps> = ({
             ))}
           </Form.Control>
         </Form.Group>
-
         <Form.Group>
           <Form.Label>Students</Form.Label>
           <ListGroup>
@@ -120,6 +134,7 @@ const CreateClassRoutineModal: React.FC<CreateClassRoutineModalProps> = ({
                   type="checkbox"
                   id={`student-${student.id}`}
                   label={student.fullName}
+                  checked={formData.studentIds.includes(student.id)}
                   onChange={(e) => handleMultiSelectChange(e, student.id)}
                 />
               </ListGroup.Item>
@@ -128,7 +143,7 @@ const CreateClassRoutineModal: React.FC<CreateClassRoutineModalProps> = ({
         </Form.Group>
         <Form.Group>
           <Form.Label>Time Slot</Form.Label>
-          <Form.Control as="select" name="timeSlotId" onChange={handleInputChange}>
+          <Form.Control as="select" name="timeSlotId" value={formData.timeSlotId} onChange={handleInputChange}>
             <option value="">Select Time Slot</option>
             {classRequirements?.timeSlots.map((timeSlot: TimeSlot) => (
               <option key={timeSlot.id} value={timeSlot.id}>
