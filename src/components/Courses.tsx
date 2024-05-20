@@ -111,8 +111,10 @@ const Courses: React.FC = () => {
 
   if (!isAdmin) {
     return (
-      <section className="container">
+      <section className="course_page">
+        <div className="container overflow-hidden">
         <CoursesList />
+        </div> 
       </section>
     );
   }

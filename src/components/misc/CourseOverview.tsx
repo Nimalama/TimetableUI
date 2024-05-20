@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface Course {
-  imageUrl: string;
-  title: string;
+  coursePic: string;
+  name: string;
   description: string;
 }
 
@@ -23,10 +23,10 @@ const CourseOverview: React.FC<Props> = ({ courses, isInnerDashboard = false }) 
  
         <div className="course-list">
           {courses.map((course) => (
-            <div className="course" key={course.title}>
-<             img src={course.imageUrl} alt={course.title} />
+            <div className="course" key={course.name}>
+<             img src={course.coursePic} alt={course.name} />
               <div className="course-info">
-                <h3>{course.title}</h3>
+                <h3>{course.name}</h3>
                 <p>{course.description}</p>
               </div>
             </div>

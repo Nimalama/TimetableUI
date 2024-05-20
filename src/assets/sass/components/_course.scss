@@ -78,3 +78,10 @@
     overflow: auto;
   }
 }
+
+.course_page {
+  flex-grow: 1;
+  overflow-y:auto;
+  display: flex;
+  justify-content: center;
+}

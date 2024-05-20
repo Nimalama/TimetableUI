@@ -1,6 +1,6 @@
 import CourseOverview from '../components/misc/CourseOverview';
 import CoursesList from '../components/misc/CoursesList';
-import { courses } from '../constants/consts';
+import { FAKE_COURSES } from '../constants/consts';
 import useDashboardContext from '../hooks/useChallengesDashboardContext';
 
 const DefaultDashboard = () => {
@@ -9,7 +9,7 @@ const DefaultDashboard = () => {
     <section className="default-dash">
       <div className="container">
         {!isStudent ? <CoursesList /> : null}
-        <CourseOverview courses={courses} isInnerDashboard />
+        <CourseOverview courses={FAKE_COURSES} isInnerDashboard />
       </div>
     </section>
   );

@@ -19,6 +19,8 @@ const DashboardContextProvider = ({ children }: AppContextProvider): JSX.Element
   const [isStudent, setIsStudent] = useState(false);
   const [isTeacher, setIsTeacher] = useState(false);
 
+  const [isUserProcessing, setIsUserProcessing] = useState(false);
+
   useEffect(() => {
     const user = localStorage.getItem('userInformation');
     const parsedUser = JSON.parse(user as string);
@@ -28,6 +30,8 @@ const DashboardContextProvider = ({ children }: AppContextProvider): JSX.Element
       setIsAdmin(parsedUser.userType === 'admin');
       setIsTeacher(parsedUser.userType === 'teacher');
       setIsStudent(parsedUser.userType === 'student');
+
+      setIsUserProcessing(true)
     } else {
       navigate(LOGIN);
     }
@@ -68,9 +72,10 @@ const DashboardContextProvider = ({ children }: AppContextProvider): JSX.Element
       userInformation,
       isAdmin,
       isStudent,
-      isTeacher
+      isTeacher,
+      isUserProcessing
     }),
-    [menuBar, activeTab, userInformation, isAdmin, isStudent, isTeacher]
+    [menuBar, activeTab, userInformation, isAdmin, isStudent, isTeacher,isUserProcessing]
   );
 
   return <DashboardContext.Provider value={value}>{children}</DashboardContext.Provider>;

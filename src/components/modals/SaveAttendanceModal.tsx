@@ -2,7 +2,7 @@ import { Form, ListGroup } from 'react-bootstrap';
 import { ClassRoutineData, User } from '../../interfaces/classInterfaces';
 import { Modal } from '../Modal';
 import { useState } from 'react';
-import { saveAttendance } from '../../services/timetableServices';
+import { saveAttendance } from '../../services/attendanceServices';
  
 const SaveAttendanceModal = ({
   classRoutine,
@@ -28,8 +28,7 @@ const SaveAttendanceModal = ({
     try {
       const response = await saveAttendance({
         studentIds: selectedStudentIds,
-        classRoutineId: classRoutine.id,
-        lecturerId: classRoutine.id
+        classRoutineId: classRoutine.id
       });
  
       if (response) {
@@ -55,26 +54,28 @@ const SaveAttendanceModal = ({
       isOverFlowModal
       wrapperClass="create-class-routine-modal"
 >
+<>
 <p>
-        {classRoutine.timeSlot.day} | {classRoutine.lecturer.fullName} | {classRoutine.course.name}
+          {classRoutine.timeSlot.day} | {classRoutine.lecturer.fullName} | {classRoutine.course.name}
 </p>
 <Form>
 <Form.Group>
 <Form.Label>Students</Form.Label>
 <ListGroup>
-            {classRoutine?.students.map((student: User) => (
+              {classRoutine?.students.map((student: User) => (
 <ListGroup.Item key={student.id}>
 <Form.Check
-                  type="checkbox"
-                  id={`student-${student.id}`}
-                  label={student.fullName}
-                  onChange={(e) => handleMultiSelectChange(e, student.id)}
-                />
+                    type="checkbox"
+                    id={`student-${student.id}`}
+                    label={student.fullName}
+                    onChange={(e) => handleMultiSelectChange(e, student.id)}
+                  />
 </ListGroup.Item>
-            ))}
+              ))}
 </ListGroup>
 </Form.Group>
 </Form>
+</>
 </Modal>
   );
 };

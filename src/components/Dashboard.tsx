@@ -24,7 +24,7 @@ const Dashboard = () => {
       <MobileTopBar>
         <></>
       </MobileTopBar>
-      <section className="d-flex">
+      <section className="main">
         <div className={sidebarClass}>
           <div className="dashboard__sidebar__header d-flex align-items-center">
             <p className="dashboard__sidebar__header__title">Scheduler</p>
@@ -84,6 +84,6 @@ const CurrentTabContent = ({ activeTab }: { activeTab: string }) => {
       return <Profile />;
 
     default:
-      return <>hh</>;
+      return <>Not found</>;
   }
 };
