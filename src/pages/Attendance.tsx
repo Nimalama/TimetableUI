@@ -6,7 +6,7 @@ import Chart from 'chart.js/auto'; // Import Chart.js
 const AttendanceComponent = () => {
   const { userInformation, isStudent, isAdmin, isUserProcessing } = useDashboardContext();
 
-  const [attendance, setAttendance] = useState<Attendance>({ attendedClasses: 0, totalClasses: 0 });
+  const [attendance, setAttendance] = useState<Attendance>({ totalAttendedClasses: 0, totalClasses: 0 });
 
   const [allAttendance, setAllAttendance] = useState<AllAttendanceData>({
     lecturersData: [],
@@ -53,7 +53,7 @@ const AttendanceComponent = () => {
             labels: ['Attended Classes', 'Remaining Classes'],
             datasets: [
               {
-                data: [attendance.attendedClasses, attendance.totalClasses - attendance.attendedClasses],
+                data: [attendance.totalAttendedClasses, attendance.totalClasses - attendance.totalAttendedClasses],
                 backgroundColor: ['#36a2eb', '#ff6384']
               }
             ]
@@ -99,7 +99,7 @@ const AttendanceComponent = () => {
                   <tr key={user.name}>
                     <td>{user.type}</td>
                     <td>{user.name}</td>
-                    <td>{user.attendedClasses}</td>
+                    <td>{user.totalAttendedClasses}</td>
                     <td>{user.totalClasses}</td>
 
                     {/* Add additional columns if needed */}

@@ -4,11 +4,14 @@ import { CommentInterface } from '../interfaces/classInterfaces';
 import CommonRemoveModal from '../components/modals/CommonRemoveModal';
 import AddCommentModal from '../components/modals/AddCommentModal';
 import { FiArrowUp } from 'react-icons/fi';
+import useDashboardContext from '../hooks/useChallengesDashboardContext';
 
 const Comments = () => {
   const [comments, setComments] = useState<CommentInterface[]>([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showCommentModal, setShowCommentModal] = useState(false);
+
+  const { isStudent, isAdmin, isUserProcessing, userInformation } = useDashboardContext();
 
   const toggleCommentModal = () => {
     setShowCommentModal(!showCommentModal);
@@ -19,12 +22,15 @@ const Comments = () => {
   };
 
   useEffect(() => {
+    if (!isUserProcessing) return;
+
     fetchComments();
-  }, []);
+  }, [isUserProcessing]);
 
   const fetchComments = async () => {
+    const fetch = getComments;
     try {
-      const response = await getComments(); // Replace with your API endpoint
+      const response = await fetch(); // Replace with your API endpoint
       setComments(response);
     } catch (error) {
       console.error('Error fetching courses:', error);
@@ -45,14 +51,17 @@ const Comments = () => {
     }
   };
 
-  const filteredComment = comments.filter((cc) => !cc.comment.includes('Reply:'));
+  let filteredComment = comments.filter((cc) => !cc.comment.includes('Reply:'));
+
+  if (isStudent) {
+    const id = userInformation?.id ?? 0;
+    filteredComment = filteredComment.filter((cc) => cc.students.id === id);
+  }
 
   const replyComments = comments
     .map((cc) => {
       if (cc.comment.includes('ID:') && cc.comment.includes('Reply:')) {
         const data = cc.comment.split('ID:')[1].split('Reply:');
-
-        console.log(data);
 
         if (data.length === 2) {
           const id = parseInt(data[0].trim());
@@ -81,9 +90,11 @@ const Comments = () => {
                 </div>
                 <small>{new Date(comment.createdAt).toLocaleString()}</small>
               </div>
-              <button className="btn btn--sm btn--danger" onClick={toggleDeleteModal}>
-                Delete
-              </button>
+              {isAdmin && (
+                <button className="btn btn--sm btn--danger" onClick={toggleDeleteModal}>
+                  Delete
+                </button>
+              )}
               <CommonRemoveModal
                 title="Delete Comment"
                 show={showDeleteModal}

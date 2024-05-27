@@ -158,3 +158,17 @@ export async function forgotPassword(email: string): Promise<{ message: string }
     throw err;
   }
 }
+
+export async function resetPassword(data: { newPassword: string; token: string }): Promise<{ message: string }> {
+  try {
+    const response = await getApiData<{ data: { success: boolean; message: string } }>({
+      endPoint: '/api/user/reset-password',
+      method: 'POST',
+      data
+    });
+
+    return response.data;
+  } catch (err) {
+    throw err;
+  }
+}

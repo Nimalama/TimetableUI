@@ -9,6 +9,7 @@ import PrivateRoute from './PrivateRoute';
 import DashboardContextProvider from '../context/DashboardContext';
 import HomePage from '../pages/HomePage';
 import ForgetPassword from '../components/ForgetPassword';
+import ResetPassword from '../components/ResetPassword';
 
 const Router = () => {
   return (
@@ -17,7 +18,7 @@ const Router = () => {
         <Route path={LOGIN} element={<Login />} />
         <Route path={SIGNUP} element={<Register />} />
         <Route path={FORGOT_PASSWORD} element={<ForgetPassword />} />
-        <Route path={RESET_PASSWORD} element={<ForgetPassword />} />
+        <Route path={RESET_PASSWORD} element={<ResetPassword />} />
         <Route path="*" element={<NotFound />} />
 
         <Route

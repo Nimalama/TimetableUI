@@ -2,7 +2,7 @@ import { CommentInterface } from '../interfaces/classInterfaces';
 import { getApiData } from '../utility/httpHelper';
 
 export interface Attendance {
-  attendedClasses: number;
+  totalAttendedClasses: number;
   totalClasses: number;
 }
 

@@ -17,7 +17,7 @@ import Comments from '../pages/Comments';
 const Dashboard = () => {
   const { category } = useParams();
 
-  const { userInformation, menuBar, setMenuBar, isAdmin } = useDashboardContext();
+  const { userInformation, menuBar, setMenuBar, isTeacher } = useDashboardContext();
 
   const sidebarClass = classNames('dashboard__sidebar', { 'dashboard__sidebar--hidden': !menuBar });
 
@@ -50,7 +50,7 @@ const Dashboard = () => {
                 </li>
               );
             })}
-            {isAdmin && (
+            {!isTeacher && (
               <li className="item">
                 <Link to="/comment" title="Comments" className={'item__link'} onClick={() => setMenuBar(false)}>
                   <FiMessageCircle size={20} />
