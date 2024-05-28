@@ -33,7 +33,8 @@ const Timetable = () => {
     courseId: 0,
     timeSlotId: 0,
     lecturerId: 0,
-    studentIds: []
+    studentIds: [],
+    singleSlot: true
   });
 
   const fetchClassRoutines = useCallback(async () => {
@@ -99,7 +100,8 @@ const Timetable = () => {
             courseId: 0,
             timeSlotId: 0,
             lecturerId: 0,
-            studentIds: []
+            studentIds: [],
+            singleSlot: true
           });
         }
       } catch (err) {
@@ -122,7 +124,8 @@ const Timetable = () => {
             courseId: 0,
             timeSlotId: 0,
             lecturerId: 0,
-            studentIds: []
+            studentIds: [],
+            singleSlot: true
           });
         }
       } catch (err) {
@@ -158,156 +161,176 @@ const Timetable = () => {
   }
 
   return (
-    <section className="container">
-      <div className="d-flex justify-content-between align-items-center my-4x">
-        <h2>Class Routine</h2>
+    <section className="overflow-auto fg-1">
+      <div className="container">
+        <div className="d-flex justify-content-between align-items-center my-4x">
+          <h2>Class Schedule</h2>
 
-        <div className="d-flex">
-          {isAdmin && (
-            <button
-              onClick={() => {
-                setFormData({
-                  classRoomId: 0,
-                  courseId: 0,
-                  timeSlotId: 0,
-                  lecturerId: 0,
-                  studentIds: []
-                });
+          <div className="d-flex">
+            {isAdmin && (
+              <button
+                onClick={() => {
+                  setFormData({
+                    classRoomId: 0,
+                    courseId: 0,
+                    timeSlotId: 0,
+                    lecturerId: 0,
+                    studentIds: [],
+                    singleSlot: true
+                  });
 
-                toggleCreateModal();
-              }}
-              className="btn btn--primary btn--sm mr-4x"
-            >
-              Create
+                  toggleCreateModal();
+                }}
+                className="btn btn--primary btn--sm mr-4x"
+              >
+                Create
+              </button>
+            )}
+            <button className="btn btn--primary btn--sm" onClick={handleExportCSV}>
+              Export
             </button>
-          )}
-          <button className="btn btn--primary btn--sm" onClick={handleExportCSV}>
-            Export
-          </button>
-          <div className="form-group ml-4x d-flex align-items-center mb-0">
-            <select
-              className="form-control ml-2x-md py-2x"
-              value={selectedCategory ?? ''}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-            >
-              <option value="">Select range</option>
-              <option value="Weekly">Next 7 days</option>
-              <option value="Monthly">Next 30 days</option>
-            </select>
+            <div className="form-group ml-4x d-flex align-items-center mb-0">
+              <select
+                className="form-control ml-2x-md py-2x"
+                value={selectedCategory ?? ''}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+                <option value="">Select range</option>
+                <option value="Weekly">Next 7 days</option>
+                <option value="Monthly">Next 30 days</option>
+              </select>
+            </div>
           </div>
         </div>
+        <div className="table-wrapper mb-12x">
+          <table className="common-table">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>SubjectId</th>
+                <th>Subject</th>
+                <th>Day</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Room Name</th>
+                <th>Faculty Name</th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              {filteredClasses.length > 0 ? (
+                <>
+                  {filteredClasses.map((classRoutine) => {
+                    const {
+                      id,
+                      timeSlot: { day, startTime, endTime },
+                      lecturer: { fullName },
+                      course: { name, code },
+                      classroom: { name: roomName }
+                    } = classRoutine;
+
+                    // set boolean takeattendanceavailable if time slot day is in next 7 days starting today
+                    const currentDate = new Date();
+                    const nextSevenDays = new Date(currentDate);
+                    nextSevenDays.setDate(currentDate.getDate() + 7);
+                    const classDate = new Date(day);
+                    const takeAttendanceAvailable = classDate >= currentDate && classDate <= nextSevenDays;
+
+                    return (
+                      <tr className="class-routine" key={classRoutine.id}>
+                        <td>{id}</td>
+                        <td>{code}</td>
+                        <td>{name}</td>
+                        <td>{day}</td>
+                        <td>{startTime}</td>
+                        <td>{endTime}</td>
+                        <td>{roomName}</td>
+                        <td>{fullName}</td>
+                        {isTeacher && takeAttendanceAvailable && (
+                          <>
+                            <Button
+                              className="mt-1x"
+                              onClick={() => {
+                                setSelectedId(+classRoutine.id);
+
+                                toggleAttendanceModal();
+                              }}
+                            >
+                              Take attendance
+                            </Button>
+                          </>
+                        )}
+
+                        {isStudent && (
+                          <>
+                            <Button className="mt-1x" onClick={toggleCommentModal}>
+                              Add Comment
+                            </Button>
+
+                            <AddCommentModal
+                              handleClose={toggleCommentModal}
+                              show={showCommentModal}
+                              classRoutineId={classRoutine.id}
+                              callback={() => undefined}
+                            />
+                          </>
+                        )}
+
+                        {isAdmin && (
+                          <>
+                            <Button
+                              className="btn mt-1x"
+                              onClick={() => {
+                                setModalMode(MODAL_TYPES.EDIT_MODE);
+
+                                setFormData({
+                                  classRoomId: classRoutine.classroom.id,
+                                  courseId: classRoutine.course.id,
+                                  timeSlotId: classRoutine.timeSlot.id,
+                                  lecturerId: classRoutine.lecturer.id,
+                                  studentIds: classRoutine.students.map((student) => student.id),
+                                  singleSlot: true
+                                });
+
+                                setSelectedId(+classRoutine.id);
+
+                                toggleCreateModal();
+                              }}
+                            >
+                              Edit
+                            </Button>
+
+                            <AddCommentModal
+                              handleClose={toggleCommentModal}
+                              show={showCommentModal}
+                              classRoutineId={classRoutine.id}
+                              callback={() => undefined}
+                            />
+                          </>
+                        )}
+                      </tr>
+                    );
+                  })}
+                  <SaveAttendanceModal
+                    handleClose={toggleAttendanceModal}
+                    show={showAttendanceModal}
+                    classRoutine={classes.find((classRoutine) => classRoutine.id === selectedId) ?? classes[0]}
+                  />
+                </>
+              ) : null}
+            </tbody>
+          </table>
+        </div>
+        <CreateClassRoutineModal
+          classRequirements={classRequirements}
+          handleClose={toggleCreateModal}
+          show={showCreateModal}
+          handleSubmit={handleFormSubmit}
+          formData={formData}
+          setFormData={setFormData}
+          mode={modalMode}
+        />
       </div>
-
-      <div className="table-wrapper">
-        <table className="common-table">
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>SubjectId</th>
-              <th>Subject</th>
-              <th>Day</th>
-              <th>Start Time</th>
-              <th>End Time</th>
-              <th>Room Name</th>
-              <th>Faculty Name</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {filteredClasses.length > 0
-              ? filteredClasses.map((classRoutine) => {
-                  const {
-                    id,
-                    timeSlot: { day, startTime, endTime },
-                    lecturer: { fullName },
-                    course: { name, code },
-                    classroom: { name: roomName }
-                  } = classRoutine;
-                  return (
-                    <tr className="class-routine" key={classRoutine.id}>
-                      <td>{id}</td>
-                      <td>{code}</td>
-                      <td>{name}</td>
-                      <td>{day}</td>
-                      <td>{startTime}</td>
-                      <td>{endTime}</td>
-                      <td>{roomName}</td>
-                      <td>{fullName}</td>
-                      {isTeacher && (
-                        <>
-                          <Button className="mt-1x" onClick={toggleAttendanceModal}>
-                            Take attendance
-                          </Button>
-
-                          <SaveAttendanceModal
-                            handleClose={toggleAttendanceModal}
-                            show={showAttendanceModal}
-                            classRoutine={classRoutine}
-                          />
-                        </>
-                      )}
-
-                      {isStudent && (
-                        <>
-                          <Button className="mt-1x" onClick={toggleCommentModal}>
-                            Add Comment
-                          </Button>
-
-                          <AddCommentModal
-                            handleClose={toggleCommentModal}
-                            show={showCommentModal}
-                            classRoutineId={classRoutine.id}
-                          />
-                        </>
-                      )}
-
-                      {isAdmin && (
-                        <>
-                          <Button
-                            className="btn mt-1x"
-                            onClick={() => {
-                              setModalMode(MODAL_TYPES.EDIT_MODE);
-
-                              setFormData({
-                                classRoomId: classRoutine.classroom.id,
-                                courseId: classRoutine.course.id,
-                                timeSlotId: classRoutine.timeSlot.id,
-                                lecturerId: classRoutine.lecturer.id,
-                                studentIds: classRoutine.students.map((student) => student.id)
-                              });
-
-                              setSelectedId(+classRoutine.id);
-
-                              toggleCreateModal();
-                            }}
-                          >
-                            Edit
-                          </Button>
-
-                          <AddCommentModal
-                            handleClose={toggleCommentModal}
-                            show={showCommentModal}
-                            classRoutineId={classRoutine.id}
-                          />
-                        </>
-                      )}
-                    </tr>
-                  );
-                })
-              : null}
-          </tbody>
-        </table>
-      </div>
-
-      <CreateClassRoutineModal
-        classRequirements={classRequirements}
-        handleClose={toggleCreateModal}
-        show={showCreateModal}
-        handleSubmit={handleFormSubmit}
-        formData={formData}
-        setFormData={setFormData}
-        mode={modalMode}
-      />
     </section>
   );
 };

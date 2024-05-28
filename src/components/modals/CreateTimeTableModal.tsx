@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Form, ListGroup } from 'react-bootstrap';
 import { ClassRoutineRequirementsInterface, Classroom, Course, TimeSlot, User } from '../../interfaces/classInterfaces';
 import { Modal } from '../Modal';
@@ -21,6 +21,7 @@ export interface TimeFormData {
   timeSlotId: number;
   lecturerId: number;
   studentIds: number[];
+  singleSlot: boolean;
 }
 
 const CreateClassRoutineModal: React.FC<CreateClassRoutineModalProps> = ({
@@ -81,8 +82,7 @@ const CreateClassRoutineModal: React.FC<CreateClassRoutineModalProps> = ({
             formData.classRoomId === 0 ||
             formData.courseId === 0 ||
             formData.lecturerId === 0 ||
-            !formData.studentIds.length ||
-            formData.timeSlotId === 0
+            !formData.studentIds.length
           }
         >
           Save
@@ -103,6 +103,7 @@ const CreateClassRoutineModal: React.FC<CreateClassRoutineModalProps> = ({
             ))}
           </Form.Control>
         </Form.Group>
+
         <Form.Group>
           <Form.Label>Course</Form.Label>
           <Form.Control as="select" name="courseId" value={formData.courseId} onChange={handleInputChange}>
@@ -114,6 +115,7 @@ const CreateClassRoutineModal: React.FC<CreateClassRoutineModalProps> = ({
             ))}
           </Form.Control>
         </Form.Group>
+
         <Form.Group>
           <Form.Label>Lecturer</Form.Label>
           <Form.Control as="select" name="lecturerId" value={formData.lecturerId} onChange={handleInputChange}>
@@ -125,6 +127,7 @@ const CreateClassRoutineModal: React.FC<CreateClassRoutineModalProps> = ({
             ))}
           </Form.Control>
         </Form.Group>
+
         <Form.Group>
           <Form.Label>Students</Form.Label>
           <ListGroup>
@@ -141,17 +144,51 @@ const CreateClassRoutineModal: React.FC<CreateClassRoutineModalProps> = ({
             ))}
           </ListGroup>
         </Form.Group>
-        <Form.Group>
-          <Form.Label>Time Slot</Form.Label>
-          <Form.Control as="select" name="timeSlotId" value={formData.timeSlotId} onChange={handleInputChange}>
-            <option value="">Select Time Slot</option>
-            {classRequirements?.timeSlots.map((timeSlot: TimeSlot) => (
-              <option key={timeSlot.id} value={timeSlot.id}>
-                {timeSlot.day} {timeSlot.startTime} - {timeSlot.endTime}
-              </option>
-            ))}
-          </Form.Control>
-        </Form.Group>
+
+        <div className="d-flex justify-content-between my-3x">
+          <Form.Check
+            type="radio"
+            name="timeSlotOption"
+            id="singleTimeSlot"
+            value="single"
+            checked={formData.singleSlot}
+            onChange={() =>
+              setFormData({
+                ...formData,
+                singleSlot: true
+              })
+            }
+            label="Single Time Slot"
+          />
+          <Form.Check
+            type="radio"
+            name="timeSlotOption"
+            id="multipleTimeSlots"
+            value="multiple"
+            checked={!formData.singleSlot}
+            onChange={() =>
+              setFormData({
+                ...formData,
+                singleSlot: false
+              })
+            }
+            label="12 Weeks"
+          />
+        </div>
+
+        {formData.singleSlot && (
+          <Form.Group>
+            <Form.Label>Time Slot</Form.Label>
+            <Form.Control as="select" name="timeSlotId" value={formData.timeSlotId} onChange={handleInputChange}>
+              <option value="">Select Time Slot</option>
+              {classRequirements?.timeSlots.map((timeSlot) => (
+                <option key={timeSlot.id} value={timeSlot.id}>
+                  {timeSlot.day} {timeSlot.startTime} - {timeSlot.endTime}
+                </option>
+              ))}
+            </Form.Control>
+          </Form.Group>
+        )}
       </Form>
     </Modal>
   );

@@ -6,8 +6,11 @@ export interface Attendance {
   totalClasses: number;
 }
 
-interface AttendanceResponse {
-  data: Attendance;
+export interface NewAttendance {
+  courseName: string;
+  totalClassesCompleted: number;
+  totalClassesAttended: number;
+  totalAbsentCount: number;
 }
 
 export interface AttendanceInstance extends Attendance {
@@ -23,8 +26,8 @@ interface AllAttendanceResponse {
   data: AllAttendanceData;
 }
 
-export const getAttendance = async (route: string): Promise<Attendance> => {
-  const response = await getApiData<AttendanceResponse>({
+export const getAttendance = async (route: string): Promise<NewAttendance[]> => {
+  const response = await getApiData<{ data: NewAttendance[] }>({
     endPoint: route,
     method: 'GET',
     requiresAuth: true
