@@ -1,9 +1,16 @@
-import { Form, ListGroup } from 'react-bootstrap';
-import { ClassRoutineData, User } from '../../interfaces/classInterfaces';
+import { Form } from 'react-bootstrap';
+import { ClassRoutineData } from '../../interfaces/classInterfaces';
 import { Modal } from '../Modal';
 import { useState } from 'react';
 import { saveAttendance } from '../../services/attendanceServices';
-
+ 
+import Select, { MultiValue } from 'react-select';
+ 
+interface Option {
+  value: string;
+  label: string;
+}
+ 
 const SaveAttendanceModal = ({
   classRoutine,
   handleClose,
@@ -13,33 +20,36 @@ const SaveAttendanceModal = ({
   show: boolean;
   handleClose: () => void;
 }) => {
-  const [selectedStudentIds, setSelectedStudentIds] = useState<number[]>([]);
-
-  const handleMultiSelectChange = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
-    const checked = e.target.checked;
-    if (checked) {
-      setSelectedStudentIds([...selectedStudentIds, id]);
-    } else {
-      setSelectedStudentIds(selectedStudentIds.filter((studentId) => studentId !== id));
-    }
+  const [selectedStudents, setSelectedStudents] = useState<Option[]>([]);
+ 
+  const handleChange = (newValue: MultiValue<Option>) => {
+    const selected = newValue as Option[];
+ 
+    setSelectedStudents(selected);
   };
-
+ 
   const handleFormSubmit = async () => {
     try {
       const response = await saveAttendance({
-        studentIds: selectedStudentIds,
+        studentIds: selectedStudents.map((student) => +student.value),
         classRoutineId: classRoutine.id
       });
-
+ 
       if (response) {
+        alert('Attendance saved successfully');
         handleClose();
-        setSelectedStudentIds([]);
+        setSelectedStudents([]);
       }
     } catch (error) {
       console.error('Error creating classroom:', error);
     }
   };
-
+ 
+  const studentOptions = classRoutine.students.map((ss) => ({
+    value: ss.id.toString() ?? '',
+    label: ss.fullName ?? ''
+  })) as Option[];
+ 
   return (
     <Modal
       shouldShowModal={show}
@@ -54,21 +64,20 @@ const SaveAttendanceModal = ({
         </p>
         <Form>
           <Form.Group>
-            <Form.Label>Students</Form.Label>
-            <ListGroup>
-              {classRoutine?.students.map((student: User) => (
-                <ListGroup.Item key={student.id}>
-                  <Form.Check
-                    type="checkbox"
-                    id={`student-${student.id}`}
-                    label={student.fullName}
-                    onChange={(e) => handleMultiSelectChange(e, student.id)}
-                  />
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
+            <div>
+              <label>Select Students</label>
+              <Select
+                isMulti
+                value={selectedStudents}
+                onChange={handleChange}
+                options={studentOptions}
+                classNamePrefix="select"
+                placeholder={`Select users...`}
+                closeMenuOnSelect={false}
+              />
+            </div>
           </Form.Group>
-          <button className="btn mt-3x btn--primary" onClick={handleFormSubmit} disabled={!selectedStudentIds.length}>
+          <button className="btn mt-3x btn--primary" onClick={handleFormSubmit} disabled={!selectedStudents.length}>
             Save
           </button>
         </Form>
@@ -76,5 +85,6 @@ const SaveAttendanceModal = ({
     </Modal>
   );
 };
-
+ 
 export default SaveAttendanceModal;
+ 
