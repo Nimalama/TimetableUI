@@ -13,16 +13,6 @@
       border-bottom: 1px solid $border-color;
     }
   }
-
-  /* styles.css */
-  .select__control {
-    min-width: 300px;
-    margin-bottom: 20px;
-  }
-
-  .select__menu {
-    z-index: 1000;
-  }
 }
 
 #studentAttendanceBarChart,
@@ -34,4 +24,14 @@ canvas {
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* styles.css */
+.select__control {
+  min-width: 300px;
+  margin-bottom: 20px;
+}
+ 
+.select__menu {
+  z-index: 1000;
 }

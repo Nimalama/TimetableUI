@@ -44,10 +44,6 @@ export const Modal = (props: ModalProps) => {
   // Hooks goes here
   useNoScroll(shouldShowModal);
 
-  const handleBackdropClick = () => {
-    handleClose();
-  };
-
   useEffect(() => {
     const clientHeight = modalBodyRef.current?.clientHeight ?? 0;
     const scrollHeight = refScrollHeight ?? modalBodyRef.current?.scrollHeight;
@@ -111,7 +107,6 @@ export const Modal = (props: ModalProps) => {
       animate="visible"
       exit="hidden"
       className={modalBackdropClass}
-      onClick={handleBackdropClick}
       role="modal-backdrop"
     />
   );
