@@ -14,7 +14,6 @@ const NonAdminAttendanceComponent = () => {
   const { isStudent, isUserProcessing } = useDashboardContext();
   const [attendance, setAttendance] = useState<CourseAttendanceStats[]>([]);
 
-  const pieChartsRef = useRef<Chart[]>([]);
   const barChartRef = useRef<Chart | null>(null);
 
   useEffect(() => {
@@ -77,6 +76,18 @@ const NonAdminAttendanceComponent = () => {
       renderBarChart();
     }
   }, [attendance]);
+
+  if (attendance.length < 1) {
+    return (
+      <section className="fg-1 overflow-auto">
+        <div className="container">
+          <div className="d-flex justify-content-center my-6x">
+            No attendance data available. Please check back later.
+          </div>
+        </div>
+      </section>
+      );
+     }
 
   return (
     <section className="fg-1 overflow-auto">
