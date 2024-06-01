@@ -56,7 +56,7 @@ const CreateClassRoutineModal: React.FC<CreateClassRoutineModalProps> = ({
     });
   };
 
-  let title = 'Create Routine';
+  let title = 'Create Schedule';
   if (mode === MODAL_TYPES.EDIT_MODE) {
     title = 'Edit Routine';
   }

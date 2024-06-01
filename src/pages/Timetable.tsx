@@ -164,7 +164,7 @@ const Timetable = () => {
     <section className="overflow-auto fg-1">
       <div className="container">
         <div className="d-flex justify-content-between align-items-center my-4x">
-          <h2>Class Routine</h2>
+          <h2>Class Schedule</h2>
 
           <div className="d-flex">
             {isAdmin && (
