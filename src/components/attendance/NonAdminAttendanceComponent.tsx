@@ -86,8 +86,8 @@ const NonAdminAttendanceComponent = () => {
           </div>
         </div>
       </section>
-      );
-     }
+    );
+  }
 
   return (
     <section className="fg-1 overflow-auto">

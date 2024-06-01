@@ -3,14 +3,14 @@ import { ClassRoutineData } from '../../interfaces/classInterfaces';
 import { Modal } from '../Modal';
 import { useState } from 'react';
 import { saveAttendance } from '../../services/attendanceServices';
- 
+
 import Select, { MultiValue } from 'react-select';
- 
+
 interface Option {
   value: string;
   label: string;
 }
- 
+
 const SaveAttendanceModal = ({
   classRoutine,
   handleClose,
@@ -21,20 +21,20 @@ const SaveAttendanceModal = ({
   handleClose: () => void;
 }) => {
   const [selectedStudents, setSelectedStudents] = useState<Option[]>([]);
- 
+
   const handleChange = (newValue: MultiValue<Option>) => {
     const selected = newValue as Option[];
- 
+
     setSelectedStudents(selected);
   };
- 
+
   const handleFormSubmit = async () => {
     try {
       const response = await saveAttendance({
         studentIds: selectedStudents.map((student) => +student.value),
         classRoutineId: classRoutine.id
       });
- 
+
       if (response) {
         alert('Attendance saved successfully');
         handleClose();
@@ -44,12 +44,12 @@ const SaveAttendanceModal = ({
       console.error('Error creating classroom:', error);
     }
   };
- 
+
   const studentOptions = classRoutine.students.map((ss) => ({
     value: ss.id.toString() ?? '',
     label: ss.fullName ?? ''
   })) as Option[];
- 
+
   return (
     <Modal
       shouldShowModal={show}
@@ -85,6 +85,5 @@ const SaveAttendanceModal = ({
     </Modal>
   );
 };
- 
+
 export default SaveAttendanceModal;
- 
