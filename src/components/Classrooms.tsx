@@ -93,79 +93,81 @@ const Classrooms: React.FC = () => {
   };
 
   return (
-    <section className="container">
-      <div className="d-flex justify-content-between my-4x">
-        <h2>Classrooms</h2>
+    <section className="overflow-auto fg-1">
+      <div className="container">
+        <div className="d-flex justify-content-between my-4x">
+          <h2>Classrooms</h2>
 
-        {isAdmin ? (
-          <button
-            onClick={() => {
-              setModalMode(MODAL_TYPES.CREATE_MODE);
+          {isAdmin ? (
+            <button
+              onClick={() => {
+                setModalMode(MODAL_TYPES.CREATE_MODE);
 
-              setPayload({
-                name: '',
-                capacity: ''
-              });
+                setPayload({
+                  name: '',
+                  capacity: ''
+                });
 
-              toggleCreateModal();
-            }}
-            className="btn btn--primary btn--sm ml-8x"
-          >
-            Create
-          </button>
-        ) : null}
-      </div>
-      <div className="table-wrapper">
-        <table className="common-table">
-          <thead>
-            <tr>
-              <th>Classroom Name</th>
-              <th>Total Student Capacity</th>
-              <th></th>
-              {/* Add additional columns if needed */}
-            </tr>
-          </thead>
-          <tbody>
-            {classrooms.map((classroom) => (
-              <tr key={classroom.id}>
-                <td>{classroom.name}</td>
-                <td>{classroom.capacity}</td>
-
-                {isAdmin ? (
-                  <td>
-                    <button
-                      className="btn btn--teritiary btn--sm mr-2x"
-                      onClick={() => {
-                        setModalMode(MODAL_TYPES.EDIT_MODE);
-                        setSelectedId(+classroom.id);
-                        setPayload({
-                          name: classroom.name,
-                          capacity: classroom.capacity.toString()
-                        });
-
-                        toggleCreateModal();
-                      }}
-                    >
-                      Edit
-                    </button>
-
-                    <button
-                      className="btn btn--danger btn--sm"
-                      onClick={() => {
-                        setSelectedId(+classroom.id);
-                        toggleDeleteModal();
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                ) : null}
-
+                toggleCreateModal();
+              }}
+              className="btn btn--primary btn--sm ml-8x"
+            >
+              Create
+            </button>
+          ) : null}
+        </div>
+        <div className="table-wrapper">
+          <table className="common-table">
+            <thead>
+              <tr>
+                <th>Classroom Name</th>
+                <th>Students Count</th>
+                <th></th>
                 {/* Add additional columns if needed */}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {classrooms.map((classroom) => (
+                <tr key={classroom.id}>
+                  <td>{classroom.name}</td>
+                  <td>{classroom.capacity}</td>
+
+                  {isAdmin ? (
+                    <td>
+                      <button
+                        className="btn btn--teritiary btn--sm mr-2x"
+                        onClick={() => {
+                          setModalMode(MODAL_TYPES.EDIT_MODE);
+                          setSelectedId(+classroom.id);
+                          setPayload({
+                            name: classroom.name,
+                            capacity: classroom.capacity.toString()
+                          });
+
+                          toggleCreateModal();
+                        }}
+                      >
+                        Edit
+                      </button>
+
+                      <button
+                        className="btn btn--danger btn--sm"
+                        onClick={() => {
+                          setSelectedId(+classroom.id);
+                          toggleDeleteModal();
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  ) : null}
+
+                  {/* Add additional columns if needed */}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <CommonRemoveModal

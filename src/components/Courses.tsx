@@ -120,97 +120,99 @@ const Courses: React.FC = () => {
   }
 
   return (
-    <section className="container">
-      <div className="d-flex justify-content-between my-4x">
-        <h2>Courses</h2>
-        <div>
-          <button
-            onClick={() => {
-              setModalMode(MODAL_TYPES.CREATE_MODE);
+    <section className="overflow-auto fg-1">
+      <div className="container">
+        <div className="d-flex justify-content-between my-4x">
+          <h2>Courses</h2>
+          <div>
+            <button
+              onClick={() => {
+                setModalMode(MODAL_TYPES.CREATE_MODE);
 
-              setPayload({
-                name: '',
-                code: '',
-                credits: null,
-                coursePic: null,
-                category: null,
-                description: null,
-                status: 'unenrolled'
-              });
+                setPayload({
+                  name: '',
+                  code: '',
+                  credits: null,
+                  coursePic: null,
+                  category: null,
+                  description: null,
+                  status: 'unenrolled'
+                });
 
-              toggleCreateModal();
-            }}
-            className="btn btn--primary btn--sm ml-8x"
-          >
-            Create
-          </button>
+                toggleCreateModal();
+              }}
+              className="btn btn--primary btn--sm ml-8x"
+            >
+              Create
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div className="table-wrapper">
-        <table className="common-table">
-          <thead>
-            <tr>
-              <th>Course Code</th>
-              <th>Course Name</th>
-              <th>Credits</th>
-              <th>Category</th>
-              <th />
-            </tr>
-          </thead>
-
-          <tbody>
-            {courses.map((course) => (
-              <tr key={course.id}>
-                <td>{course.code}</td>
-                <td className="d-flex align-items-center">
-                  {course.coursePic?.length && (
-                    <div className="course-image mr-2x">
-                      <img src={`${API_BASE_URL}${course.coursePic}`} alt="Course Image" />
-                    </div>
-                  )}
-                  {course.name}
-                </td>
-                <td>{course.credits}</td>
-                <td>{course.category}</td>
-
-                {isAdmin ? (
-                  <td>
-                    <button
-                      className="btn btn--teritiary btn--sm mr-2x"
-                      onClick={() => {
-                        setModalMode(MODAL_TYPES.EDIT_MODE);
-                        setSelectedId(+course.id);
-                        setPayload({
-                          code: course.code,
-                          name: course.name,
-                          credits: course.credits,
-                          category: course.category,
-                          coursePic: null,
-                          description: course.description,
-                          status: course.status
-                        });
-
-                        toggleCreateModal();
-                      }}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="btn btn--danger btn--sm"
-                      onClick={() => {
-                        setSelectedId(+course.id);
-                        toggleDeleteModal();
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                ) : null}
+        <div className="table-wrapper">
+          <table className="common-table">
+            <thead>
+              <tr>
+                <th>Course Code</th>
+                <th>Course Name</th>
+                <th>Credits</th>
+                <th>Category</th>
+                <th />
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {courses.map((course) => (
+                <tr key={course.id}>
+                  <td>{course.code}</td>
+                  <td className="d-flex align-items-center">
+                    {course.coursePic?.length && (
+                      <div className="course-image mr-2x">
+                        <img src={`${API_BASE_URL}${course.coursePic}`} alt="Course Image" />
+                      </div>
+                    )}
+                    {course.name}
+                  </td>
+                  <td>{course.credits}</td>
+                  <td>{course.category}</td>
+
+                  {isAdmin ? (
+                    <td>
+                      <button
+                        className="btn btn--teritiary btn--sm mr-2x"
+                        onClick={() => {
+                          setModalMode(MODAL_TYPES.EDIT_MODE);
+                          setSelectedId(+course.id);
+                          setPayload({
+                            code: course.code,
+                            name: course.name,
+                            credits: course.credits,
+                            category: course.category,
+                            coursePic: null,
+                            description: course.description,
+                            status: course.status
+                          });
+
+                          toggleCreateModal();
+                        }}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="btn btn--danger btn--sm"
+                        onClick={() => {
+                          setSelectedId(+course.id);
+                          toggleDeleteModal();
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  ) : null}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <CommonRemoveModal
