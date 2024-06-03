@@ -121,7 +121,7 @@ const Classrooms: React.FC = () => {
             <thead>
               <tr>
                 <th>Classroom Name</th>
-                <th>Students Count</th>
+                <th>Total Student Capacity</th>
                 <th></th>
                 {/* Add additional columns if needed */}
               </tr>
