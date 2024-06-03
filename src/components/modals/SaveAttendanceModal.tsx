@@ -31,7 +31,7 @@ const SaveAttendanceModal = ({
   const handleFormSubmit = async () => {
     try {
       const response = await saveAttendance({
-        studentIds: selectedStudents.map((student) => +student.value),
+        studentIds: selectedStudents?.map((student) => +student.value),
         classRoutineId: classRoutine.id
       });
 
